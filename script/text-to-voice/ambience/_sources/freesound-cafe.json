@@ -1,0 +1,42 @@
+[
+ {
+  "id": 162853,
+  "scene": "cafe",
+  "file": "cafe/fs-162853.ogg",
+  "name": "Café parisien ambiance Paris.wav",
+  "author": "beman87",
+  "license": "http://creativecommons.org/licenses/by/3.0/",
+  "url": "https://freesound.org/people/beman87/sounds/162853/",
+  "speech_words": 24
+ },
+ {
+  "id": 263584,
+  "scene": "cafe",
+  "file": "cafe/fs-263584.ogg",
+  "name": "Small Restaurant atmosphere.wav",
+  "author": "Berwitz",
+  "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+  "url": "https://freesound.org/people/Berwitz/sounds/263584/",
+  "speech_words": 0
+ },
+ {
+  "id": 214995,
+  "scene": "cafe",
+  "file": "cafe/fs-214995.ogg",
+  "name": "Ambient sound inside cafe bar.aif",
+  "author": "4team",
+  "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+  "url": "https://freesound.org/people/4team/sounds/214995/",
+  "speech_words": 0
+ },
+ {
+  "id": 403065,
+  "scene": "cafe",
+  "file": "cafe/fs-403065.ogg",
+  "name": "MS STEREO Coffee Shop, 6 People, low chatter, refrigerator, barista movement 1.WAV",
+  "author": "AwenAudio",
+  "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+  "url": "https://freesound.org/people/AwenAudio/sounds/403065/",
+  "speech_words": 0
+ }
+]

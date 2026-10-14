@@ -1,0 +1,77 @@
+# Images, audio out (TTS), audio in (speech-to-text)
+
+Check what's available once per session and remember it; don't retry failing tools every exercise. Always tell the learner honestly when something isn't possible and what the fallback is.
+
+## Images
+
+Cheap and reliable first:
+1. **Emoji** for concrete nouns (🚗 🚌 🥖 🚉 🏥) - use in vocabulary tables and picture multiple-choice options.
+2. **Simple generated illustration** when emoji can't show it (e.g. "car door", "steering wheel"): a tiny inline SVG, or - if the environment can render HTML/visual widgets or publish pages - a small flashcard page. Keep it simple; label nothing in the target language inside the picture (that would give away picture questions).
+3. **Web image** if an image search tool is available and the concept needs a real photo (a regional food, a building type). Link it; don't hotlink dozens.
+Skip images for abstract words.
+
+## Listening audio - where it comes from (in this order)
+
+**1. Real recordings from the internet.** Search (WebSearch) for a short (≤ 3 min) clip at the learner's level on the lesson topic: learner podcasts with transcripts (e.g. podcastfrancaisfacile.com, lingua.com listening, TV5Monde *Apprendre*, RFI *Français facile*; for other languages the equivalent "easy"/"slow" news and dialogue sites). Requirements:
+- You can read its transcript (WebFetch the page or its PDF), so the questions match what is actually said.
+- The workbook cannot embed audio from other websites (and you should not re-host someone else's recording), so a real clip is a `material.link` that opens in a new tab. If that page shows the transcript right next to the player, the learner sees the answers - then don't use it for the test: offer it as a **bonus** in the test's `reveal` ("listen first, then read") and make the test audio with option 2.
+- Say where it's from (site name) in the material.
+
+**2. Neural text-to-speech (offline) - `tts.py`.** Natural voices; the default when no suitable real recording exists. Three local engines (learner's choice 2026-10-09 - XTTS-v2, MeloTTS and Piper were removed): **Chatterbox Multilingual** (voices copied from 12-15 s reference clips; the most natural and the best fit in a scene, but slow - used for dialogues), **Supertonic 3** (10 voices, fast - used for words and example sentences) and **Kokoro** (1 French voice, dialogue backup). See `script/text-to-voice/README.md` for the voice lists, benchmarks and how to add a language or a voice.
+
+```
+python3 <root>/script/tts.py --lang fr --list-voices
+# a dialogue: each speaker gets a different voice (female/male alternate), seeded by the text
+python3 <root>/script/tts.py --lang fr --slow --file /tmp/dialogue.txt --out /tmp/listening.webm --verify
+# words and examples: one file per line, Supertonic voices rotating from line to line (fast)
+python3 <root>/script/tts.py --lang fr --each --vary --file /tmp/words.txt --out-dir /tmp/clips --verify
+```
+
+- Models are not in the shared repository: if `script/text-to-voice/models/` or `script/voice-to-text/models/` is empty, ask the learner to run `sh setup/download_models.sh` once (in the Mac Terminal if huggingface.co is blocked in the workspace), and build whisper with `sh setup/build_whisper.sh` in the workspace when `stt.py --check` finds no `whisper-cli`.
+- Setup per session: `sh <root>/script/text-to-voice/setup_engines.sh all` (~1-2 min: Supertonic and Kokoro via pip, and a virtual env in `$HOME/.venvs/chatterbox` from the bundled wheels). Without `all` only the fast engines are installed - enough for word clips. Models live in `<root>/script/text-to-voice/models/`.
+- **Casting.** Dialogues: every speaker gets a Chatterbox voice first (seeded by the text, so another `--seed` gives another combination), then Supertonic / Kokoro if the Chatterbox voices of that gender run out. Word lists and example sentences (`--each`): **Supertonic only** - fast, and one clip per line; `--all-voices` or an exact `--voice` overrides that. Plan the time for dialogues: ~45 s per Chatterbox line, several reruns of the same command.
+- **Chatterbox voices** are 12-15 s reference clips in `models/chatterbox/voices/<name>.wav` + an entry in `voices.json` (`name`, `gender`, `from`, `note`). Sources: (1) native French readers from Multilingual LibriSpeech French (CC BY 4.0, LibriVox recordings; fetched through `datasets-server.huggingface.co/rows?dataset=facebook/multilingual_librispeech&config=french&split=test|dev`), picked for clean audio (speech-to-noise ≥ 30 dB), lively intonation and a spread of pitches, cut to 14 s, loudness-normalised; (2) the voices the learner rated great, recorded with their own engine (Supertonic and Kokoro) (Supertonic F4 → `elise`, M1 → `maxime`, M3 → `antoine`, Kokoro ff_siwis → `margaux`). Never make a voice from a recording of a real person without their consent - a learner's own test recording is a one-off experiment, kept out of `voices/`. Record the source in `from` (credit for CC BY) and the learner's rating in `note`; delete voices they rate below good (the learner keeps only the good ones). Chatterbox occasionally stops a sentence early (a 4 s line came out 1.8 s): `--verify` shows it as a low match - delete that clip from `~/.cache/tts-clips` and run again.
+- **Chatterbox and the time limit.** Chatterbox runs in its own worker process (it needs most of the sandbox's memory). A shell call on the learner's computer is limited to ~3 minutes, so `tts.py` stops starting Chatterbox clips after `--budget` seconds (default 140; use ~125 when the shell limit is 180 s) and exits with code 3 and `{"incomplete": true, "clips_left": n}` - **run the same command again** until it exits 0; finished clips are cached in `~/.cache/tts-clips` and reused. `--verify` on many clips can take longer than one call - verify in a separate run.
+- **Learner's ratings (2026-10-09, each voice placed in the hotel scene).** Chatterbox, good: men bernard, paul, maxime, antoine, luis; women claire, ines, julie, elise (from the receptionist voice Supertonic F4 - their favourite), margaux. Older voices still in use (not rated in the reel): lea, marc, ana, gitta. Deleted: hugo, olivier (too much echo, "like a bathroom"), sophie, camille (poor recordings), thomas, nathalie, damien (only passable) - **when picking new reference clips, reject echoey or low-quality recordings**. For words, Supertonic F1/F4/M1/M3/M5 were rated great. Details: `script/text-to-voice/samples/2026-10-09_hotel-scene/README.md`.
+- **Cast by gender.** A waiter, an old man, a mother: `--voices "Serveur=m,Cliente=f"` picks a fitting voice of that gender (still varied by the text), or name one exactly (`Léa=supertonic:F1`).
+- Write numbers as words or digits consistently and check them with `--verify` - Supertonic sometimes mispronounces compound numbers (*vingt-deux*).
+- **Vary the voices.** Different dialogues automatically get different voice mixes; use `--seed` for another mix or `--voices "Léa=chatterbox:lea,Serveur=supertonic:M5"` to cast on purpose (a waiter, a child, an old man…).
+- **One clip = one word or one sentence.** Vocabulary: a clip for each word and a separate clip for each example sentence. Grammar/phonetics examples: one clip per example (`[du pain](/_blob/a) · [de la soupe](/_blob/b)`), never several examples read in one clip - the learner can't replay just the one they need. Write the list one item per line and use `--each`.
+- **Check what a listener hears.** `--verify` transcribes each clip with stt.py and reports `heard` and a word `match`; regenerate anything below ~0.85 with another `--voice` (single words score lower because the recognizer has no context; Supertonic F1/F4/M4/M5 came out clear in testing). Never ship a dialogue clip whose `heard` text changes an answer the test asks about.
+- `dialogue.txt`: one line per turn, `Name: text`. Write it to a temp/scratch location, **never next to the audio in the learner's folder** (the learner would see the transcript). Make it sound like people talking, not reading: a few natural fillers and hesitations where a real speaker would use them (*Euh…*, *Alors…*, *Bon…*, addressing someone *Monsieur Benali…*), short replies, the odd repeat - one or two per speaker, never so many that they hide an answer the test asks about (fillers count as part of the transcript). The transcript goes into the test's `reveal` and, after the test, into the session file.
+- For the workbook: upload the .webm files as assets (Artifact publish with `url`, `asset: true`; up to 25 per call with `file_paths`, files inside your working directory; webm/mp4 are accepted, mp3 is not) and use the returned `/_blob/...` paths: `material.audio_url` for a listening clip, `[text](/_blob/id)` buttons in markdown, `audio` / `example_audio` on flashcards. In chat-only mode, send the files.
+
+**Background sounds (ambience).** Real conversations happen in noisy places, so listening dialogues get a background matching the scene: `tts.py ... --ambience metro --level A1` (or `script/ambience.py --scene metro --in clean.webm --out listening.webm --level A1` for an existing recording). 25 scenes (`ambience.py --list`), 1-11 real recordings each: cafe, restaurant, metro, metro_station, train_station, train, bus, tram, car, airport, airplane, street, traffic, square, market, supermarket, shop, mall, hotel, office, kitchen, park, river, beach, rain - each lesson gets a different recording of the scene (seeded by the text). Recordings come from TUT Urban Acoustic Scenes, DEMAND and Freesound (CC0 / CC BY), plus short events (birds, bells, laughter...) from ESC-50; credits in the ambience README. To add recordings: `freesound.org` search with the learner's API key in `script/.freesound_api_key` (never print it) - fetch the preview, cut 75 s, run whisper on it and drop it if speech is clearly followable, add a credit row. The background starts ~2 s before the first word and fades out after the last one. Loudness follows the level: speech 22 dB above the background at A0, 20 at A1, 16 at A2, 12 at B1, 9 at B2, 6 at C1 - so A0-A2 learners hear the place without fighting it; raise the difficulty with `--snr` once a learner scores ≥ 80% at the default. With `--verify` the result also gets `check_with_ambience` (what whisper hears through the noise) - if it falls below ~0.85, lower the noise (higher `--snr`) rather than ship it. Mention the place in the section's one-line context ("Dans le métro…"). Recordings and licences: `script/text-to-voice/ambience/README.md` (personal study only). Don't add a background to single-word or example-sentence clips.
+
+**Placing the voices in the scene.** With `--ambience`, `tts.py` builds the dialogue with `ambience.scene_dialogue` so the voices sound recorded in that place, not pasted on top (approved by the learner, 2026-10-09):
+- one shared synthetic room for **all** speakers (size and wetness per scene: `ROOM` in ambience.py; outdoor scenes almost dry) - never reverb on some voices only;
+- every voice EQ'd gently (-6..+5 dB) towards one target tone (Supertonic F4's spectrum), so different engines sound like one microphone;
+- stereo places (left, right, a bit further back for a third/fourth speaker) and the background in stereo;
+- pace: syllables per second over the whole turn **including its pauses**, nudged at most ±5% towards the level target (`PACE`: A0 4.6 … A1 5.1 … C2 7.0). A voice that is far slower is a voice problem: regenerate or recast it, don't stretch it further. Some speakers a little slower than others is fine - people differ;
+- random turn gaps 0.25-0.6 s; loudness equalised per speaker.
+Chatterbox speaks with the lively style (`CHATTERBOX_STYLE`: exaggeration 0.6, cfg_weight 0.3, temperature 0.7) and without the old 0.88 slowdown in scenes. Without `--ambience` (and with `--each`) clips are made as before; `--slow` still adds longer gaps between turns for A0-A1.
+**Never edit timing inside finished speech** (cutting pauses, strong time-stretching): it caused a rasp in the voice. If a voice is slow or choppy, regenerate it (another seed/voice/engine, the lively style) and let the scene pass place it. The result reports `room`, `pace_target`, per-speaker `pace`/`tempo` and `places`; listen to (or `--verify`) the final file before uploading.
+
+**3. Fallbacks**: edge-tts / gTTS (need internet), macOS `say`, espeak-ng (robotic - tell the learner). No backend at all (exit code 2): read-once text fallback from lesson-steps.md, and say that's what's happening.
+
+## Voice messages - `stt.py`
+
+```
+python3 <root>/script/stt.py --check                 # or scripts/stt.py from the skill
+python3 <root>/script/stt.py --lang fr <root>/french/sessions/audio/2026-09-30_speaking.m4a
+```
+
+**Preferred backend: whisper.cpp in the languages root.** The learner's root may contain `script/voice-to-text/` with a built `whisper.cpp/build/bin/whisper-cli` and `models/ggml-*.bin`. `stt.py` finds it automatically (next to itself, above the audio file, or under a mounted folder); pass `--whisper-dir` if it doesn't. It runs fully offline and takes a few seconds. Note: a binary built inside a Linux VM (e.g. the desktop bridge's shell) only runs there, not directly on macOS/Windows - run it through that same shell. `script/voice-to-text/README.md` says how it was built and how to rebuild or add a better model.
+
+**Getting the audio to it.** The audio must be on the same machine as whisper.cpp:
+- The learner attaches a voice message to the chat → it lands in your sandbox's uploads. Copy it into `<language>/sessions/audio/YYYY-MM-DD_<topic>_speaking.<ext>` in the progress folder (e.g. via the bridge's file-commit tool), then run stt.py there.
+- Or the learner records and drops the file into `<language>/sessions/audio/` themselves - then just run it.
+
+**Other backends** (fallback order): faster-whisper, openai-whisper - both download models from Hugging Face on first use, which may be blocked.
+
+**Reading the result.**
+- JSON with the transcript, per-word confidence and `low_confidence` words.
+- **Whisper repairs grammar.** It is trained on fluent speech, so it often writes what a native would have said ("je ne aime" → "je n'aime", "à le" → "au"). Before correcting, show the transcript and ask: "Is this what you said? Fix anything I misheard." Grade the confirmed version. Don't praise a structure as correct if the transcript is the only evidence and it's a structure the learner usually gets wrong - say you can't be sure from the audio.
+- With the base model, accented or quiet speech can come out garbled; many low-confidence words at once usually means poor audio/recognition, not bad pronunciation everywhere - ask for a re-record closer to the mic, or for the text.
+- Pronunciation feedback from this is indirect: words transcribed wrongly (compare with what the learner obviously meant) or with low confidence are *probable* trouble spots. Pair each with the typical cause for that sound in this language (language notes) and a tip. Say "the recognizer struggled with X - that's usually a sign of ..." rather than asserting.
+- Fallback (exit code 2, or no audio attached): ask the learner to use their phone/computer dictation in the target language or type what they said; correct that text; state that pronunciation can't be assessed this way. If they have dictation output, words the dictation got wrong are again a useful pronunciation hint.

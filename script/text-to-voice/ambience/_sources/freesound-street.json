@@ -1,0 +1,32 @@
+[
+ {
+  "id": 394331,
+  "scene": "street",
+  "file": "street/fs-394331.ogg",
+  "name": "HOW A FRENCH CITY SOUNDS V2",
+  "author": "FreeToUseSounds",
+  "license": "http://creativecommons.org/licenses/by/3.0/",
+  "url": "https://freesound.org/people/FreeToUseSounds/sounds/394331/",
+  "speech_words": 0
+ },
+ {
+  "id": 527750,
+  "scene": "street",
+  "file": "street/fs-527750.ogg",
+  "name": "Rue Rivoli Paris 2.wav",
+  "author": "bruno.auzet",
+  "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+  "url": "https://freesound.org/people/bruno.auzet/sounds/527750/",
+  "speech_words": 24
+ },
+ {
+  "id": 452523,
+  "scene": "street",
+  "file": "street/fs-452523.ogg",
+  "name": "traffic medium busy street boulevard Jean Talon heavy trucks XY Montreal, Canada.flac",
+  "author": "kyles",
+  "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+  "url": "https://freesound.org/people/kyles/sounds/452523/",
+  "speech_words": 6
+ }
+]

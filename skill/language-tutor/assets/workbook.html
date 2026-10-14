@@ -1,0 +1,1211 @@
+<title>Language Tutor Workbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Young+Serif&family=Kalam:wght@400;700&display=swap">
+<style>
+/* Layout: a French school exercise book (cahier, Seyès ruling) - one column, exercise page first, progress page second; corrections in the teacher's red pen. */
+:root{
+  --paper:#f7f8fb; --sheet:#ffffff; --rule:#dfe5f3; --rule-strong:#c5cfe8;
+  --ink:#1d2a4d; --ink-soft:#56607a; --accent:#2747a8; --accent-soft:#e6ecfb;
+  --margin:#d9534f; --pen:#c0352f; --ok:#2e7d4f; --ok-soft:#e5f3ea; --bad-soft:#fbe9e7; --warn:#a86b00;
+  --line:#e3e7f0; --shadow:0 1px 2px rgba(29,42,77,.06),0 4px 16px rgba(29,42,77,.05);
+  --deck-learned:#2f6f6a; --deck-coming:#c4521f; --deck-line:#7fb3c4;
+  --f-display:"Young Serif",Georgia,"Times New Roman",serif;
+  --f-body:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-pen:"Kalam","Comic Sans MS","Bradley Hand",cursive;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#121725; --sheet:#182033; --rule:#222c44; --rule-strong:#2d3955;
+  --ink:#e6eaf5; --ink-soft:#9aa5c0; --accent:#8fa8ff; --accent-soft:#223056;
+  --margin:#e0716c; --pen:#ff8a80; --ok:#6fcf97; --ok-soft:#1c3328; --bad-soft:#3a2224; --warn:#e3b04b;
+  --line:#2a3450; --shadow:none; --deck-learned:#2f7a73; --deck-coming:#c95a26; --deck-line:#6fa8bb; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121725; --sheet:#182033; --rule:#222c44; --rule-strong:#2d3955;
+  --ink:#e6eaf5; --ink-soft:#9aa5c0; --accent:#8fa8ff; --accent-soft:#223056;
+  --margin:#e0716c; --pen:#ff8a80; --ok:#6fcf97; --ok-soft:#1c3328; --bad-soft:#3a2224; --warn:#e3b04b;
+  --line:#2a3450; --shadow:none; --deck-learned:#2f7a73; --deck-coming:#c95a26; --deck-line:#6fa8bb; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
+.wrap{max-width:860px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:grid;gap:18px}
+header.top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;justify-content:space-between}
+.brand{font-family:var(--f-display);font-size:1.35rem;letter-spacing:.01em}
+.brand small{display:block;font-family:var(--f-body);font-size:.8rem;color:var(--ink-soft);letter-spacing:.04em;text-transform:uppercase}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pill{border:1px solid var(--line);background:var(--sheet);color:var(--ink);border-radius:999px;padding:6px 14px;font:inherit;font-size:.92rem;cursor:pointer}
+.pill[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--sheet)}
+.pill:focus-visible,.btn:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--sheet)}
+.seg button{border:0;background:transparent;color:var(--ink-soft);font:inherit;font-size:.92rem;padding:7px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);font-weight:700}
+/* the exercise sheet: Seyès ruling + red margin */
+.sheet{position:relative;background:var(--sheet);border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);
+  padding-block:22px 26px;padding-inline:56px 24px;min-width:0;
+  background-image:linear-gradient(to right,transparent 39px,var(--margin) 39px,var(--margin) 41px,transparent 41px),
+    repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rule-strong) 31px,var(--rule-strong) 32px),
+    repeating-linear-gradient(to bottom,transparent 0,transparent 7px,var(--rule) 7px,var(--rule) 8px);
+  background-blend-mode:normal}
+@media (max-width:520px){.sheet{padding-inline:30px 14px;background-image:linear-gradient(to right,transparent 17px,var(--margin) 17px,var(--margin) 19px,transparent 19px),repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rule-strong) 31px,var(--rule-strong) 32px)}}
+.eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0}
+h1{font-size:1.7rem;line-height:1.2;margin-top:4px}
+h2{font-size:1.25rem}
+h3{font-size:1.05rem}
+.body>h3{margin:14px 0 0;padding-top:16px;border-top:1px solid var(--rule)}
+.body>h3:first-child{margin-top:0;padding-top:0;border-top:0}
+.body>h3+*{margin-top:-2px}
+.body ol{margin:0;padding-left:1.4em}
+.instr p{margin:0 0 6px}.instr ul,.instr ol{margin:4px 0 6px;padding-left:1.3em}.instr li{margin:2px 0}
+.instr{color:var(--ink-soft);margin:8px 0 0}
+.body{margin-top:14px;display:grid;gap:10px;min-width:0}
+.body>*,.sheet>*,.sheet>div>*{min-width:0}
+.body p{margin:0}
+.body ul{margin:0;padding-left:1.2em}
+.body blockquote{margin:0;padding:8px 14px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 6px 6px 0}
+.tbl{overflow-x:auto;background:var(--sheet);border:1px solid var(--line);border-radius:6px}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft)}
+tr:last-child td{border-bottom:0}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:var(--accent-soft);padding:1px 5px;border-radius:4px}
+audio{width:100%;margin-top:4px}
+.player{display:grid;gap:6px}
+.ts{display:grid;gap:6px;justify-items:start}
+.tsnote{font-size:.85rem;color:var(--ink-soft)}
+.tsbtn{font:inherit;font-size:.9rem;border:1px solid var(--accent);background:transparent;color:var(--accent);border-radius:999px;padding:3px 12px;cursor:pointer}
+.tstext{border-left:3px solid var(--accent);padding:6px 0 6px 12px;margin:0;width:100%}
+ol.items{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:16px;counter-reset:it}
+ol.items>li{counter-increment:it;display:grid;grid-template-columns:2.1em 1fr;gap:4px 8px;min-width:0}
+ol.items>li::before{content:counter(it) ".";font-family:var(--f-display);color:var(--accent);font-size:1.05rem;padding-top:1px}
+.item{min-width:0;display:grid;gap:6px}
+.q{font-weight:700}
+.q .hint{font-weight:400;color:var(--ink-soft);font-size:.9rem}
+input[type=text],textarea{width:100%;font:inherit;font-size:1.02rem;color:var(--ink);background:var(--paper);border:1px solid var(--rule-strong);border-radius:6px;padding:9px 11px}
+textarea{min-height:9em;resize:vertical;line-height:1.6}
+.choices{display:flex;flex-wrap:wrap;gap:8px}
+.choices label{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--rule-strong);background:var(--paper);border-radius:8px;padding:8px 12px;cursor:pointer;font-size:1rem}
+.choices input{accent-color:var(--accent)}
+.choices label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.fb{font-family:var(--f-pen);color:var(--pen);font-size:1.08rem;line-height:1.4;display:grid;gap:2px;padding:4px 0 4px 12px;border-left:3px solid var(--pen);background:transparent;position:relative;margin-left:-15px}
+.fb.ok{border-left:0;padding-left:0;margin-left:0;display:block}
+.fb.ok ul{margin-top:2px}
+.fb.ok .mark{position:static;display:inline-block;width:auto;margin-right:6px}
+.fb .mark{position:absolute;left:-22px;top:3px;width:18px;text-align:center;font-weight:700}
+.fb.ok{color:var(--ok);border-left-color:var(--ok)}
+.fb .corr{font-family:var(--f-body);font-size:.98rem;color:var(--ink)}
+.fb .corr b{color:var(--ok)}
+.fb .corr.long{line-height:1.55;display:block;background:var(--accent-soft);border-radius:6px;padding:8px 12px;margin:4px 0 6px}
+.fb .corr strong{color:var(--accent);background:var(--sheet);border-radius:3px;padding:0 3px}
+.fb ul{margin:0;padding-left:1.1em;font-family:var(--f-body);font-size:.95rem;line-height:1.5;color:var(--ink);display:grid;gap:6px}
+.fb hr{border:0;border-top:1px solid var(--rule-strong);margin:8px 0 4px;width:100%}
+.fb .err{color:var(--pen);font-weight:700}
+.said{font-family:var(--f-body);color:var(--ink-soft);border-left:2px solid var(--rule-strong);padding:2px 0 2px 10px;margin:4px 0}
+.vtrans{width:100%;min-height:90px;margin-top:8px}
+.vtrans-l{display:block;margin-top:10px;font-size:.9rem;color:var(--ink-soft)}
+.fb .err strong,.fb li strong{color:var(--pen);font-weight:700}
+.fb .fix{color:var(--ok);font-weight:700}
+.actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:22px}
+.btn{font:inherit;font-weight:700;border-radius:8px;padding:10px 18px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--sheet)}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn:disabled{opacity:.55;cursor:default}
+.status{font-size:.9rem;color:var(--ink-soft)}
+.summary{margin-top:20px;border-top:2px dashed var(--rule-strong);padding-top:14px;display:grid;gap:6px}
+.score{font-family:var(--f-pen);font-size:1.7rem;color:var(--pen);transform:rotate(-2deg);display:inline-block}
+.score.pass{color:var(--ok)}
+.reveal{margin-top:12px}
+.reveal summary{cursor:pointer;color:var(--accent);font-weight:700}
+.empty{text-align:center;padding:40px 20px;color:var(--ink-soft);display:grid;gap:8px;justify-items:center}
+.empty .big{font-family:var(--f-display);font-size:1.3rem;color:var(--ink)}
+/* progress view */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:8px;padding:16px;min-width:0;display:grid;gap:10px;align-content:start}
+.k{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+.level{font-family:var(--f-display);font-size:2.4rem;line-height:1;color:var(--accent)}
+.steps{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.steps span{height:8px;border-radius:4px;background:var(--line)}
+.steps span.done{background:var(--accent)}
+.steps span.now{background:var(--warn)}
+.steplabels{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:.72rem;color:var(--ink-soft);text-align:center;font-variant-numeric:tabular-nums}
+.boxes{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;align-items:end}
+.boxes div{display:flex;flex-direction:column;justify-content:flex-end;gap:4px;text-align:center;font-size:.8rem;color:var(--ink-soft);height:118px}
+.boxes i{display:block;background:var(--accent);border-radius:4px 4px 0 0;min-height:2px;opacity:.85}
+.boxes b{color:var(--ink);font-variant-numeric:tabular-nums}
+.list{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.list li{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:6px;min-width:0}
+.list li:last-child{border-bottom:0}
+.list .sub{grid-column:1/-1;color:var(--ink-soft);font-size:.88rem;margin-top:-4px}
+.chip{font-size:.78rem;font-weight:700;border-radius:999px;padding:2px 9px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.list .chip{white-space:normal;max-width:12em;text-align:center;border-radius:10px;justify-self:end}
+.chip.pass{background:var(--ok-soft);color:var(--ok)}
+.chip.fail{background:var(--bad-soft);color:var(--pen)}
+.chip.next{background:var(--accent-soft);color:var(--accent)}
+.chip.idle{background:var(--line);color:var(--ink-soft)}
+.num{font-variant-numeric:tabular-nums}
+.foot{font-size:.85rem;color:var(--ink-soft);text-align:center}
+/* lesson stepper */
+.stepper{display:flex;flex-wrap:wrap;gap:6px}
+.stepper button{font:inherit;font-size:.8rem;border:1px solid var(--line);background:var(--sheet);color:var(--ink-soft);border-radius:999px;padding:4px 10px;cursor:pointer;white-space:nowrap}
+.stepper button.done{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.stepper button.now{background:var(--accent);color:var(--sheet);border-color:var(--accent);font-weight:700}
+.stepper button.skipped{border-style:dashed;border-color:var(--warn);color:var(--warn)}
+.btn.skip{border-color:var(--rule-strong);color:var(--ink-soft);background:transparent;font-weight:400}
+.btn.skip.armed{border-color:var(--warn);color:var(--warn);font-weight:700}
+.stepper button:disabled{cursor:default;opacity:.6}
+.phase{display:inline-block;font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:4px;padding:2px 7px;background:var(--accent-soft);color:var(--accent);margin-left:8px;vertical-align:middle}
+.source{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--accent);border-radius:8px;padding:8px 14px;color:var(--accent);font-weight:700;text-decoration:none}
+.note{font-size:.9rem;color:var(--ink-soft);border-left:3px solid var(--rule-strong);padding-left:10px}
+/* drill */
+.drill{margin-top:20px;display:grid;gap:14px;border:2px dashed var(--pen);border-radius:10px;padding:16px;background:var(--sheet)}
+.drill h2{color:var(--pen);font-family:var(--f-pen);font-size:1.4rem}
+.why{font-size:.92rem;color:var(--ink-soft)}
+.choices label.right{border-color:var(--ok);background:var(--ok-soft)}
+.choices label.wrong{border-color:var(--pen);background:var(--bad-soft)}
+/* roleplay chat */
+.chat{display:grid;gap:10px;margin-top:16px}
+.bub{max-width:85%;padding:9px 13px;border-radius:14px;line-height:1.45;min-width:0;overflow-wrap:anywhere}
+.bub.them{background:var(--accent-soft);border-bottom-left-radius:4px;justify-self:start}
+.bub.me{background:var(--paper);border:1px solid var(--rule-strong);border-bottom-right-radius:4px;justify-self:end}
+.bub .who{display:block;font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:2px}
+.bub .fb{margin-top:6px}
+.composer{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:12px}
+.composer textarea{min-height:3.2em}
+/* selection bar + toast */
+.selbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:5;display:flex;gap:8px;align-items:center;background:var(--ink);color:var(--paper);border-radius:12px;padding:8px 10px 8px 14px;box-shadow:0 6px 24px rgba(0,0,0,.25);max-width:calc(100% - 32px)}
+.selbar span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.selbar button{font:inherit;font-weight:700;border:0;border-radius:8px;padding:7px 12px;background:var(--accent);color:var(--sheet);cursor:pointer;white-space:nowrap}
+.selbar button.x{background:transparent;color:var(--paper);padding:7px 8px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);top:calc(16px + env(safe-area-inset-top,0px));z-index:6;background:var(--ok);color:var(--sheet);border-radius:10px;padding:9px 16px;font-weight:700;max-width:calc(100% - 32px)}
+.voice{display:grid;gap:8px}
+.vrow{display:flex;flex-wrap:wrap;gap:8px}
+.vbtn{display:inline-flex;align-items:center;gap:6px;font-size:.95rem;padding:8px 14px}
+.drop{border:2px dashed var(--rule-strong);border-radius:8px;padding:12px;text-align:center;color:var(--ink-soft);font-size:.9rem}
+.drop.over{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.vprev audio{width:100%}
+.vbtn.on{background:#c0392b;border-color:#c0392b;color:#fff;font-variant-numeric:tabular-nums}
+.vbtn.on::before{content:"";width:8px;height:8px;border-radius:50%;background:#fff;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.2}}
+.say{font:inherit;font-size:.95em;border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:1px 9px;cursor:pointer;white-space:nowrap}
+.body a,.instr a,.why a{color:var(--accent)}
+/* flashcards */
+.deckbar{display:flex;justify-content:center;gap:clamp(24px,10vw,110px);margin:16px 0 18px}
+.stack{position:relative;min-width:120px;text-align:center;color:#fff;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;padding:12px 14px;border-radius:4px}
+.stack b{font-size:1.35rem;letter-spacing:0;margin-right:6px;vertical-align:-2px}
+.stack::before,.stack::after{content:"";position:absolute;inset:0;border-radius:4px;z-index:-1;opacity:.35}
+.stack::before{transform:rotate(-5deg)}.stack::after{transform:rotate(4deg)}
+.stack.learned,.stack.learned::before,.stack.learned::after{background:var(--deck-learned)}
+.stack.coming,.stack.coming::before,.stack.coming::after{background:var(--deck-coming)}
+.stack{isolation:isolate}
+.fcard{max-width:520px;margin:0 auto;background:var(--sheet);border:1px solid var(--line);border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.08);padding:20px;display:grid;gap:14px;min-height:240px;align-content:start}
+.fmode{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);text-align:center}
+.fword{font-family:var(--f-display);font-size:clamp(1.6rem,6vw,2.2rem);text-align:center;padding:18px 0 6px;overflow-wrap:anywhere}
+.fbody{display:grid;gap:10px}
+.fin{width:100%;font:inherit;font-size:1.05rem;color:var(--ink);background:var(--paper);border:1px solid var(--rule-strong);border-radius:6px;padding:10px 12px;text-align:center}
+textarea.fin{text-align:left;min-height:4.5em}
+.fchoices{justify-content:center}
+.fopt{font:inherit;font-size:1.05rem;border:1px solid var(--rule-strong);background:var(--paper);color:var(--ink);border-radius:8px;padding:9px 16px;cursor:pointer}
+.fopt.right{border-color:var(--ok);background:var(--ok-soft);color:var(--ok);font-weight:700}
+.fopt.wrong{border-color:var(--pen);background:var(--bad-soft);color:var(--pen);text-decoration:line-through}
+.fres{text-align:center}
+.fres.right{color:var(--ok)}.fres.wrong{color:var(--pen)}.fres.nearly{color:var(--warn)}
+.factions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center}
+.grades{display:grid;gap:8px;justify-items:center;width:100%}
+.gbtns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.gbtn{font:inherit;font-weight:700;letter-spacing:.05em;text-transform:uppercase;font-size:.85rem;border:2px solid var(--deck-line);background:transparent;color:var(--deck-line);border-radius:999px;padding:10px 22px;cursor:pointer}
+.gbtn.wrong:hover{border-color:var(--pen);color:var(--pen)}.gbtn.nearly:hover{border-color:var(--warn);color:var(--warn)}.gbtn.right:hover{border-color:var(--ok);color:var(--ok)}
+.videos{display:grid;gap:8px;margin:4px 0 14px}
+.video{display:flex;gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--rule-strong);border-radius:10px;text-decoration:none;color:inherit;background:var(--sheet)}
+.video:hover{border-color:var(--accent)}
+.video b{display:block}
+.vplay{flex:0 0 44px;height:32px;border-radius:8px;background:#e62117;color:#fff;display:grid;place-items:center;font-size:.9rem}
+.vmeta{display:block;font-size:.85rem;color:var(--ink-soft)}
+.finish{margin-top:22px;padding-top:16px;border-top:2px solid var(--rule-strong);display:grid;gap:10px}
+.copyrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.copyrow code{flex:1 1 220px;padding:8px 10px;border:1px solid var(--rule-strong);border-radius:8px;background:var(--sheet);font-size:.95rem;overflow-wrap:anywhere}
+.done-table td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span data-t>Language Tutor Workbook</span><small id="sub" data-t>Lessons, tests and progress</small></div>
+    <div class="row">
+      <div class="row" id="langs" role="group" aria-label="Language" data-ta></div>
+      <div class="seg" role="group" aria-label="View" data-ta>
+        <button id="v-ex" aria-pressed="true" data-t>Lesson</button>
+        <button id="v-pr" aria-pressed="false" data-t>Progress</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="view-ex">
+    <nav class="stepper" id="stepper" aria-label="Lesson sections" data-ta hidden></nav>
+    <section class="sheet" id="sheet" style="margin-top:12px">
+      <div class="empty" id="ex-empty">
+        <div class="big" data-t>Your next lesson will appear here</div>
+        <div data-t>Ask the tutor in chat for a lesson, for example "let's study French". It prepares the whole lesson here; you work through it section by section.</div>
+      </div>
+      <div id="sec" hidden></div>
+    </section>
+  </main>
+
+  <main id="view-pr" hidden>
+    <div class="empty" id="pr-empty"><div class="big" data-t>No progress yet</div><div data-t>It fills in after your first lesson.</div></div>
+    <div id="pr" class="grid" hidden></div>
+  </main>
+
+  <p class="foot" id="foot" data-t>Select any word on the page to add it to your vocabulary.</p>
+</div>
+<div class="selbar" id="selbar" hidden><span id="selword"></span><button type="button" id="seladd" data-t>+ Add to vocabulary</button><button type="button" class="x" id="selx" aria-label="Close" data-ta>✕</button></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function(){
+  "use strict";
+  const $=id=>document.getElementById(id);
+  const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  function inline(s){
+    return esc(s).replace(/`([^`]+)`/g,"<code>$1</code>").replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>")
+      .replace(/(^|[^*])\*([^*\s][^*]*)\*/g,"$1<em>$2</em>").replace(/~~([^~]+)~~/g,"<s>$1</s>")
+      .replace(/\[([^\]]+)\]\((\/_blob\/[A-Za-z0-9]+)\)/g,'<button type="button" class="say" data-audio="$2">▶ $1</button>')
+      .replace(/\[([^\]]+)\]\((https:\/\/[^)\s]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>')}
+  // ▶ buttons in lesson text play short audio clips (phonetics examples, words)
+  let sayAudio=null;
+  document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest(".say");if(!b)return;
+    try{if(sayAudio)sayAudio.pause();sayAudio=new Audio(b.dataset.audio);sayAudio.play().catch(()=>{})}catch(err){}});
+  function md(src){
+    const lines=String(src||"").replace(/\r/g,"").split("\n");let out=[],i=0;
+    while(i<lines.length){const l=lines[i];
+      if(!l.trim()){i++;continue}
+      if(/^\s*\|/.test(l)){const rows=[];while(i<lines.length&&/^\s*\|/.test(lines[i])){rows.push(lines[i]);i++}
+        const cells=r=>r.trim().replace(/^\||\|$/g,"").split("|").map(c=>c.trim());const h=cells(rows[0]),body=rows.slice(1).filter(r=>!/^\s*\|?\s*:?-{2,}/.test(r)).map(cells);
+        out.push('<div class="tbl"><table><thead><tr>'+h.map(c=>"<th>"+inline(c)+"</th>").join("")+"</tr></thead><tbody>"+body.map(r=>"<tr>"+r.map(c=>"<td>"+inline(c)+"</td>").join("")+"</tr>").join("")+"</tbody></table></div>");continue}
+      if(/^\s*[-*] /.test(l)){const it=[];while(i<lines.length&&/^\s*[-*] /.test(lines[i])){it.push(lines[i].replace(/^\s*[-*] /,""));i++}out.push("<ul>"+it.map(x=>"<li>"+inline(x)+"</li>").join("")+"</ul>");continue}
+      if(/^\s*\d+[.)] /.test(l)){const it=[];while(i<lines.length&&/^\s*\d+[.)] /.test(lines[i])){it.push(lines[i].replace(/^\s*\d+[.)] /,""));i++}out.push("<ol>"+it.map(x=>"<li>"+inline(x)+"</li>").join("")+"</ol>");continue}
+      if(/^#{1,4} /.test(l)){out.push("<h3>"+inline(l.replace(/^#+ /,""))+"</h3>");i++;continue}
+      if(/^> ?/.test(l)){const q=[];while(i<lines.length&&/^> ?/.test(lines[i])){q.push(inline(lines[i].replace(/^> ?/,"")));i++}out.push("<blockquote>"+q.join("<br>")+"</blockquote>");continue}
+      const p=[];while(i<lines.length&&lines[i].trim()&&!/^\s*\||^\s*[-*] |^\s*\d+[.)] |^#{1,4} |^> ?/.test(lines[i])){p.push(inline(lines[i]));i++}out.push("<p>"+p.join("<br>")+"</p>")}
+    return out.join("")}
+  // Task instructions: markdown, and a checklist written inline with ① ② ③ … becomes one line per point.
+  function instrHTML(t){t=String(t||"").replace(/\s*([\u2460-\u2473])\s*/g,"\n- $1 ");return '<div class="instr">'+md(t)+"</div>"}
+  const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+  // ---------------- interface language ----------------
+  // Every interface string goes through ui("English text", {placeholders}). The page speaks the learner's
+  // explanation language (lesson.explain_lang, else dash.explain_lang): Russian is built in (UI_RU);
+  // any other language is translated once by Claude and kept in this browser (lt.ui.<code>).
+  const UI_RU={
+    "Language Tutor Workbook":"Тетрадь репетитора","Lessons, tests and progress":"Уроки, тесты и прогресс",
+    "Lesson":"Урок","Progress":"Прогресс","Language":"Язык","View":"Вид","Lesson sections":"Разделы урока","Close":"Закрыть",
+    "Your next lesson will appear here":"Здесь появится твой следующий урок",
+    "Ask the tutor in chat for a lesson, for example \"let's study French\". It prepares the whole lesson here; you work through it section by section.":"Попроси репетитора в чате об уроке, например «давай позанимаемся французским». Он подготовит здесь весь урок, а ты пройдёшь его раздел за разделом.",
+    "No progress yet":"Прогресса пока нет","It fills in after your first lesson.":"Он появится после первого урока.",
+    "Select any word on the page to add it to your vocabulary.":"Выдели любое слово на странице, чтобы добавить его в словарь.",
+    "+ Add to vocabulary":"+ В словарь",
+    "Checking with Claude isn't available on this page. Your answers are saved - say \"check\" in chat.":"Проверка через Claude на этой странице недоступна. Ответы сохранены - напиши в чате «проверь».",
+    "Claude is busy or your usage limit is reached. Your answers are saved - try again later.":"Claude занят или лимит использования исчерпан. Ответы сохранены - попробуй позже.",
+    "Claude's answer came back in the wrong format (it happens occasionally). Your answers are saved - press the button again.":"Ответ Claude пришёл в неверном формате (такое бывает). Ответы сохранены - нажми кнопку ещё раз.",
+    "The check didn't finish. Try again.":"Проверка не завершилась. Попробуй ещё раз.",
+    "Part {n}":"Часть {n}","Skipped - tap to do it now":"Пропущено - нажми, чтобы сделать сейчас","Finish":"Финиш",
+    "Skip this section":"Пропустить раздел","Yes, skip it":"Да, пропустить",
+    "Flashcards":"Карточки","Scenario":"Ситуация","Read / listen":"Читать / слушать","Test":"Тест","Mistake drill":"Работа над ошибками","Conversation":"Разговор","Review":"Разбор",
+    "Show the text":"Показать текст","Hide the text":"Скрыть текст",
+    "Listen {n} times to the end - then you can see the text.":"Прослушай запись до конца {n} раза - потом можно будет посмотреть текст.",
+    "Open the recording":"Открыть запись","Watch on YouTube":"Смотреть на YouTube","from {time}":"с {time}",
+    "Start the conversation →":"Начать разговор →","Continue to the test →":"Перейти к тесту →","Continue →":"Дальше →",
+    "The text is hidden during the test.":"Во время теста текст скрыт.","Answer {n}":"Ответ {n}",
+    "Recording attached - your tutor will comment on pronunciation in chat.":"Запись прикреплена - репетитор разберёт произношение в чате.",
+    "No recording attached.":"Запись не прикреплена.",
+    "Check my answers":"Проверить ответы","Save answers":"Сохранить ответы",
+    "Saved. Say \"check\" in chat to get feedback.":"Сохранено. Напиши в чате «проверь», чтобы получить разбор.",
+    "Skip to the next section →":"К следующему разделу →",
+    "🎙 Record":"🎙 Записать","🎙 Record again":"🎙 Записать заново","Choose a file":"Выбрать файл","or drop a recording here":"или перетащи запись сюда","Stop":"Стоп",
+    "Opening your phone's recorder instead…":"Открываю диктофон телефона…",
+    "Record with Voice Memos / QuickTime (or your phone) and choose or drop the file here.":"Запиши в «Диктофоне» / QuickTime (или на телефоне) и выбери или перетащи файл сюда.",
+    "This page isn't allowed to use the microphone here.":"Этой странице здесь не разрешён доступ к микрофону.",
+    "This browser can't record inside the page.":"Этот браузер не умеет записывать прямо на странице.",
+    "Allow the microphone if your browser asks…":"Разреши доступ к микрофону, если браузер спросит…",
+    "Recording… speak, then press Stop. Nothing is uploaded until you check your answers.":"Идёт запись… говори, потом нажми «Стоп». Ничего не загружается, пока ты не проверишь ответы.",
+    "The microphone was blocked (by you, the browser or the page's frame).":"Микрофон заблокирован (тобой, браузером или рамкой страницы).",
+    "No microphone was found.":"Микрофон не найден.","Recording couldn't start.":"Не удалось начать запись.",
+    "Recording… press Stop when you're done.":"Идёт запись… нажми «Стоп», когда закончишь.",
+    "to get pronunciation feedback, send this recording to your tutor in chat.":"чтобы получить разбор произношения, отправь эту запись репетитору в чат.",
+    "it will be attached when you check your answers.":"она прикрепится, когда ты проверишь ответы.",
+    "this format can't be stored in the workbook (use .m4a, .mp4 or .webm) - send it to your tutor in chat instead.":"этот формат нельзя сохранить в тетради (нужен .m4a, .mp4 или .webm) - отправь запись репетитору в чат.",
+    "Optional. Press Record, speak, press Stop - you can listen back before checking. If the microphone is blocked here, choose or drop a file recorded elsewhere. Your tutor gives pronunciation feedback from it.":"Необязательно. Нажми «Записать», говори, нажми «Стоп» - перед проверкой можно прослушать. Если микрофон здесь заблокирован, выбери или перетащи файл, записанный в другом месте. По записи репетитор разберёт произношение.",
+    "Correct":"Верно","Not studied yet:":"Ещё не проходили:",
+    "⚠️ Your recording was <b>not</b> attached: {err}. Send the file to Claude in the chat - it will transcribe it and comment on your pronunciation.":"⚠️ Запись <b>не</b> прикрепилась: {err}. Отправь файл Claude в чат - он расшифрует его и разберёт произношение.",
+    "🎙 Recording attached («{name}»). The page can't listen to audio itself: your tutor transcribes it and comments on pronunciation when you send <i>{msg}</i> in the chat.":"🎙 Запись прикреплена («{name}»). Сама страница слушать аудио не умеет: репетитор расшифрует запись и разберёт произношение, когда ты напишешь в чате <i>{msg}</i>.",
+    "Show the text / transcript again":"Показать текст / расшифровку ещё раз",
+    "Saving…":"Сохраняю…","Uploading your recording…":"Загружаю запись…",
+    "this page can't store recordings right now (file storage isn't available here)":"страница сейчас не может хранить записи (хранилище файлов недоступно)",
+    "the format of «{name}» can't be stored (use .m4a, .mp4 or .webm)":"формат «{name}» нельзя сохранить (нужен .m4a, .mp4 или .webm)",
+    "the recording is over 20 MB":"запись больше 20 МБ","the workbook could not accept this audio file":"тетрадь не смогла принять этот аудиофайл","Claude is taking too long to answer. Try again.":"Claude слишком долго не отвечает. Попробуй ещё раз.","Transcript of your recording - fix only words that were misheard":"Расшифровка записи - исправь только то, что распознано неверно","Answer every point in one voice message, then press Check.":"Ответь на все пункты одним голосовым сообщением, потом нажми «Проверить».","Record your answer first.":"Сначала запиши голосовое.","Recording saved. Write «check my speaking» in chat - Claude will transcribe it and check it point by point.":"Запись сохранена. Напиши в чате «проверь говорение» - Claude расшифрует запись и проверит её по пунктам.","Automatic transcription isn't available here - Claude will transcribe the recording when you write «check my speaking» in chat.":"Автоматическая расшифровка здесь недоступна - Claude расшифрует запись, когда ты напишешь в чате «проверь говорение».","You said:":"Ты сказал:","the upload failed ({why})":"загрузка не удалась ({why})",
+    "Claude is checking… usually under a minute.":"Claude проверяет… обычно меньше минуты.",
+    "Quick practice on what went wrong - pick the correct form.":"Быстрая тренировка на ошибках - выбери правильный вариант.",
+    "Check the drill":"Проверить","Next section →":"Следующий раздел →","Finish the lesson →":"Завершить урок →","Drill: {score}":"Тренировка: {score}",
+    "Stranger":"Незнакомец","You":"Ты","Your answer ({lang})…":"Твой ответ ({lang})…","Send":"Отправить",
+    "The conversation needs Claude on this page, which isn't available. Ask your tutor in chat for the role-play instead.":"Для разговора на этой странице нужен Claude, а он недоступен. Попроси репетитора провести диалог в чате.",
+    "(no correction for this message - send the next one as usual)":"(без исправлений для этой реплики - продолжай как обычно)",
+    "Claude's answer came back in the wrong format. Press Send again.":"Ответ Claude пришёл в неверном формате. Нажми «Отправить» ещё раз.",
+    "Finish and get feedback":"Завершить и получить разбор","Claude is reviewing the conversation…":"Claude разбирает разговор…",
+    "↺ Start the conversation over":"↺ Начать разговор заново","Tap again to start over":"Нажми ещё раз, чтобы начать заново",
+    "learned":"выучено","Round {n} is over. Now the words that didn't work yet: {k}.":"Круг {n} пройден. Теперь слова, которые пока не получились: {k}.","Repeat them →":"Повторить их →","coming up":"впереди","{a}/{b} right first time":"{a}/{b} с первого раза",
+    "Words to keep practising: {words}. They come back sooner in your reviews.":"Слова, которые стоит потренировать: {words}. Они вернутся в повторении раньше.",
+    "Every word right on the first try.":"Все слова - с первой попытки.",
+    "Listen":"Слушать","Translate into {lang}":"Переведи ({lang})",
+    "Write a short sentence with this word ({lang})":"Составь короткое предложение с этим словом ({lang})",
+    "Pick the correct word ({lang})":"Выбери правильное слово ({lang})",
+    "I got this…":"Мой результат…","Wrong":"Неверно","Nearly right":"Почти верно","Right":"Верно",
+    "Next card →":"Следующая карточка →","Checking…":"Проверяю…","Check":"Проверить","Show answer":"Показать ответ","Grade it myself":"Оценю сам(а)","Example:":"Пример:",
+    "{a}/{b} first try":"{a}/{b} с первой попытки","skipped":"пропущено",
+    "Lesson complete":"Урок пройден","Well done! Here is how each part went.":"Отлично! Вот как прошла каждая часть.",
+    "Skipped: {list}. They stay open - tap one in the bar above to do it later.":"Пропущено: {list}. Эти разделы остаются открыты - нажми на любой в полосе сверху, чтобы сделать его позже.",
+    "Save my {lang} lesson {id}":"Сохрани мой урок ({lang}) {id}",
+    "Copy":"Копировать","Copied ✓":"Скопировано ✓","Select and copy":"Выдели и скопируй",
+    "✓ Saved to your files":"✓ Сохранено в твоих файлах",
+    "Your tutor saved this lesson{date}. See you next lesson!":"Репетитор сохранил этот урок{date}. До следующего урока!",
+    "✓ Lesson finished":"✓ Урок завершён",
+    "Saved in the workbook. To write it into your progress files, send this to Claude in the chat (it is also picked up automatically at the start of your next session):":"Сохранено в тетради. Чтобы записать урок в файлы прогресса, отправь это Claude в чат (в начале следующего занятия это подхватится и само):",
+    "Done for today? Finish the lesson - Claude writes a short recap here, and your tutor saves everything (answers, mistakes, new words, flashcard results) to your files.":"На сегодня всё? Заверши урок - Claude напишет здесь короткий итог, а репетитор сохранит всё (ответы, ошибки, новые слова, результаты карточек) в твои файлы.",
+    "✓ Finish - save the lesson":"✓ Завершить - сохранить урок",
+    "Claude is writing your recap…":"Claude пишет итог урока…","Couldn't save just now - try again.":"Сейчас не получилось сохранить - попробуй ещё раз.",
+    "Looking up «{w}»…":"Ищу «{w}»…","Added «{w}» - your tutor will translate it when saving":"Добавлено «{w}» - репетитор переведёт при сохранении",
+    "Added «{w}»":"Добавлено «{w}»","you'll learn it in a coming lesson":"выучим в одном из следующих уроков","{n} words waiting to be learned":"ждут изучения: {n}","Couldn't add the word just now":"Сейчас не получилось добавить слово",
+    "Level":"Уровень","Explanations in: {lang}":"Объяснения: {lang}","updated {date}":"обновлено {date}",
+    "Current lesson":"Текущий урок","None open":"Нет открытого","Section {i} of {n}":"Раздел {i} из {n}",
+    "Vocabulary · {n} words":"Словарь · слов: {n}","Box {b}":"Ящик {b}","Box {b}: next review after {d} days":"Ящик {b}: следующее повторение через {d} дн.",
+    "{a} due today · {b} this week":"{a} на сегодня · {b} на этой неделе",
+    "New words · waiting to be saved":"Новые слова · ждут сохранения","new":"новое",
+    "Select a word in a lesson to add it here":"Выдели слово в уроке, чтобы добавить его сюда",
+    "Roadmap":"План курса","No roadmap yet":"Плана пока нет","Exams":"Экзамены","No finished topics yet":"Пройденных тем пока нет",
+    "Recurring mistakes":"Повторяющиеся ошибки","Nothing recurring yet":"Повторяющихся ошибок пока нет",
+    "Open this page in Claude to use it":"Открой эту страницу в Claude, чтобы пользоваться ею",
+    "Sign in to Claude to see your lessons":"Войди в Claude, чтобы увидеть свои уроки"};
+  const UI_KEYS=Object.keys(UI_RU);
+  const NATIVE_CODES={"русский":"ru","english":"en","français":"fr","francais":"fr","deutsch":"de","español":"es","espanol":"es","italiano":"it","português":"pt","українська":"uk","polski":"pl","nederlands":"nl","türkçe":"tr","日本語":"ja","中文":"zh","한국어":"ko"};
+  function langCode(x){x=String(x||"").trim().toLowerCase();if(!x)return"";if(/^[a-z]{2,3}([-_][a-z]+)?$/.test(x)&&!LANG_CODES_BY_NAME[x])return x.slice(0,2);
+    return LANG_CODES_BY_NAME[x]||NATIVE_CODES[x]||""}
+  let UI={},uiCode=store.get("lt.uilang")||"en";
+  function ui(s,v){let r=(UI&&UI[s])||s;if(v)for(const k in v)r=r.split("{"+k+"}").join(String(v[k]));return r}
+  // a language's name in the interface language, e.g. "fr" -> "французский" for a Russian speaker
+  function langLabel(x){const c=langCode(x);
+    try{if(c){const n=new Intl.DisplayNames([uiCode],{type:"language"}).of(c);if(n&&n!==c)return n}}catch(e){}
+    return langName(x)}
+  const explainLang=()=>(lesson&&lesson.explain_lang)||(dashes[lang]||{}).explain_lang||"English";
+  // Shared by every check (tests, flashcard sentences, role-play): what is NOT an error, and grammar the
+  // learner hasn't been taught yet (lesson.grammar = {known: [...], later: [...]}, written by the tutor).
+  function checkRules(){const g=(lesson&&lesson.grammar)||{},fr=/^fr/i.test(langCode((lesson&&lesson.target_lang)||lang)||"");
+    const out=["KEEP THE LEARNER'S MEANING. \"corrected\" is the learner's own text with only the language errors fixed - minimal edits, same sentences, same facts, same opinions. Never add, drop or change content: if they wrote «J'aime parler avec mes amis et ma famille», it stays about talking with friends and family; «avec de sucre» becomes «avec du sucre», never «sans sucre». A correct sentence is copied unchanged. A missing task point may be added as a short extra sentence where it fits, wrapped in **double asterisks** so it shows in bold and starting with the task point's number when the task numbers its points (use what the learner already said - «Ma femme» → **⑤ Je suis marié.**), and named in a note; the learner's own sentences are never replaced to make room for it.",
+      "WHAT IS NOT AN ERROR - never count it and never mention it, not even as a tip: punctuation and typography (a missing full stop, the space French puts before ? ! : ;, quote marks, a missing capital letter); the ligatures the learner's keyboard can't type - «oe» for «œ» (soeur, coeur, oeuf), «ae» for «æ» (a missing accent, also on a capital like École, IS a spelling error); a different correct word order or wording. Accept every correct variant (e.g. «je parle un peu français» and «je parle un peu de français» are both fine). When you are not sure something is wrong, it is not an error."];
+    if(fr)out.push("Countries (French): de / d' + a feminine country or any country starting with a vowel - je viens de France, d'Italie, d'Ouzbékistan, d'Iran (never «de l'Ouzbékistan»); du + a masculine country starting with a consonant - du Maroc, du Japon; des + plural - des États-Unis.");
+    if(Array.isArray(g.known)&&g.known.length)out.push("Grammar the learner HAS studied so far: "+g.known.join("; ")+".");
+    if(Array.isArray(g.later)&&g.later.length)out.push("Grammar NOT studied yet: "+g.later.join("; ")+". A slip in grammar that is not studied yet does NOT make the answer wrong: give the correct form in one short note that starts with «"+ui("Not studied yet:")+"», keep ok = true (verdict \"right\" for a flashcard) unless the meaning breaks, and don't list it in \"mistakes\" or the drill.");
+    return out.join("\n")}
+  // Added to every prompt whose output the learner reads: Claude otherwise drifts into the target language.
+  function langRule(){const E=langName(explainLang()),T=langName((lesson&&lesson.target_lang)||lang);
+    return"LANGUAGE OF YOUR TEXT: the learner's own language is "+E+". Write every explanation, note, summary, rule name, drill question and \"why\" in "+E+" only - never in "+T+(E==="English"?"":" and never in English")+". Only the "+T+" words, example sentences, answer options and corrected forms themselves stay in "+T+"."}
+  function applyStatic(){
+    document.documentElement.lang=uiCode;
+    document.querySelectorAll("[data-t]").forEach(el=>{if(el.dataset.src===undefined)el.dataset.src=el.textContent.trim();
+      el.textContent=ui(el.dataset.src)});
+    document.querySelectorAll("[data-ta]").forEach(el=>{if(el.dataset.srca===undefined)el.dataset.srca=el.getAttribute("aria-label")||"";el.setAttribute("aria-label",ui(el.dataset.srca))});
+    document.title=ui("Language Tutor Workbook")}
+  let uiAsking=null;
+  async function translateUI(code){
+    if(uiAsking===code||!sample)return;uiAsking=code;
+    const name=langName(code);
+    try{const r=await sample.json(["Translate these interface strings of a language-learning workbook into "+name+".",
+        "Rules: keep {placeholders}, HTML tags, emoji, arrows (→ ↺ ✓ ⚠️ 🎙) and «quotes» exactly; short, natural UI wording; address the learner informally if the language has that distinction.",
+        'Reply with only JSON: {"strings": {"<English>": "<'+name+'>", ...}} with every key below.',
+        JSON.stringify(UI_KEYS)].join("\n\n"),{cache:true});
+      const m=r&&r.strings;if(m&&typeof m==="object"){const out={};for(const k of UI_KEYS)if(typeof m[k]==="string"&&m[k].trim())out[k]=m[k];
+        store.set("lt.ui."+code,JSON.stringify({n:UI_KEYS.length,m:out}));if(uiCode===code){UI=out;applyStatic();render();renderProgress()}}}
+    catch(e){}finally{uiAsking=null}}
+  function setUiLang(){
+    const code=langCode(explainLang())||"en";
+    if(code!==uiCode||!setUiLang.done){uiCode=code;store.set("lt.uilang",code);setUiLang.done=true;
+      if(code==="ru")UI=UI_RU;else if(code==="en")UI={};
+      else{UI={};try{const c=JSON.parse(store.get("lt.ui."+code)||"null");if(c&&c.m){UI=c.m;if(c.n!==UI_KEYS.length)translateUI(code)}else translateUI(code)}catch(e){translateUI(code)}}
+      applyStatic()}
+    else if(code!=="ru"&&code!=="en"&&!Object.keys(UI).length)translateUI(code)}
+  if(uiCode==="ru")UI=UI_RU;else if(uiCode!=="en"){try{const c=JSON.parse(store.get("lt.ui."+uiCode)||"null");if(c&&c.m)UI=c.m}catch(e){}}
+  applyStatic();
+  const safeId=s=>String(s).replace(/[^A-Za-z0-9_.~:@+-]/g,"-").slice(0,180);
+  const now=()=>new Date().toISOString();
+  const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+  function toast(t){const el=$("toast");el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,3200)}
+  const SAMPLE_OFF=new Set(["not_granted","sampling_disabled","not_declared","capability_disabled","capability_removed"]);
+  function sampleMsg(e){const c=e&&e.code;
+    if(SAMPLE_OFF.has(c)){sample=null;return ui("Checking with Claude isn't available on this page. Your answers are saved - say \"check\" in chat.")}
+    if(c==="rate_limited")return ui("Claude is busy or your usage limit is reached. Your answers are saved - try again later.");
+    if(c==="invalid_json")return ui("Claude's answer came back in the wrong format (it happens occasionally). Your answers are saved - press the button again.");
+    if(c==="timeout")return ui("Claude is taking too long to answer. Try again.");
+    if(c==="cancelled")return"";
+    return ui("The check didn't finish. Try again.")}
+
+  let db=null,sample=null,assets=null;
+  // Every call to Claude goes through askClaude(): a time limit (and the caller's AbortController) so a request
+  // that never answers can't leave the page "busy" with dead buttons.
+  function askClaude(input,opts,ms){opts=Object.assign({},opts||{});const own=new AbortController(),outer=opts.signal;
+    if(outer){if(outer.aborted)own.abort();else outer.addEventListener("abort",()=>own.abort(),{once:true})}
+    opts.signal=own.signal;let timedOut=false;const t=setTimeout(()=>{timedOut=true;own.abort()},ms||90000);
+    // race against the abort as well, in case a hung request ignores its signal
+    const stop=new Promise((_,rej)=>own.signal.addEventListener("abort",()=>rej(timedOut?{code:"timeout"}:{code:"cancelled"}),{once:true}));
+    return Promise.race([sample.json(input,opts),stop]).catch(e=>{throw timedOut?{code:"timeout"}:e}).finally(()=>clearTimeout(t))}
+  // Stop whatever Claude call is running (used by Restart / Finish so they always respond).
+  function cancelBusy(){try{if(ctl)ctl.abort()}catch(e){}busy=false}
+  let lang=store.get("lt.lang")||null,view=store.get("lt.view")||"ex";
+  let dashes={},lesson=null,st={index:0,phase:"material"},subs={},words=[];
+  let unsub=[],unsubSubs=null,busy=false,ctl=null;
+
+  function setView(v){view=v;store.set("lt.view",v);$("v-ex").setAttribute("aria-pressed",v==="ex");$("v-pr").setAttribute("aria-pressed",v==="pr");$("view-ex").hidden=v!=="ex";$("view-pr").hidden=v!=="pr"}
+  $("v-ex").onclick=()=>setView("ex");$("v-pr").onclick=()=>setView("pr");setView(view);
+
+  function renderLangs(){
+    const ids=Object.keys(dashes).sort();const box=$("langs");box.textContent="";
+    if(ids.length&&(!lang||!dashes[lang]))lang=ids[0];setUiLang();
+    for(const id of ids){const b=document.createElement("button");b.className="pill";b.type="button";
+      const nm=langCode(id)?langLabel(id):(dashes[id].label||id);b.textContent=nm.charAt(0).toUpperCase()+nm.slice(1)+(dashes[id].level?" · "+dashes[id].level:"");
+      b.setAttribute("aria-pressed",id===lang);b.onclick=()=>{if(lang!==id){lang=id;store.set("lt.lang",id);renderLangs();watchLang()}};box.append(b)}}
+
+  // ---------------- lesson state ----------------
+  const sections=()=>(lesson&&Array.isArray(lesson.sections))?lesson.sections:[];
+  const cur=()=>sections()[st.index];
+  const subPath=s=>lesson.legacy?"sub/"+safeId(lang+"--"+lesson.id):"sub/"+safeId(lang+"--"+lesson.id+"--"+s.key);
+  function fromLegacy(ex){ // older single-exercise docs (ex/<lang>) shown as a one-section lesson
+    const sec={key:"main",label:ex.step_label||"",title:ex.title||"Exercise",kind:"lesson",
+      test:{instructions:ex.instructions||"",items:ex.items||[],rubric:ex.rubric||"",reveal:ex.reveal||""}};
+    if(ex.body||ex.audio_url)sec.material={instructions:"",body:ex.body||"",audio_url:ex.audio_url||""};
+    if(!(ex.items||[]).length){sec.material=sec.material||{body:ex.body||""};sec.test.items=[]}
+    return{id:ex.id||"x",legacy:true,target_lang:ex.target_lang||"",sections:[sec]}}
+  const draftKey=s=>"lt.d."+lang+"."+lesson.id+"."+s.key;
+  async function saveState(){if(!db||!lesson)return;try{await db.doc("state/"+lang).set({lesson_id:lesson.id,index:st.index,phase:st.phase,updated:now()})}catch(e){}}
+  async function saveSub(s,patch){const p=subPath(s);const base=subs[s.key]||{language:lang,lesson_id:lesson.id,section:s.key,label:s.label||"",title:s.title||"",kind:s.kind||"lesson"};
+    const doc=Object.assign({},base,patch,{updated:now(),synced:false});subs[s.key]=doc;await db.doc(p).set(doc);return doc}
+  const firstPhase=s=>!s?"end":s.kind==="flashcards"?"cards":s.material?"material":(s.kind==="roleplay"?"chat":"test");
+  function go(index,phase){st.index=Math.max(0,Math.min(index,sections().length));const s=cur();
+    st.phase=phase||firstPhase(s);saveState();render();window.scrollTo({top:0,behavior:"smooth"})}
+
+  function renderStepper(){
+    const nav=$("stepper");const ss=sections();nav.hidden=!ss.length;nav.textContent="";
+    ss.forEach((s,k)=>{const b=document.createElement("button");b.type="button";b.textContent=(s.short||s.label||ui("Part {n}",{n:k+1}));
+      const stt=subs[s.key]&&subs[s.key].status,done=stt==="done";b.className=k===st.index?"now":done?"done":stt==="skipped"?"skipped":"";if(stt==="skipped")b.title=ui("Skipped - tap to do it now");
+      b.disabled=!(done||k<=maxReached());b.onclick=()=>go(k);nav.append(b)});
+    const e=document.createElement("button");e.type="button";e.textContent=ui("Finish");e.className=st.index>=ss.length?"now":"";e.disabled=maxReached()<ss.length;e.onclick=()=>go(ss.length,"end");nav.append(e)}
+  function maxReached(){let m=st.index;sections().forEach((s,k)=>{const x=subs[s.key]&&subs[s.key].status;if(x==="done"||x==="skipped")m=Math.max(m,k+1)});return m}
+  function skipBtn(s){
+    const b=document.createElement("button");b.type="button";b.className="btn skip";b.textContent=ui("Skip this section");
+    let tm=null;
+    b.onclick=async()=>{
+      if(!b.classList.contains("armed")){b.classList.add("armed");b.textContent=ui("Yes, skip it");tm=setTimeout(()=>{b.classList.remove("armed");b.textContent=ui("Skip this section")},4000);return}
+      clearTimeout(tm);b.disabled=true;
+      const prev=subs[s.key]||{};
+      try{await saveSub(s,{status:"skipped",skipped_at:now(),answers:prev.answers||{}})}catch(e){}
+      go(st.index+1)};
+    return b}
+
+  function render(){
+    renderStepper();
+    const sec=$("sec");
+    if(!lesson||!sections().length){sec.hidden=true;$("ex-empty").hidden=false;return}
+    sec.hidden=false;$("ex-empty").hidden=true;sec.textContent="";
+    if(st.index>=sections().length||st.phase==="end")return renderEnd(sec);
+    const s=cur();
+    const head=document.createElement("div");
+    const phaseName=ui(s.kind==="flashcards"?"Flashcards":{material:s.kind==="roleplay"?"Scenario":"Read / listen",test:"Test",drill:"Mistake drill",chat:"Conversation",review:"Review"}[st.phase]||"");
+    head.innerHTML='<div class="eyebrow">'+esc(s.label||"")+(phaseName?'<span class="phase">'+esc(phaseName)+"</span>":"")+'</div><h1>'+esc(s.title||"")+"</h1>";
+    sec.append(head);
+    if(s.kind==="flashcards")return renderCards(sec,s);
+    if(st.phase==="material")return renderMaterial(sec,s);
+    if(st.phase==="chat")return renderChat(sec,s);
+    return renderTest(sec,s);
+  }
+
+  // ---------------- material ----------------
+  // Listening transcript: hidden under the player; the "Show the text" toggle appears only after the
+  // learner has listened to the whole recording twice (counted per lesson section, kept in this browser).
+  const LISTENS_NEEDED=2,seenTranscript={};
+  const listenKey=k=>"listens:"+((lesson&&lesson.id)||"")+":"+k;
+  function playerHTML(m,key,unlocked){
+    let h='<div class="player" data-key="'+esc(key||"")+'"'+(unlocked?' data-unlocked="1"':"")+'><audio controls preload="none" src="'+esc(m.audio_url)+'"></audio>';
+    if(m.transcript)h+='<div class="ts"><span class="tsnote"></span><button type="button" class="tsbtn" aria-expanded="false" hidden>'+esc(ui("Show the text"))+'</button><div class="tstext body" hidden>'+md(m.transcript)+"</div></div>";
+    return h+"</div>"}
+  function syncPlayer(pl){
+    const key=pl.dataset.key,n=Number(store.get(listenKey(key))||0),open=pl.dataset.unlocked==="1"||n>=LISTENS_NEEDED;
+    const note=pl.querySelector(".tsnote"),btn=pl.querySelector(".tsbtn");if(!btn)return;
+    btn.hidden=!open;
+    note.textContent=open?"":ui("Listen {n} times to the end - then you can see the text.",{n:LISTENS_NEEDED})+(n?" ("+n+"/"+LISTENS_NEEDED+")":"")}
+  function initPlayers(root){(root||document).querySelectorAll(".player").forEach(syncPlayer)}
+  document.addEventListener("ended",e=>{const pl=e.target&&e.target.closest&&e.target.closest(".player");if(!pl||!pl.dataset.key)return;
+    const k=listenKey(pl.dataset.key);store.set(k,String(Number(store.get(k)||0)+1));syncPlayer(pl)},true);
+  document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest(".tsbtn");if(!b)return;
+    const pl=b.closest(".player"),t=pl.querySelector(".tstext"),show=t.hidden;t.hidden=!show;b.setAttribute("aria-expanded",String(show));
+    b.textContent=ui(show?"Hide the text":"Show the text");if(show&&pl.dataset.unlocked!=="1"){seenTranscript[pl.dataset.key]=true;store.set("ts"+listenKey(pl.dataset.key),"1")}});
+  const sawTranscript=k=>!!seenTranscript[k]||store.get("ts"+listenKey(k))==="1";
+  function materialHTML(m,key,unlocked){
+    let h="";
+    if(m.instructions)h+=instrHTML(m.instructions);
+    h+='<div class="body">';
+    if(m.audio_url&&/^(https:|\/)/.test(m.audio_url))h+=playerHTML(m,key,unlocked);
+    if(m.link&&/^https:/.test(m.link.url||""))h+='<p><a class="source" href="'+esc(m.link.url)+'" target="_blank" rel="noopener">▶ '+esc(m.link.label||ui("Open the recording"))+"</a></p>"+(m.link.note?'<p class="note">'+inline(m.link.note)+"</p>":"");
+    h+=videosHTML(m.videos);
+    h+=md(m.body||"")+"</div>";return h}
+  // YouTube can't be embedded in the page, so videos are link cards that open in a new tab.
+  function ytId(u){const m=String(u||"").match(/(?:youtu\.be\/|[?&]v=|\/shorts\/|\/embed\/)([\w-]{11})/);return m?m[1]:""}
+  function videosHTML(v){const list=(Array.isArray(v)?v:v?[v]:[]).filter(x=>x&&/^https:\/\/(www\.|m\.)?(youtube\.com|youtu\.be)\//.test(x.url||""));
+    if(!list.length)return"";
+    return'<div class="videos">'+list.map(x=>{const id=ytId(x.url);let url=x.url;
+      if(x.start&&id&&!/[?&]t=/.test(url))url="https://www.youtube.com/watch?v="+id+"&t="+parseInt(x.start,10)+"s";
+      const st=x.start?Math.floor(x.start/60)+":"+String(x.start%60).padStart(2,"0"):"";
+      return'<a class="video" href="'+esc(url)+'" target="_blank" rel="noopener"><span class="vplay">▶</span><span><b>'+esc(x.title||ui("Watch on YouTube"))+"</b>"+
+        '<span class="vmeta">YouTube'+(x.channel?" · "+esc(x.channel):"")+(st?" · "+esc(ui("from {time}",{time:st})):"")+(x.duration?" · "+esc(x.duration):"")+"</span>"+(x.note?'<span class="vmeta">'+inline(x.note)+"</span>":"")+"</span></a>"}).join("")+"</div>"}
+  function renderMaterial(sec,s){
+    const d=document.createElement("div");d.innerHTML=materialHTML(s.material||{},s.key);sec.append(d);initPlayers(d);
+    const a=document.createElement("div");a.className="actions";
+    const b=document.createElement("button");b.className="btn";b.type="button";
+    b.textContent=ui(s.kind==="roleplay"?"Start the conversation →":(s.test&&s.test.items&&s.test.items.length?"Continue to the test →":"Continue →"));
+    b.onclick=()=>{if(s.kind==="roleplay")go(st.index,"chat");else if(s.test&&s.test.items&&s.test.items.length)go(st.index,"test");else finishSection(s,{status:"done"})};
+    const note=document.createElement("span");note.className="status";
+    note.textContent=s.test&&s.test.items&&s.test.items.length&&s.material&&s.material.hide_in_test!==false?ui("The text is hidden during the test."):"";
+    a.append(b,skipBtn(s),note);sec.append(a)}
+
+  // ---------------- test ----------------
+  function collect(s){const a={};for(const it of (s.test.items||[])){
+      if(it.type==="choice"){const c=document.querySelector('input[name="a-'+CSS.escape(it.id)+'"]:checked');a[it.id]=c?c.value:""}
+      else if(it.type!=="upload"&&it.type!=="point"){const el=$("a-"+it.id);a[it.id]=el?el.value.trim():""}}
+    if(voiceFirst(s)){const tr=document.querySelector('.vtrans[data-key="'+CSS.escape(s.key)+'"]');a.transcript=((tr&&tr.value)||pendingTranscript[s.key]||"").trim()}
+    return a}
+  // Speaking "voice first": the items are task points (type "point", no answer field) plus ONE recording; the
+  // learner answers them all in one voice message and the transcript is checked point by point.
+  const voiceFirst=s=>((s.test&&s.test.items)||[]).some(it=>it.type==="point");
+  function renderTest(sec,s){
+    const t=s.test||{items:[]},sub=subs[s.key]||{},fb=sub.feedback;
+    const checked=!!fb;
+    if(t.instructions){const p=document.createElement("div");p.innerHTML=instrHTML(t.instructions);sec.append(p.firstChild)}
+    if(s.material&&s.material.hide_in_test===false){const d=document.createElement("div");d.innerHTML=materialHTML(s.material);sec.append(d)}
+    if(t.body){const d=document.createElement("div");d.className="body";d.innerHTML=md(t.body);sec.append(d)}
+    let draft={};try{draft=JSON.parse(store.get(draftKey(s))||"{}")}catch(e){}
+    const saved=sub.answers||{};
+    const form=document.createElement("form");form.autocomplete="off";form.spellcheck=false;
+    const ol=document.createElement("ol");ol.className="items";
+    (t.items||[]).forEach((it,k)=>{
+      const li=document.createElement("li");const w=document.createElement("div");w.className="item";
+      const q=document.createElement("div");q.className="q";q.innerHTML=inline(it.prompt||"")+(it.hint?' <span class="hint">('+inline(it.hint)+")</span>":"");w.append(q);
+      const val=(checked?saved[it.id]:(draft[it.id]??saved[it.id]))??"";
+      if(it.type==="choice"){const g=document.createElement("div");g.className="choices";g.setAttribute("role","radiogroup");
+        (it.options||[]).forEach((o,j)=>{const lb=document.createElement("label");const r=document.createElement("input");r.type="radio";r.name="a-"+it.id;r.id="a-"+it.id+"-"+j;r.value=o;r.disabled=checked;if(val===o)r.checked=true;lb.append(r,document.createTextNode(o));g.append(lb)});w.append(g)}
+      else if(it.type==="point"){if(checked&&saved[it.id]){const d=document.createElement("div");d.className="said";d.textContent="«"+saved[it.id]+"»";w.append(d)}}
+      else if(it.type!=="upload"){const el=document.createElement(it.type==="long"?"textarea":"input");if(el.tagName==="INPUT")el.type="text";el.id="a-"+it.id;el.value=val;el.placeholder=it.placeholder||"";el.readOnly=checked;el.setAttribute("aria-label",ui("Answer {n}",{n:k+1}));el.lang=lesson.target_lang||"";w.append(el)}
+      if(it.type==="upload"&&checked){const au=subs[s.key]&&subs[s.key].audio;if(au&&/^(https:|\/)/.test(au.url||"")){const a=document.createElement("audio");a.controls=true;a.preload="none";a.src=au.url;w.append(a)}
+        const n=document.createElement("div");n.className="note";n.textContent=ui(au?"Recording attached - your tutor will comment on pronunciation in chat.":"No recording attached.");w.append(n)}
+      if(it.type==="upload"&&!checked){const au=sub.audio;
+        if(au&&sub.status==="awaiting_transcript"&&/^(https:|\/)/.test(au.url||"")){const a=document.createElement("audio");a.controls=true;a.preload="none";a.src=au.url;w.append(a)}
+        w.append(voiceBox(s,it))}
+      const r=fb&&Array.isArray(fb.items)?fb.items.find(x=>String(x.id)===String(it.id)):null;if(r)w.append(fbBox(r));
+      li.append(w);ol.append(li)});
+    form.append(ol);
+    form.addEventListener("input",()=>store.set(draftKey(s),JSON.stringify(collect(s))));
+    form.addEventListener("change",()=>store.set(draftKey(s),JSON.stringify(collect(s))));
+    const a=document.createElement("div");a.className="actions";const status=document.createElement("span");status.className="status";status.setAttribute("role","status");
+    if(!checked){
+      const chk=document.createElement("button");chk.className="btn";chk.type="submit";chk.textContent=ui(sample?"Check my answers":"Save answers");
+      a.append(chk,skipBtn(s),status);
+      form.addEventListener("submit",e=>{e.preventDefault();checkSection(s,chk,status)});
+    }
+    form.append(a);sec.append(form);
+    if(checked){renderSummary(sec,s,fb);renderDrill(sec,s,fb)}
+    else if(sub.status==="awaiting_transcript")status.textContent=ui("Recording saved. Write «check my speaking» in chat - Claude will transcribe it and check it point by point.");
+    else if(sub.status==="saved"&&!sample){status.textContent=ui("Saved. Say \"check\" in chat to get feedback.");const nx=document.createElement("button");nx.className="btn ghost";nx.type="button";nx.textContent=ui("Skip to the next section →");nx.onclick=()=>finishSection(s,{status:"done"});a.prepend(nx)}
+  }
+  // ---------------- voice recording (via the device's recorder / a file) ----------------
+  const pendingAudio={};
+  const AUDIO_TYPES={m4a:"video/mp4",mp4:"video/mp4",webm:"video/webm"};
+  // Voice Memos / phone recorders save .m4a: an MP4 file whose header names the brand "M4A ". The asset
+  // store only accepts MP4 files it recognises, so the header is relabelled with the generic MP4 brand
+  // "isom" (already listed in the file's compatible brands) - the audio itself is untouched.
+  async function uploadableAudio(file,type){
+    if(type!=="video/mp4")return file;
+    try{const h=new Uint8Array(await file.slice(0,12).arrayBuffer());const tag=String.fromCharCode(...h.slice(4,8)),brand=String.fromCharCode(...h.slice(8,12));
+      if(tag==="ftyp"&&/^(M4A |M4B |M4P )$/.test(brand)){const b=new Uint8Array(await file.arrayBuffer());b.set([105,115,111,109],8);return new File([b],file.name.replace(/\.m4[abp]$/i,".mp4"),{type})}}catch(e){}
+    return file}
+  function audioType(file){const ext=(file.name.split(".").pop()||"").toLowerCase();
+    if(AUDIO_TYPES[ext])return AUDIO_TYPES[ext];
+    if(/mp4|m4a|aac/.test(file.type))return"video/mp4";if(/webm/.test(file.type))return"video/webm";return null}
+  // In-page recording: getUserMedia + MediaRecorder. If the browser or the page's frame refuses the
+  // microphone, fall back to the phone's recorder (capture input) or a file / drag-and-drop.
+  let recording=null; // {key, rec, stream, t0, timer, chunks}
+  const micPolicyAllowed=()=>{try{const p=document.permissionsPolicy||document.featurePolicy;return p&&p.allowsFeature?p.allowsFeature("microphone"):null}catch(e){return null}};
+  const canRecord=()=>!!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia&&typeof MediaRecorder!=="undefined")&&micPolicyAllowed()!==false;
+  const coarse=()=>{try{return matchMedia("(pointer:coarse)").matches}catch(e){return false}};
+  const fmtSec=n=>Math.floor(n/60)+":"+String(Math.floor(n%60)).padStart(2,"0");
+  function stopRecording(){if(recording&&recording.rec&&recording.rec.state!=="inactive"){try{recording.rec.stop()}catch(e){}}}
+  async function startRecording(key,onDone,onTick){
+    // onDone/onTick live on the recording object so a re-rendered section can take them over.
+    const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+    const mime=["audio/webm;codecs=opus","audio/webm","audio/mp4","video/webm"].find(t=>{try{return MediaRecorder.isTypeSupported(t)}catch(e){return false}})||"";
+    const rec=new MediaRecorder(stream,mime?{mimeType:mime}:undefined),chunks=[];
+    rec.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+    rec.onstop=()=>{stream.getTracks().forEach(t=>t.stop());clearInterval(recording&&recording.timer);
+      const type=(rec.mimeType||mime||"audio/webm").split(";")[0],ext=/mp4/.test(type)?"m4a":"webm";
+      const blob=new Blob(chunks,{type}),done=recording?recording.onDone:onDone;recording=null;
+      if(blob.size)done(new File([blob],"recording-"+new Date().toISOString().slice(0,19).replace(/[:T]/g,"-")+"."+ext,{type}))};
+    rec.start(1000);
+    recording={key,rec,stream,chunks,onDone,onTick,t0:Date.now()};
+    recording.timer=setInterval(()=>{if(recording)recording.onTick((Date.now()-recording.t0)/1000)},500);
+    // Hard stop after 5 minutes so a forgotten recording doesn't grow without limit.
+    setTimeout(()=>{if(recording&&recording.rec===rec)stopRecording()},300000)}
+  // Live transcript while recording (Web Speech API, where the browser offers it). Without it the recording is
+  // transcribed by the tutor with stt.py ("awaiting_transcript").
+  const pendingTranscript={};let live=null;
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const SPEECH_LANG={fr:"fr-FR",es:"es-ES",de:"de-DE",it:"it-IT",pt:"pt-PT",en:"en-GB",ru:"ru-RU"};
+  function startLive(onUpdate){if(!SR)return false;let done="",sess="",stopped=false;
+    const go=()=>{let r;try{r=new SR()}catch(e){onUpdate(null,"unavailable");return}
+      const c=langCode(lesson.target_lang||lang);r.lang=SPEECH_LANG[c]||c;r.continuous=true;r.interimResults=true;
+      r.onresult=e=>{let fin="",int="";for(let i=0;i<e.results.length;i++){const x=e.results[i];if(x.isFinal)fin+=x[0].transcript+" ";else int+=x[0].transcript}
+        sess=fin;onUpdate((done+fin+int).replace(/\s+/g," ").trim(),"")};
+      r.onerror=e=>{if(e.error!=="no-speech"&&e.error!=="aborted"){stopped=true;onUpdate(null,e.error||"error")}};
+      r.onend=()=>{done+=sess;sess="";if(!stopped)go();else onUpdate(done.replace(/\s+/g," ").trim(),"end")};
+      try{r.start()}catch(e){stopped=true;onUpdate(null,"start")}live.r=r};
+    live={stop(){stopped=true;try{live.r&&live.r.stop()}catch(e){}}};go();return true}
+  function voiceBox(s,it){
+    const box=document.createElement("div");box.className="voice";
+    const prev=pendingAudio[s.key];
+    box.innerHTML='<div class="vrow"><button type="button" class="btn ghost vbtn vrec">'+esc(ui("🎙 Record"))+'</button>'+
+      '<label class="btn ghost vbtn" for="vf-'+esc(it.id)+'">'+esc(ui("Choose a file"))+'</label></div>'+
+      '<input type="file" id="vr-'+esc(it.id)+'" accept="audio/*" capture hidden>'+
+      '<input type="file" id="vf-'+esc(it.id)+'" accept="audio/*,video/mp4,video/webm,.m4a,.mp4,.webm" hidden>'+
+      '<div class="drop">'+esc(ui("or drop a recording here"))+'</div><div class="vprev"></div><div class="note vnote"></div>'+
+      (voiceFirst(s)?'<label class="vtrans-l" hidden>'+esc(ui("Transcript of your recording - fix only words that were misheard"))+'<textarea class="vtrans" data-key="'+esc(s.key)+'" spellcheck="false"></textarea></label>':'');
+    const trL=box.querySelector(".vtrans-l"),trA=box.querySelector(".vtrans");
+    if(trA){let d={};try{d=JSON.parse(store.get(draftKey(s))||"{}")}catch(e){}const t0=pendingTranscript[s.key]||d.transcript||"";
+      if(t0){trA.value=t0;trL.hidden=false}trA.oninput=()=>{pendingTranscript[s.key]=trA.value}}
+    const prevEl=box.querySelector(".vprev"),note=box.querySelector(".vnote"),recBtn=box.querySelector(".vrec");
+    const capInput=box.querySelector("#"+CSS.escape("vr-"+it.id));
+    const fallback=why=>{
+      if(coarse()){note.textContent=why+" "+ui("Opening your phone's recorder instead…");try{capInput.click()}catch(e){}}
+      else note.textContent=why+" "+ui("Record with Voice Memos / QuickTime (or your phone) and choose or drop the file here.")};
+    const setRecUI=on=>{recBtn.classList.toggle("on",on);recBtn.textContent=on?ui("Stop")+" · 0:00":ui(pendingAudio[s.key]?"🎙 Record again":"🎙 Record")};
+    const onDone=file=>{if(live){live.stop();live=null}if(box.isConnected){show(file);setRecUI(false)}else pendingAudio[s.key]=file};
+    const onLive=(text,why)=>{if(!trA)return;if(text===null){if(!pendingTranscript[s.key])note.dataset.nolive="1";return}
+      pendingTranscript[s.key]=text;trA.value=text;trL.hidden=false};
+    const onTick=sec=>{recBtn.textContent=ui("Stop")+" · "+fmtSec(sec)};
+    recBtn.onclick=async()=>{
+      if(recording&&recording.key===s.key){stopRecording();return}
+      if(recording)stopRecording();
+      if(!canRecord()){fallback(ui(micPolicyAllowed()===false?"This page isn't allowed to use the microphone here.":"This browser can't record inside the page."));return}
+      recBtn.disabled=true;note.textContent=ui("Allow the microphone if your browser asks…");
+      try{await startRecording(s.key,onDone,onTick);if(trA){pendingTranscript[s.key]="";trA.value="";delete note.dataset.nolive;if(!startLive(onLive))note.dataset.nolive="1"}
+        recBtn.disabled=false;setRecUI(true);note.textContent=ui("Recording… speak, then press Stop. Nothing is uploaded until you check your answers.")}
+      catch(e){recBtn.disabled=false;recording=null;const n=e&&e.name;
+        fallback(ui(n==="NotAllowedError"||n==="SecurityError"?"The microphone was blocked (by you, the browser or the page's frame).":n==="NotFoundError"?"No microphone was found.":"Recording couldn't start."))}};
+    if(recording&&recording.key===s.key){setRecUI(true);recording.onDone=onDone;recording.onTick=onTick;note.textContent=ui("Recording… press Stop when you're done.")}
+    const show=file=>{
+      pendingAudio[s.key]=file;prevEl.textContent="";
+      try{const a=document.createElement("audio");a.controls=true;a.src=URL.createObjectURL(file);prevEl.append(a)}catch(e){}
+      const ok=audioType(file);
+      if(trA&&!pendingTranscript[s.key]){note.textContent=file.name+" · "+Math.round(file.size/1024)+" KB - "+ui("Automatic transcription isn't available here - Claude will transcribe the recording when you write «check my speaking» in chat.");return}
+      note.textContent=file.name+" · "+Math.round(file.size/1024)+" KB - "+ui(!assets?"to get pronunciation feedback, send this recording to your tutor in chat.":ok?"it will be attached when you check your answers.":"this format can't be stored in the workbook (use .m4a, .mp4 or .webm) - send it to your tutor in chat instead.")};
+    for(const id of ["vr-","vf-"]){const inp=box.querySelector("#"+CSS.escape(id+it.id));inp.onchange=()=>{if(inp.files&&inp.files[0])show(inp.files[0])}}
+    const drop=box.querySelector(".drop");
+    drop.ondragover=e=>{e.preventDefault();drop.classList.add("over")};drop.ondragleave=()=>drop.classList.remove("over");
+    drop.ondrop=e=>{e.preventDefault();drop.classList.remove("over");const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)show(f)};
+    if(prev){show(prev);if(!(recording&&recording.key===s.key))recBtn.textContent=ui("🎙 Record again")}
+    else if(!(recording&&recording.key===s.key))note.textContent=voiceFirst(s)&&subs[s.key]&&subs[s.key].status==="awaiting_transcript"?ui("Recording saved. Write «check my speaking» in chat - Claude will transcribe it and check it point by point."):voiceFirst(s)?ui("Answer every point in one voice message, then press Check."):ui("Optional. Press Record, speak, press Stop - you can listen back before checking. If the microphone is blocked here, choose or drop a file recorded elsewhere. Your tutor gives pronunciation feedback from it.");
+    return box}
+  // A note "«context with the **wrong part**» -> fix: rule" shows the learner's words (mistake in red bold),
+  // the fix in green bold and the rule in normal text; other notes are shown as written.
+  function noteHTML(x){x=String(x);const m=x.match(/^([^\n]*?)\s*(?:->|→)\s*([^:\n]+?)\s*:\s+([\s\S]*)$/);
+    if(!m||m[1].length>160||/^(more natural|естественнее|задание)/i.test(m[1]))return inline(x);
+    let wrong=m[1].trim().replace(/^[«"]|[»"]$/g,"");
+    if(/[а-яё]/i.test(m[2])){const w=/\*\*/.test(wrong)?inline(wrong):'<span class="err">'+inline(wrong)+"</span>";return w+" → "+inline(m[2].trim()+": "+m[3])}
+    const t=typoHTML(wrong,m[2].trim().replace(/^[«"]|[»"]$/g,""));if(t)return t+": "+inline(m[3]);
+    wrong=/\*\*/.test(wrong)?inline(wrong):'<span class="err">'+inline(wrong)+"</span>";
+    return wrong+' → <span class="fix">'+inline(m[2].trim().replace(/^[«"]|[»"]$/g,""))+"</span>: "+inline(m[3])}
+  // A typo in one word ("enterprise" → "entreprise", "musèe" → "musée"): mark only the letters that differ.
+  function typoHTML(wrong,fix){
+    if(!/\*\*/.test(wrong)){const ws=wrong.trim().split(/\s+/),fs=fix.trim().split(/\s+/);  // "Vouz avez" → "Vous avez": the one word that differs
+      if(ws.length>1&&ws.length===fs.length){const d=ws.map((x,k)=>x!==fs[k]?k:-1).filter(k=>k>=0);
+        if(d.length===1){const k=d[0],r=typoHTML(ws[k],fs[k]);if(r){const[wa,fa]=r.split(" → ");const j=(arr,mid)=>arr.map((x,q)=>q===k?mid:esc(x)).join(" ");return j(ws,wa)+" → "+j(fs,fa)}}}}
+    const bm=wrong.match(/\*\*([^*]+)\*\*/),w=(bm?bm[1]:wrong).trim(),word=/^[\p{L}'’-]+$/u;
+    if(!word.test(w)||!word.test(fix)||w.length<3||w.toLowerCase()===fix.toLowerCase())return null;
+    const a=[...w],b=[...fix],L=Array.from({length:a.length+1},()=>new Array(b.length+1).fill(0));
+    for(let i=a.length-1;i>=0;i--)for(let j=b.length-1;j>=0;j--)L[i][j]=a[i]===b[j]?L[i+1][j+1]+1:Math.max(L[i+1][j],L[i][j+1]);
+    if(L[0][0]<0.6*Math.max(a.length,b.length))return null;
+    const ka=a.map(()=>false),kb=b.map(()=>false);let i=0,j=0;
+    while(i<a.length&&j<b.length){if(a[i]===b[j]){ka[i]=kb[j]=true;i++;j++}else if(L[i+1][j]>=L[i][j+1])i++;else j++}
+    const mark=(cs,keep,cls)=>{let h="",run="";const flush=()=>{if(run)h+='<span class="'+cls+'">'+esc(run)+"</span>";run=""};
+      cs.forEach((c,k)=>{if(keep[k]){flush();h+=esc(c)}else run+=c});flush();return h};
+    const before=bm?wrong.slice(0,bm.index):"",after=bm?wrong.slice(bm.index+bm[0].length):"";
+    return inline(before)+mark(a,ka,"err")+inline(after)+" → "+mark(b,kb,"fix")}
+  function fbBox(r){const d=document.createElement("div");d.className="fb"+(r.ok?" ok":"");
+    let h='<span class="mark" aria-hidden="true">'+(r.ok?"✓":"✗")+"</span>"+(r.ok?(r.note?inline(r.note):esc(ui("Correct"))):"");
+    // short answers: the whole correction in bold; a corrected text: plain, so the **parts the tutor added** (missing task points) stand out
+    if(!r.ok&&r.corrected)h+=r.corrected.length>90?'<span class="corr long">→ '+inline(r.corrected)+"</span>":'<span class="corr">→ <b>'+inline(r.corrected)+"</b></span>";
+    const n=(r.notes||[]).filter(Boolean);if(n.length)h+="<ul>"+n.map(x=>"<li>"+noteHTML(x)+"</li>").join("")+"</ul>";
+    d.innerHTML=h;return d}
+  function renderSummary(sec,s,fb){
+    const d=document.createElement("div");d.className="summary";
+    if(Array.isArray(fb.items)&&fb.items.length){const n=(s.test&&s.test.items)?s.test.items.filter(it=>it.type!=="upload").length:fb.items.length;fb=Object.assign({},fb,{score:fb.items.filter(x=>x.ok).length,total:Math.max(n,fb.items.length)})}
+    const pct=fb.total?Math.round(100*fb.score/fb.total):null;
+    d.innerHTML=(fb.total?'<div><span class="score'+(pct>=80?" pass":"")+'">'+esc(fb.score)+"/"+esc(fb.total)+" · "+pct+"%</span></div>":"")+(fb.summary?"<div>"+md(fb.summary)+"</div>":"");
+    sec.append(d);
+    const sub=subs[s.key]||{};
+    if(sub.audio_error||sub.audio){const n=document.createElement("div");n.className="note";n.style.marginTop="10px";
+      n.innerHTML=sub.audio_error?ui("⚠️ Your recording was <b>not</b> attached: {err}. Send the file to Claude in the chat - it will transcribe it and comment on your pronunciation.",{err:esc(ui(sub.audio_error))})
+        :ui("🎙 Recording attached («{name}»). The page can't listen to audio itself: your tutor transcribes it and comments on pronunciation when you send <i>{msg}</i> in the chat.",{name:esc(sub.audio.name||"recording"),msg:esc(saveMsg())});
+      sec.append(n)}
+    const rv=(s.material&&s.material.hide_in_test!==false?materialHTML(s.material,s.key,true):"")+((s.test&&s.test.reveal)?'<div class="body">'+md(s.test.reveal)+"</div>":"");
+    if(rv){const det=document.createElement("details");det.className="reveal";det.innerHTML="<summary>"+esc(ui("Show the text / transcript again"))+"</summary>"+rv;sec.append(det);initPlayers(det)}}
+
+  function checkPrompt(s,ans){
+    const d=dashes[lang]||{},t=s.test||{};
+    const vf=voiceFirst(s);
+    const items=(t.items||[]).filter(it=>it.type!=="upload").map((it,k)=>vf?{id:it.id,n:k+1,task_point:it.prompt,hint:it.hint||""}:({id:it.id,n:k+1,type:it.type||"text",prompt:it.prompt,hint:it.hint||"",options:it.options,learner_answer:ans[it.id]||""}));
+    const rec=(d.mistakes||[]).slice(0,6).map(m=>"- "+m.rule+(m.example?" (e.g. "+m.example+")":"")).join("\n");
+    return["You are checking a language learner's test in their workbook. Be accurate before being thorough: only mark real errors (ungrammatical, wrong word, wrong gender/article, wrong form, wrong or missing accent). Accept any correct variant. Stylistic alternatives go in notes starting with \"more natural:\" and do not make an answer wrong. A missing or wrong accent alone: ok=false, say it is the accent. Empty answer: ok=false with the correct answer. Questions about a text or recording: judge the content against the material, the transcript and the rubric; small language slips there are noted but don't fail the item unless they change the meaning. If a question is ambiguous or its premise does not match the text/transcript (it asks about something that isn't there, or points to the wrong moment), accept every answer consistent with the text, mark it ok and say in a note that the question was unclear - never blame the learner's attention for a flawed question. Each note in this exact form: «the learner's words around the error, with the wrong part in **double asterisks**» -> the corrected words: the rule in one or two short sentences (e.g. «je suis entraîneur **dans l'école**» -> dans une école: школа упоминается впервые -> une); when the error is in a pattern with look-alikes, add one line contrasting them with an example of each (e.g. «un pain au chocolat, une tarte aux pommes» = flavour / main ingredient: à + le/la/les; «un café avec du lait» = something added: avec + du/de la).",
+      "Target language: "+langName(lesson.target_lang||lang)+". Level: "+(lesson.level||d.level||"?")+".",
+      checkRules(),
+      langRule(),
+      "Section: "+(s.label||"")+" - "+(s.title||""),
+      s.material&&s.material.body?"Material the learner saw before the test:\n"+String(s.material.body).slice(0,7000):"",
+      s.material&&s.material.transcript?"Transcript of the recording the learner heard:\n"+String(s.material.transcript).slice(0,6000):"",
+      t.instructions?"Test instructions: "+t.instructions:"",
+      t.rubric?"Tutor's answer key / notes (not shown to the learner):\n"+String(t.rubric).slice(0,5000):"",
+      rec?"The learner's recurring mistakes (from earlier lessons):\n"+rec:"",
+      vf?"The learner answered ALL task points in ONE voice message (nothing typed). Automatic speech-to-text transcript of it (it may mishear words or miss punctuation - don't count an obviously misheard word as the learner's error):\n«"+String(ans.transcript||"").slice(0,6000)+"»\nFor EVERY task point give \"said\": the words of the transcript that answer it, verbatim (\"\" if the point is not covered - then ok=false and corrected = a model sentence). Check the language of \"said\" as usual.\nTask points (JSON):\n"+JSON.stringify(items):"Items with the learner's answers (JSON):\n"+JSON.stringify(items),
+      sawTranscript(s.key)?"Note: the learner opened the transcript of the recording (after listening twice) before answering.":"",
+      (t.items||[]).some(it=>it.type==="upload")?"Voice recording attached: "+((subs[s.key]&&subs[s.key].audio)?"yes (pronunciation is reviewed later by the tutor, don't comment on it)":"no"):"",
+      "Then write a short MISTAKE DRILL: 3-5 multiple-choice questions that make the learner practise the exact errors from THIS test first (e.g. spelling: \"musèe\" vs \"musée\"; article: \"le pharmacie\" vs \"la pharmacie\"; form: \"je dois\" vs \"je doit\"), then the recurring mistakes above. Each has 2-4 short options, exactly one correct; vary the position of the correct option. If the test was perfect, make 2-3 questions on the recurring mistakes. Each question = a short instruction in the explanation language + ONE target-language sentence with ONE blank ___; every option must fit that same blank, and the correct option put into the blank must give a correct, natural sentence (not «___ étudiante» with verb options). No second blank, no half-translated hints. The question must never contain or describe the correct option - no «un ___ (gâteau, с крышечкой над a)», no naming which accent or letter is right; give the meaning in the explanation language instead («un ___ (торт)»).",
+      'Output exactly one JSON object and nothing else (no prose, no code fence): {"items": [{"id": string, "ok": boolean, "corrected": string, "notes": [string], "note": string'+(vf?', "said": string':'')+'}] (one entry for EVERY item; the page counts the score from "ok"), "summary": "2-3 sentences: what went well, the main thing to work on - no score or count in it", "mistakes": ["short rule name per real error"], "drill": [{"q": string, "options": [string], "answer": index of the correct option, "why": "one-line rule"}]}'
+    ].filter(Boolean).join("\n\n")}
+  // A drill question must not give its answer away ("un ___ (gâteau, с крышечкой над a)"): drop the hint in
+  // brackets that contains the correct option, or the whole question if the answer is still in it.
+  function unleak(x){const low=t=>String(t).toLowerCase(),ok=low(x.options[x.answer]).trim();
+    if(ok.length<3)return x;const has=t=>low(t).includes(ok),others=x.options.filter((o,i)=>i!==x.answer&&low(o).trim().length>=2);
+    if(!has(x.q)||others.some(o=>low(x.q).includes(low(o).trim())))return x;
+    const q=x.q.replace(/\s*[(«"][^)»"]*[)»"]/g,m=>has(m)?"":m).trim();return has(q)?null:Object.assign({},x,{q})}
+  function cleanFeedback(res,n){
+    const drill=(Array.isArray(res.drill)?res.drill:[]).map(x=>({q:String(x.q||""),options:(Array.isArray(x.options)?x.options:[]).map(String).slice(0,4),answer:Number(x.answer),why:String(x.why||"")})).filter(x=>x.q&&x.options.length>=2&&x.answer>=0&&x.answer<x.options.length).filter(x=>(x.q.match(/_{2,}/g)||[]).length<=1).map(unleak).filter(Boolean).slice(0,6);
+    const its=(Array.isArray(res.items)?res.items:[]);
+    // Tests: the score is counted here from the per-item verdicts (Claude's own "score" was sometimes one off).
+    const okN=its.filter(x=>x&&x.ok===true).length;
+    return{score:its.length?okN:(Number(res.score)||0),total:its.length?Math.max(n,its.length):(Number(res.total)||n),items:(Array.isArray(res.items)?res.items:[]).map(x=>({id:String(x.id),ok:!!x.ok,corrected:String(x.corrected||""),notes:Array.isArray(x.notes)?x.notes.map(String):[],note:x.note?String(x.note):"",said:x.said?String(x.said):""})),summary:String(res.summary||""),mistakes:Array.isArray(res.mistakes)?res.mistakes.map(String):[],drill}}
+  async function checkSection(s,btn,status){
+    if(busy)return;busy=true;btn.disabled=true;const ans=collect(s),vf=voiceFirst(s);
+    if(vf&&!pendingAudio[s.key]&&!(subs[s.key]&&subs[s.key].audio)&&!ans.transcript){busy=false;btn.disabled=false;status.textContent=ui("Record your answer first.");return}
+    try{
+      status.textContent=ui("Saving…");
+      let audio=null,audioErr="";const up=(s.test.items||[]).find(it=>it.type==="upload");
+      if(up&&pendingAudio[s.key]){const file=pendingAudio[s.key],type=audioType(file);
+        if(!assets)audioErr=ui("this page can't store recordings right now (file storage isn't available here)");
+        else if(!type)audioErr=ui("the format of «{name}» can't be stored (use .m4a, .mp4 or .webm)",{name:file.name});
+        else{try{status.textContent=ui("Uploading your recording…");const r=await assets.upload(await uploadableAudio(file,type),{type});audio={id:r.id,url:r.url,name:file.name,type,bytes:file.size};delete pendingAudio[s.key]}
+          catch(e){audioErr=e&&e.code==="too_large"?ui("the recording is over 20 MB"):e&&e.code==="unsupported_type"?ui("the workbook could not accept this audio file"):ui("the upload failed ({why})",{why:(e&&(e.code||e.message))||"?"})}}}
+      await saveSub(s,Object.assign({answers:ans,status:"saved",audio:audio||(subs[s.key]&&subs[s.key].audio)||null,audio_error:audioErr||null},sawTranscript(s.key)?{transcript_viewed:true}:{}));
+      if(vf&&!ans.transcript){await saveSub(s,{status:"awaiting_transcript"});busy=false;render();return}
+      if(!sample){status.textContent=ui("Saved. Say \"check\" in chat to get feedback.");busy=false;render();return}
+      status.textContent=ui("Claude is checking… usually under a minute.");
+      ctl=new AbortController();
+      const res=await askClaude(checkPrompt(s,ans),{cache:false,signal:ctl.signal},150000);
+      if(!res||!Array.isArray(res.items))throw{code:"invalid_json"};
+      const fb=cleanFeedback(res,(s.test.items||[]).filter(it=>it.type!=="upload").length);
+      if(vf)for(const r of fb.items)if(r.said)ans[r.id]=r.said;
+      await saveSub(s,{answers:ans,status:"checked",feedback:fb,checked_by:"page",checked_at:now()});
+      st.phase="drill";saveState();busy=false;render();
+    }catch(e){busy=false;btn.disabled=false;status.textContent=sampleMsg(e);if(!sample){btn.textContent=ui("Save answers");render()}}
+  }
+
+  // ---------------- drill ----------------
+  function renderDrill(sec,s,fb){
+    const sub=subs[s.key]||{},drill=(fb&&fb.drill)||[],done=sub.drill_answers;
+    const box=document.createElement("div");box.className="drill";
+    if(drill.length){
+      box.innerHTML="<h2>"+esc(ui("Mistake drill"))+"</h2><div class=\"status\">"+esc(ui("Quick practice on what went wrong - pick the correct form."))+"</div>";
+      const ol=document.createElement("ol");ol.className="items";
+      drill.forEach((q,k)=>{const li=document.createElement("li");const w=document.createElement("div");w.className="item";
+        const p=document.createElement("div");p.className="q";p.innerHTML=inline(q.q);w.append(p);
+        const g=document.createElement("div");g.className="choices";
+        q.options.forEach((o,j)=>{const lb=document.createElement("label");const r=document.createElement("input");r.type="radio";r.name="d-"+k;r.value=String(j);r.disabled=!!done;
+          if(done&&Number(done[k])===j)r.checked=true;
+          if(done){if(j===q.answer)lb.className="right";else if(Number(done[k])===j)lb.className="wrong"}
+          lb.append(r,document.createTextNode(o));g.append(lb)});
+        w.append(g);if(done){const y=document.createElement("div");y.className="why";y.innerHTML=(Number(done[k])===q.answer?"✓ ":"✗ ")+inline(q.why);w.append(y)}
+        li.append(w);ol.append(li)});
+      box.append(ol)}
+    const a=document.createElement("div");a.className="actions";
+    if(drill.length&&!done){const b=document.createElement("button");b.className="btn";b.type="button";b.textContent=ui("Check the drill");
+      b.onclick=async()=>{const ans=drill.map((q,k)=>{const c=box.querySelector('input[name="d-'+k+'"]:checked');return c?Number(c.value):-1});
+        const sc=ans.filter((x,k)=>x===drill[k].answer).length;b.disabled=true;
+        try{await saveSub(s,{drill_answers:ans,drill_score:sc+"/"+drill.length})}catch(e){}render()};a.append(b)}
+    else{const n=document.createElement("button");n.className="btn";n.type="button";n.textContent=ui(st.index+1<sections().length?"Next section →":"Finish the lesson →");
+      n.onclick=()=>finishSection(s,{status:"done"});a.append(n);
+      if(done){const sc=document.createElement("span");sc.className="status";sc.textContent=ui("Drill: {score}",{score:sub.drill_score||""});a.append(sc)}}
+    box.append(a);sec.append(box)}
+  async function finishSection(s,patch){try{await saveSub(s,patch)}catch(e){}go(st.index+1)}
+
+  // ---------------- roleplay ----------------
+  // The role-play state goes to Claude as ONE JSON object (theme, character, agenda, conversation with
+  // actor "claude"/"user", last_user_message) instead of a plain-text transcript, so the character and
+  // plan are restated on every turn and only the newest learner message gets corrected.
+  function rpState(s,turns,extra){const r=s.roleplay||{},d=dashes[lang]||{},name=r.name||ui("Stranger");
+    const conv=turns.map(t=>({actor:t.who==="me"?"user":"claude",message:String(t.text||"")}));
+    const meTurns=turns.filter(t=>t.who==="me");
+    return Object.assign({
+      theme:r.theme||[r.persona,r.scenario].filter(Boolean).join(". "),
+      character:{name,persona:r.persona||"a friendly stranger",never_act_as:r.never_act_as||[]},
+      setting:r.scenario||"",
+      agenda:r.agenda||[],
+      learner_goal:r.goal||"keep the conversation going",
+      target_language:langName(lesson.target_lang||lang),level:lesson.level||d.level||"A1",
+      explanation_language:langName(lesson.explain_lang||d.explain_lang||"English"),
+      words_to_bring_in:r.focus||"",
+      turn_limit:r.turns||8,learner_turns_so_far:meTurns.length,
+      conversation:conv.slice(-40)},extra||{})}
+  function rpTurnPrompt(state){const n=state.character.name;
+    return["You are playing ONE character in a language-learning role-play. The whole role-play is the JSON object at the end. Read it, then write the character's next line and correct the learner's newest message.",
+      "1. You are "+n+" - exactly the person described in \"theme\" and \"character.persona\" - from the first line to the last. The \"claude\" messages in \"conversation\" are your own earlier lines: stay consistent with them (same facts, same plans, same relationship to the learner). Never switch to another role, never become staff, a waiter, a shop assistant or a narrator, and never act as anything in \"character.never_act_as\". If the learner treats you as someone else, answer in character (e.g. \"I'm a customer too!\").",
+      "2. Steer the conversation through \"agenda\" in order: move to the next point when the current one is done, but always react to what the learner just said first.",
+      "3. Speak ONLY "+state.target_language+" at level "+state.level+": 1-2 short sentences, everyday words, usually ending with a question the learner has to answer. If the learner seems stuck, rephrase more simply. Bring in \"words_to_bring_in\" when it is natural.",
+      "4. Correct ONLY \"last_user_message\". Earlier user messages were already corrected - ignore their errors completely. \"correction.corrected\" is last_user_message alone, corrected (empty string if it is ok) - never include earlier messages. Real errors only (grammar, word choice, gender/article, accents), each note as «their words with the **wrong part**» -> the fix: the rule; a merely more natural wording goes in notes as \"more natural: …\" and keeps ok=true. Notes in "+state.explanation_language+" only.",
+      checkRules(),
+      langRule(),
+      "5. When learner_turns_so_far >= turn_limit or the last agenda point is done, close the conversation politely in character and set end=true.",
+      'Output exactly one JSON object and nothing else (no prose, no code fence): {"reply": "'+n+'\'s next line", "correction": {"ok": boolean, "corrected": string, "notes": [string]}, "end": boolean}',
+      "ROLE-PLAY:\n"+JSON.stringify(state,null,1)].join("\n\n")}
+  function renderChat(sec,s){
+    const sub=subs[s.key]||{},turns=sub.turns||[];const r=s.roleplay||{};
+    if(!turns.length&&r.opening){turns.push({who:"them",text:r.opening})}
+    const intro=document.createElement("p");intro.className="instr";intro.innerHTML=inline(r.goal_text||r.goal||"");sec.append(intro);
+    const chat=document.createElement("div");chat.className="chat";
+    for(const t of turns){const b=document.createElement("div");b.className="bub "+(t.who==="me"?"me":"them");
+      b.innerHTML='<span class="who">'+esc(t.who==="me"?ui("You"):(r.name||ui("Stranger")))+"</span>"+inline(t.text);
+      if(t.who==="me"&&t.correction)b.append(fbBox({ok:!!t.correction.ok,corrected:t.correction.corrected,notes:t.correction.notes||[],note:t.correction.note||""}));
+      chat.append(b)}
+    sec.append(chat);
+    const ended=sub.status==="chat-ended"||sub.status==="checked"||sub.status==="done";
+    if(sub.feedback){renderSummary(sec,{material:null,test:null},sub.feedback);renderDrill(sec,s,sub.feedback);
+      const ra=document.createElement("div");ra.className="actions";ra.append(restartBtn(s));sec.append(ra);return}
+    const status=document.createElement("div");status.className="status";status.setAttribute("role","status");
+    if(!ended){
+      const comp=document.createElement("form");comp.className="composer";
+      const ta=document.createElement("textarea");ta.id="rp-in";ta.placeholder=ui("Your answer ({lang})…",{lang:langLabel(lesson.target_lang||lang)});ta.lang=lesson.target_lang||"";ta.value=store.get(draftKey(s))||"";
+      ta.oninput=()=>store.set(draftKey(s),ta.value);
+      ta.onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();comp.requestSubmit()}};
+      const send=document.createElement("button");send.className="btn";send.type="submit";send.textContent=ui("Send");
+      comp.append(ta,send);sec.append(comp);
+      comp.onsubmit=async e=>{e.preventDefault();const txt=ta.value.trim();if(!txt||busy)return;if(!sample){status.textContent=ui("The conversation needs Claude on this page, which isn't available. Ask your tutor in chat for the role-play instead.");return}
+        busy=true;send.disabled=true;turns.push({who:"me",text:txt});store.set(draftKey(s),"");status.textContent="…";
+        // show the message at once and keep Restart / Finish usable while the reply is on its way
+        {const bb=document.createElement("div");bb.className="bub me";bb.innerHTML='<span class="who">'+esc(ui("You"))+"</span>"+inline(txt);chat.append(bb);ta.value="";
+         fin.disabled=false;if(!a.querySelector(".rs"))a.insertBefore(restartBtn(s),fin.nextSibling)}
+        // One self-contained prompt per turn carrying the role-play as JSON (see rpState): with earlier
+        // replies passed as assistant turns the model tends to answer in plain text and drift out of role.
+        const prompt=rpTurnPrompt(rpState(s,turns,{last_user_message:txt}));
+        const me=turns[turns.length-1];
+        const finish=async(reply,correction,end)=>{if(correction)me.correction=correction;turns.push({who:"them",text:reply});
+          await saveSub(s,{turns,status:end?"chat-ended":"chatting"});busy=false;render();setTimeout(()=>{const x=$("rp-in");if(x)x.focus()},50)};
+        try{ctl=new AbortController();const res=await askClaude(prompt,{cache:false,signal:ctl.signal},90000);
+          const c=res&&res.correction;let corr=null;
+          if(c){corr={ok:!!c.ok,corrected:String(c.corrected||""),notes:Array.isArray(c.notes)?c.notes.map(String):[]};
+            // Guard: strip earlier learner messages that crept into "corrected"; drop it if still far too long.
+            const norm=x=>String(x||"").toLowerCase().replace(/[^\p{L}\p{N}]+/gu," ").trim();
+            for(const t of turns.slice(0,-1))if(t.who==="me")for(const cand of [t.text,t.correction&&t.correction.corrected]){
+              const c=corr.corrected,nc=norm(c),nx=norm(cand);if(!nx||!nc.startsWith(nx)||nc===nx)continue;
+              // cut the same number of words from the original text
+              const words=nx.split(" ").length;let cut=0,seen=0;const re=/[\p{L}\p{N}]+/gu;let m;
+              while((m=re.exec(c))&&seen<words){seen++;cut=m.index+m[0].length}
+              corr.corrected=c.slice(cut).replace(/^[\s.,;:!?…»"']+/,"").trim()}
+            if(corr.corrected.length>1.6*txt.length+25)corr.corrected="";
+            if(corr.ok)corr.corrected=""}
+          await finish(String((res&&res.reply)||"…"),corr,!!(res&&res.end))}
+        catch(err){
+          // Salvage a reply that came back as plain text instead of JSON, so the conversation keeps going.
+          const raw=err&&err.code==="invalid_json"&&typeof err.text==="string"?err.text.trim():"";
+          let reply="";const m=raw.match(/"reply"\s*:\s*"((?:[^"\\]|\\.)*)"/);
+          if(m){try{reply=JSON.parse('"'+m[1]+'"')}catch(e){reply=m[1]}}
+          else if(raw&&!/^[\[{]/.test(raw)&&raw.length<600)reply=raw.replace(/^[A-Za-zÀ-ÿ .'-]{1,30}:\s*/,"").replace(/^["«]|["»]$/g,"");
+          if(reply){try{await finish(reply,{ok:true,corrected:"",notes:[],note:ui("(no correction for this message - send the next one as usual)")},false)}catch(e){busy=false;send.disabled=false}}
+          else{turns.pop();busy=false;send.disabled=false;ta.value=txt;{const l=chat.lastElementChild;if(l&&l.classList.contains("me"))l.remove()}status.textContent=err&&err.code==="invalid_json"?ui("Claude's answer came back in the wrong format. Press Send again."):sampleMsg(err)}}};
+    }
+    const a=document.createElement("div");a.className="actions";
+    const fin=document.createElement("button");fin.className=ended?"btn":"btn ghost";fin.type="button";fin.textContent=ui("Finish and get feedback");
+    fin.disabled=turns.filter(t=>t.who==="me").length<1;
+    fin.onclick=async()=>{if(!sample)return;if(busy)cancelBusy();busy=true;fin.disabled=true;status.textContent=ui("Claude is reviewing the conversation…");
+      const d=dashes[lang]||{};
+      const state=rpState(s,turns,{recurring_mistakes:(d.mistakes||[]).slice(0,6).map(m=>m.rule)});
+      state.conversation=turns.map(t=>t.who==="me"?{actor:"user",message:t.text,correction_given:t.correction||null}:{actor:"claude",message:t.text});
+      const prompt=["Review this finished language-learning role-play (JSON at the end). \"user\" is the learner; \"claude\" is the character. Explanations in "+state.explanation_language+".",checkRules(),langRule(),
+        "Score communication 0-10: did the learner reach \"learner_goal\", get their message across and keep the conversation going? Then the main language problems across ALL user messages (each already has its correction_given). Then a MISTAKE DRILL of 3-5 multiple-choice questions on the exact errors in this conversation (then recurring_mistakes), 2-4 short options each, exactly one correct, correct position varied. Each question = a short instruction in the explanation language + ONE target-language sentence with ONE blank ___; every option must fit that same blank, and the correct option put into the blank must give a correct, natural sentence (not «___ étudiante» with verb options). No second blank, no half-translated hints. The question must never contain or describe the correct option - no «un ___ (gâteau, с крышечкой над a)», no naming which accent or letter is right; give the meaning in the explanation language instead («un ___ (торт)»).",
+        'Output exactly one JSON object and nothing else (no prose, no code fence): {"score": 0-10, "total": 10, "summary": "3-4 sentences", "mistakes": ["short rule names"], "items": [], "drill": [{"q": string, "options": [string], "answer": index, "why": string}]}',
+        "ROLE-PLAY:\n"+JSON.stringify(state,null,1)].join("\n\n");
+      try{ctl=new AbortController();const res=await askClaude(prompt,{cache:false,signal:ctl.signal},90000);const fb=cleanFeedback(res||{},10);fb.total=10;
+        await saveSub(s,{turns,status:"checked",feedback:fb,checked_by:"page"});st.phase="chat";busy=false;render()}
+      catch(err){busy=false;fin.disabled=false;status.textContent=sampleMsg(err)}};
+    a.append(fin);if(turns.some(t=>t.who==="me"))a.append(restartBtn(s));a.append(skipBtn(s),status);sec.append(a)}
+  // Start the role-play again; the previous attempt is kept in sub.attempts for the tutor's sync.
+  function restartBtn(s){const b=document.createElement("button");b.type="button";b.className="btn ghost rs";b.textContent=ui("↺ Start the conversation over");
+    b.onclick=async()=>{if(b.dataset.armed!=="1"){b.dataset.armed="1";b.textContent=ui("Tap again to start over");setTimeout(()=>{if(b.isConnected){b.dataset.armed="";b.textContent=ui("↺ Start the conversation over")}},4000);return}
+      if(busy)cancelBusy();const sub=subs[s.key]||{};busy=true;
+      try{await saveSub(s,{attempts:(sub.attempts||[]).concat([{turns:sub.turns||[],feedback:sub.feedback||null,drill_score:sub.drill_score||null,ended:now()}]),turns:[],feedback:null,drill_answers:null,drill_score:null,status:"chatting"})}catch(e){}
+      busy=false;store.set(draftKey(s),"");st.phase="chat";saveState();render()};return b}
+
+  // ---------------- flashcards (carousel) ----------------
+  // Card modes: translate (target word -> type the meaning), sentence (meaning -> write a sentence
+  // in the target language), choice (meaning -> pick the correct target form among look-alikes).
+  // Right -> learned; nearly / wrong -> the next round (after every other card of this round). First answers are
+  // kept per word for the tutor's spaced-repetition sync.
+  const decks={};
+  const GRADE_RANK={right:0,nearly:1,wrong:2};
+  function getDeck(s){
+    // rebuild when the tutor replaced the deck's cards while the page was open
+    const sig=(s.cards||[]).map(c=>c.id).join(",");if(decks[s.key]&&decks[s.key].sig!==sig)delete decks[s.key];
+    if(!decks[s.key]){const res=(subs[s.key]&&subs[s.key].cards)||{};
+      decks[s.key]={sig,queue:(s.cards||[]).filter(c=>!(res[c.id]&&res[c.id].done)).map(c=>c.id),again:[],round:1,last:null,phase:"ask",answer:"",verdict:null,opts:{}}}
+    return decks[s.key]}
+  const normAns=x=>String(x||"").toLowerCase().replace(/ё/g,"е").replace(/œ/g,"oe").replace(/æ/g,"ae").normalize("NFD").replace(/[̀-ͯ]/g,"")
+    .replace(/\(.*?\)/g," ").replace(/[^\p{L}\p{N}\s'-]/gu," ").replace(/^(to|the|a|an)\s+/,"").replace(/\s+/g," ").trim();
+  function translationMatches(ans,tr){
+    const a=normAns(ans);if(!a)return false;
+    return String(tr||"").split(/[,;/]|\s(?:or|или)\s/).map(normAns).filter(Boolean).some(v=>v===a||(a.length>=4&&(v.startsWith(a+" ")||v.endsWith(" "+a))))}
+  function shuffled(arr,seed){const a=arr.slice();let h=0;for(const ch of seed)h=(h*31+ch.charCodeAt(0))>>>0;
+    for(let i=a.length-1;i>0;i--){h=(h*1103515245+12345)>>>0;const j=h%(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
+  function wordResults(s,res){const out={};(s.cards||[]).forEach(c=>{const r=res[c.id];if(!r||!r.first)return;
+    const prev=out[c.word];if(!prev||GRADE_RANK[r.first]>GRADE_RANK[prev])out[c.word]=r.first});return out}
+  async function gradeCard(s,card,g){
+    const d=getDeck(s),sub=subs[s.key]||{},res=Object.assign({},sub.cards||{});
+    const r=Object.assign({attempts:0},res[card.id]||{});r.attempts++;if(!r.first)r.first=g;if(g==="right")r.done=true;res[card.id]=r;
+    // Rounds: a missed card goes to the next round's pile and comes back only after every other card of
+    // this round - never right away or one card later.
+    d.queue.shift();d.last=card.id;if(g!=="right"&&!d.again.includes(card.id))d.again.push(card.id);
+    d.phase="ask";d.answer="";d.verdict=null;
+    try{await saveSub(s,{cards:res,word_results:wordResults(s,res),status:d.queue.length||d.again.length?"in-progress":"done"})}catch(e){}
+    render();setTimeout(()=>{const x=$("card-in");if(x)x.focus()},40)}
+  function renderCards(sec,s){
+    const d=getDeck(s),res=(subs[s.key]&&subs[s.key].cards)||{},all=s.cards||[];
+    const learned=all.filter(c=>res[c.id]&&res[c.id].done).length;
+    if(s.material&&s.material.instructions){const p=document.createElement("div");p.innerHTML=instrHTML(s.material.instructions);sec.append(p.firstChild)}
+    const bar=document.createElement("div");bar.className="deckbar";
+    bar.innerHTML='<div class="stack learned"><b>'+learned+'</b> '+esc(ui("learned"))+'</div><div class="stack coming"><b>'+(d.queue.length+d.again.length)+'</b> '+esc(ui("coming up"))+'</div>';
+    sec.append(bar);
+    if(!d.queue.length&&d.again.length){ // between rounds: a short break, then the missed words in a new order
+      const box=document.createElement("div");box.className="summary";
+      box.innerHTML="<div>"+esc(ui("Round {n} is over. Now the words that didn't work yet: {k}.",{n:d.round,k:d.again.length}))+"</div>";
+      const a=document.createElement("div");a.className="actions";const n=document.createElement("button");n.className="btn";n.type="button";n.textContent=ui("Repeat them →");
+      n.onclick=()=>{let q=shuffled(d.again,s.key+":"+d.round);if(q.length>1&&q[0]===d.last)q.push(q.shift());d.queue=q;d.again=[];d.round++;render();setTimeout(()=>{const x=$("card-in");if(x)x.focus()},40)};
+      a.append(n,skipBtn(s));box.append(a);sec.append(box);return}
+    if(!d.queue.length){
+      const wr=wordResults(s,res),weak=Object.keys(wr).filter(w=>wr[w]!=="right");
+      const first=all.filter(c=>res[c.id]&&res[c.id].first==="right").length;
+      const box=document.createElement("div");box.className="summary";
+      box.innerHTML='<div><span class="score'+(all.length&&first/all.length>=.8?" pass":"")+'">'+esc(ui("{a}/{b} right first time",{a:first,b:all.length}))+'</span></div>'+
+        (weak.length?"<div>"+ui("Words to keep practising: {words}. They come back sooner in your reviews.",{words:weak.map(w=>"<b>"+esc(w)+"</b>").join(", ")})+"</div>":"<div>"+esc(ui("Every word right on the first try."))+"</div>");
+      sec.append(box);
+      const a=document.createElement("div");a.className="actions";const n=document.createElement("button");n.className="btn";n.type="button";
+      n.textContent=ui(st.index+1<sections().length?"Next section →":"Finish the lesson →");n.onclick=()=>finishSection(s,{status:"done"});a.append(n);sec.append(a);return}
+    const card=all.find(c=>c.id===d.queue[0]);if(!card){d.queue.shift();return render()}
+    const mode=card.mode||"translate";
+    const wrap=document.createElement("div");wrap.className="fcard";
+    const front=mode==="translate"?card.word:card.translation;
+    // audio for the word (card.audio) and its example (card.example_audio): /_blob/<id> clips
+    const sayB=(p,l)=>/^\/_blob\/[A-Za-z0-9]+$/.test(p||"")?' <button type="button" class="say" data-audio="'+esc(p)+'" aria-label="'+esc(ui("Listen"))+'">▶'+(l?" "+esc(l):"")+"</button>":"";
+    const tl=langLabel(lesson.target_lang||lang);
+    const ask=(s.prompts&&s.prompts[mode])||{translate:ui("Translate into {lang}",{lang:langLabel(explainLang())}),sentence:ui("Write a short sentence with this word ({lang})",{lang:tl}),choice:ui("Pick the correct word ({lang})",{lang:tl})}[mode];
+    wrap.innerHTML='<div class="fmode">'+esc(ask)+'</div><div class="fword"'+(mode==="translate"?' lang="'+esc(lesson.target_lang||"")+'"':"")+">"+esc(front)+
+      (mode==="translate"&&card.gender?' <span class="chip idle">'+esc(card.gender)+"</span>":"")+(mode==="translate"?sayB(card.audio):"")+"</div>";
+    const body=document.createElement("div");body.className="fbody";wrap.append(body);
+    const actions=document.createElement("div");actions.className="factions";
+    const gradeRow=(pre)=>{const row=document.createElement("div");row.className="grades";
+      const lab=document.createElement("div");lab.className="status";lab.textContent=ui("I got this…");row.append(lab);
+      const btns=document.createElement("div");btns.className="gbtns";
+      [["wrong","Wrong"],["nearly","Nearly right"],["right","Right"]].forEach(([g,lb])=>{const b=document.createElement("button");b.type="button";b.className="gbtn "+g+(pre===g?" pre":"");b.textContent=ui(lb);b.onclick=()=>gradeCard(s,card,g);btns.append(b)});
+      row.append(btns);return row};
+    if(mode==="choice"){
+      if(!d.opts[card.id])d.opts[card.id]=shuffled((card.options&&card.options.length?card.options:[card.word]),card.id);
+      const g=document.createElement("div");g.className="choices fchoices";
+      d.opts[card.id].forEach(o=>{const b=document.createElement("button");b.type="button";b.className="fopt";b.lang=lesson.target_lang||"";b.textContent=o;
+        if(d.phase==="shown"){if(o===(card.answer||card.word))b.classList.add("right");else if(o===d.answer)b.classList.add("wrong");b.disabled=true}
+        b.onclick=()=>{d.answer=o;d.phase="shown";d.verdict=o===(card.answer||card.word)?"right":"wrong";render()};g.append(b)});
+      body.append(g);
+      if(d.phase==="shown"){const y=document.createElement("div");y.className="why";y.innerHTML=(d.verdict==="right"?"✓ ":"✗ ")+"<b>"+esc(card.answer||card.word)+"</b>"+sayB(card.audio)+(card.why?" - "+inline(card.why):"");body.append(y);
+        const nb=document.createElement("button");nb.className="btn";nb.type="button";nb.textContent=ui("Next card →");nb.onclick=()=>gradeCard(s,card,d.verdict);actions.append(nb)}
+    }else{
+      const inp=document.createElement(mode==="sentence"?"textarea":"input");if(inp.tagName==="INPUT")inp.type="text";inp.id="card-in";inp.className="fin";
+      inp.value=d.answer;inp.lang=mode==="sentence"?(lesson.target_lang||""):"";inp.placeholder=mode==="sentence"?"…":"";inp.readOnly=d.phase!=="ask";
+      inp.oninput=()=>{d.answer=inp.value};
+      inp.onkeydown=e=>{if(e.key==="Enter"&&!e.shiftKey&&d.phase==="ask"){e.preventDefault();check()}};
+      body.append(inp);
+      const fb=document.createElement("div");fb.className="fres";body.append(fb);
+      const check=async()=>{
+        const ans=inp.value.trim();d.answer=ans;
+        if(mode==="translate"){d.verdict=translationMatches(ans,card.translation)?"right":null;d.phase="shown";render();return}
+        if(!ans){d.verdict=null;d.phase="shown";render();return}
+        if(!sample){d.verdict=null;d.phase="shown";render();return}
+        cbtn.disabled=true;fb.textContent=ui("Checking…");
+        try{const T=langName(lesson.target_lang||lang),E=langName(explainLang());
+          const r=await askClaude(["You are checking one flashcard answer of a "+(lesson.level||"")+" learner of "+T+". Task: write a short "+T+" sentence using «"+card.word+"» (meaning: "+card.translation+").","Learner's sentence: «"+ans+"»",
+            "Check the WHOLE sentence carefully, not only the target word: spelling and accents; elision and contractions (French: je/le/la/de/ne/que + vowel or mute h -> j'/l'/d'/n'/qu': «je essaie» -> «J'essaie»; de + le -> du, à + le -> au); articles and gender/number agreement of nouns and adjectives («le nouveau livre», «la nouvelle maison»); verb forms; word order. Fix EVERY error in \"corrected\" - it must be a fully correct sentence - and name every error in the note.",
+            "verdict: \"right\" = fully correct and uses the word correctly; \"nearly\" = uses the word correctly but has one or two small slips (accent, elision, agreement, article); \"wrong\" = word missing or misused, or several / major errors.",
+            "note: 1-3 short lines in "+E+": each error -> its rule. When the mistake is in a pattern that has look-alikes, contrast them in one line with an example of each (e.g. «un pain au chocolat / une tarte aux pommes» = flavour or main ingredient: à + le/la/les; «un café avec du lait» = something added: avec + du/de la). Empty string if the sentence is right.",
+            checkRules(),
+            langRule(),
+            'Output exactly one JSON object and nothing else: {"verdict": "right"|"nearly"|"wrong", "corrected": "the fully corrected sentence (same as theirs if right)", "note": string}'].join("\n"),{cache:false});
+          d.verdict=["right","nearly","wrong"].includes(r&&r.verdict)?r.verdict:null;d.corr={corrected:String((r&&r.corrected)||""),note:String((r&&r.note)||"")}}
+        catch(e){d.verdict=null;d.corr=null}
+        d.phase="shown";render()};
+      if(d.phase==="ask"){var cbtn=document.createElement("button");cbtn.className="btn";cbtn.type="button";cbtn.textContent=ui("Check");cbtn.onclick=check;actions.append(cbtn);
+        const sh=document.createElement("button");sh.className="btn skip";sh.type="button";sh.textContent=ui("Show answer");sh.onclick=()=>{d.verdict=null;d.phase="shown";render()};actions.append(sh)}
+      else{
+        let h="";
+        if(mode==="translate")h=(d.verdict==="right"?"✓ ":"")+"<b>"+esc(card.translation)+"</b>"+(card.example?'<div class="why" lang="'+esc(lesson.target_lang||"")+'">'+esc(card.example)+sayB(card.example_audio)+(card.example_translation?" - "+esc(card.example_translation):"")+"</div>":"");
+        else{const wa='<div class="why">'+esc(card.word)+sayB(card.audio)+(card.example?" · "+esc(card.example)+sayB(card.example_audio):"")+"</div>";
+          if(d.corr&&d.verdict){h=(d.verdict==="right"?"✓ ":d.verdict==="nearly"?"≈ ":"✗ ")+(d.verdict!=="right"&&d.corr.corrected?"→ <b>"+esc(d.corr.corrected)+"</b>":"")+(d.corr.note?'<div class="why">'+inline(d.corr.note)+"</div>":"")+wa}
+          else h=esc(ui("Example:"))+" <b>"+esc(card.example||card.word)+"</b>"+sayB(card.example?card.example_audio:card.audio)+(card.example_translation?' <span class="why">'+esc(card.example_translation)+"</span>":"")+(card.example?'<div class="why">'+esc(card.word)+sayB(card.audio)+"</div>":"")}
+        fb.innerHTML=h;fb.className="fres "+(d.verdict||"self");
+        if(d.verdict&&!(mode==="translate"&&d.verdict!=="right")){const nb=document.createElement("button");nb.className="btn";nb.type="button";nb.textContent=ui("Next card →");nb.onclick=()=>gradeCard(s,card,d.verdict);actions.append(nb);
+          const ov=document.createElement("button");ov.className="btn skip";ov.type="button";ov.textContent=ui("Grade it myself");ov.onclick=()=>{d.verdict=null;render()};actions.append(ov)}
+        else actions.append(gradeRow(null))}
+    }
+    wrap.append(actions);sec.append(wrap);
+    const foot=document.createElement("div");foot.className="actions";foot.append(skipBtn(s));sec.append(foot);
+  }
+
+  // ---------------- end ----------------
+  function renderEnd(sec){
+    const rows=sections().map(s=>{const x=subs[s.key]||{},f=x.feedback;return"<tr><td>"+esc(s.label||s.key)+" · "+esc(s.title||"")+"</td><td>"+(s.kind==="flashcards"&&x.cards?esc(ui("{a}/{b} first try",{a:Object.values(x.cards).filter(r=>r.first==="right").length,b:(s.cards||[]).length})):f&&f.total?esc(f.score)+"/"+esc(f.total):(x.status==="done"?"✓":x.status==="skipped"?esc(ui("skipped")):"–"))+"</td></tr>"}).join("");
+    sec.innerHTML='<div class="eyebrow">'+esc(lesson.topic||"")+'</div><h1>'+esc(ui("Lesson complete"))+'</h1><p class="instr">'+esc(ui("Well done! Here is how each part went."))+'</p><div class="tbl" style="margin-top:14px"><table class="done-table"><tbody>'+rows+"</tbody></table></div>";
+    const sk=sections().filter(s=>subs[s.key]&&subs[s.key].status==="skipped");
+    if(sk.length){const p=document.createElement("p");p.className="note";p.style.marginTop="14px";p.textContent=ui("Skipped: {list}. They stay open - tap one in the bar above to do it later.",{list:sk.map(s=>s.title||s.label).join(", ")});sec.append(p)}
+    if(lesson.next_hint){const p=document.createElement("p");p.className="note";p.style.marginTop="14px";p.innerHTML=inline(lesson.next_hint);sec.append(p)}
+    sec.append(finishBox())}
+
+  // "Finish - save the lesson": stores a finish request (a sub with kind "finish") with a per-section
+  // summary and Claude's recap of the whole lesson. The tutor in chat picks it up on "save my lesson" /
+  // "sync" and writes everything into the learner's files.
+  const FINISH={key:"finish",label:"Finish",title:"Lesson finished",kind:"finish"};
+  function lessonDigest(){return sections().map(s=>{const x=subs[s.key]||{},f=x.feedback||{};
+    return{key:s.key,title:(s.label||"")+" · "+(s.title||""),status:x.status||"not started",
+      score:s.kind==="flashcards"&&x.cards?Object.values(x.cards).filter(r=>r.first==="right").length+"/"+(s.cards||[]).length+" first try":f.total?f.score+"/"+f.total:"",
+      drill:x.drill_score||"",mistakes:f.mistakes||[],summary:f.summary||""}})}
+  function saveMsg(){return ui("Save my {lang} lesson {id}",{lang:langLabel(lesson.target_lang||lang),id:lesson.id})}
+  function finishBox(){
+    const box=document.createElement("div");box.className="finish";const fx=subs.finish;
+    const msg=saveMsg();
+    const copyRow='<div class="copyrow"><code>'+esc(msg)+'</code><button type="button" class="btn ghost" id="copymsg">'+esc(ui("Copy"))+'</button></div>';
+    if(fx&&fx.status==="saved"||fx&&fx.synced&&fx.status!=="requested"){box.innerHTML='<h2>'+esc(ui("✓ Saved to your files"))+'</h2><p class="note">'+esc(ui("Your tutor saved this lesson{date}. See you next lesson!",{date:fx.saved_at?" ("+String(fx.saved_at).slice(0,10)+")":""}))+"</p>"+(fx.recap?'<div class="body">'+md(fx.recap)+"</div>":"");return box}
+    if(fx&&fx.status==="requested"){
+      box.innerHTML='<h2>'+esc(ui("✓ Lesson finished"))+'</h2>'+(fx.recap?'<div class="body">'+md(fx.recap)+"</div>":"")+'<p class="note">'+esc(ui("Saved in the workbook. To write it into your progress files, send this to Claude in the chat (it is also picked up automatically at the start of your next session):"))+'</p>'+copyRow;
+      wireCopy(box,msg);return box}
+    box.innerHTML='<p class="instr">'+esc(ui("Done for today? Finish the lesson - Claude writes a short recap here, and your tutor saves everything (answers, mistakes, new words, flashcard results) to your files."))+'</p><div class="actions"><button type="button" class="btn" id="finishbtn">'+esc(ui("✓ Finish - save the lesson"))+'</button><span class="status" role="status"></span></div>';
+    const btn=box.querySelector("#finishbtn"),status=box.querySelector(".status");
+    btn.onclick=async()=>{if(busy)return;busy=true;btn.disabled=true;status.textContent=ui("Saving…");
+      const digest=lessonDigest(),newWords=words.filter(w=>w.language===lang&&!w.synced).map(w=>w.word);
+      let recap="";
+      if(sample){status.textContent=ui("Claude is writing your recap…");
+        try{ctl=new AbortController();const r=await askClaude(["Write a short end-of-lesson recap for a "+(lesson.level||"")+" learner of "+langName(lesson.target_lang||lang)+", in "+langName(lesson.explain_lang||(dashes[lang]||{}).explain_lang||"English")+" (keep "+langName(lesson.target_lang||lang)+" examples as they are).",
+            langRule(),"Lesson: "+(lesson.topic||lesson.id),"Sections with results (JSON):\n"+JSON.stringify(digest).slice(0,12000),
+            newWords.length?"Words the learner added: "+newWords.join(", "):"",
+            "Markdown, at most 120 words: one line on how it went overall; **Got right** - 2-3 bullets; **Work on** - the 2-3 most important mistakes with the correct form; **Next time** - one line.",
+            'Reply with only JSON: {"recap": "markdown"}'].filter(Boolean).join("\n\n"),{cache:false,signal:ctl.signal});
+          recap=String((r&&r.recap)||"")}catch(e){}}
+      try{await saveSub(FINISH,{status:"requested",finished_at:now(),topic:lesson.topic||"",digest,new_words:newWords,recap});busy=false;render()}
+      catch(e){busy=false;btn.disabled=false;status.textContent=ui("Couldn't save just now - try again.")}};
+    return box}
+  function wireCopy(box,msg){const b=box.querySelector("#copymsg");if(!b)return;
+    b.onclick=async()=>{let ok=false;try{await navigator.clipboard.writeText(msg);ok=true}catch(e){}
+      if(!ok){try{const r=document.createRange();r.selectNodeContents(box.querySelector(".copyrow code"));const sl=getSelection();sl.removeAllRanges();sl.addRange(r);ok=document.execCommand("copy")}catch(e){}}
+      b.textContent=ui(ok?"Copied ✓":"Select and copy");setTimeout(()=>{if(b.isConnected)b.textContent=ui("Copy")},2500)}}
+
+  // ---------------- add to vocabulary ----------------
+  const LANG_NAMES={fr:"French",de:"German",es:"Spanish",it:"Italian",pt:"Portuguese",en:"English",ru:"Russian",uk:"Ukrainian",nl:"Dutch",pl:"Polish",tr:"Turkish",ja:"Japanese",zh:"Chinese",ko:"Korean"};
+  const LANG_CODES_BY_NAME=Object.fromEntries(Object.entries(LANG_NAMES).map(([c,n])=>[n.toLowerCase(),c]));
+  const langName=x=>{x=String(x||"").trim();return LANG_NAMES[x.toLowerCase()]||(x?x.charAt(0).toUpperCase()+x.slice(1):"English")};
+  let selText="",selCtx="";
+  document.addEventListener("selectionchange",()=>{
+    const sel=document.getSelection();const t=sel?String(sel).trim():"";
+    if(!t||t.length>60||t.split(/\s+/).length>5||!db||!lesson){$("selbar").hidden=true;return}
+    const node=sel.anchorNode&&(sel.anchorNode.nodeType===3?sel.anchorNode.parentElement:sel.anchorNode);
+    if(!node||!$("sheet").contains(node)||node.closest("textarea,input,.selbar"))return;
+    selText=t;selCtx=(node.closest("p,li,td,blockquote,.bub,.q")||node).textContent.trim().slice(0,300);
+    $("selword").textContent="«"+t+"»";$("selbar").hidden=false});
+  $("selbar").addEventListener("pointerdown",e=>e.preventDefault());
+  $("selbar").addEventListener("mousedown",e=>e.preventDefault());
+  $("selx").onclick=()=>{$("selbar").hidden=true;try{document.getSelection().removeAllRanges()}catch(e){}};
+  $("seladd").onclick=async()=>{
+    const t=selText;if(!t||!db)return;$("selbar").hidden=true;
+    let w={word:t,translation:"",gender:null,pos:null,example:selCtx,example_translation:"",needs_lookup:true};
+    const tl=langName(lesson.target_lang||lang),el=langName(explainLang());
+    if(sample){toast(ui("Looking up «{w}»…",{w:t}));
+      try{const r=await askClaude(["A learner of "+tl+" (level "+(lesson.level||"")+") selected text in their lesson to add to their "+tl+" vocabulary. Their own / explanation language is "+el+".",
+          "Selected: «"+t+"»","Context it was selected from: «"+selCtx+"»",
+          "First decide which language the selection is in.",
+          "- If it is "+tl+": use it as is.",
+          "- If it is "+el+" or any other language: translate it into "+tl+" - the word or phrase the learner would need for this meaning in this context (e.g. Russian «потом» -> French \"puis\").",
+          "\"word\" must ALWAYS be "+tl+", in dictionary form: nouns with their article (e.g. 'la gare'), verbs in the infinitive, fixed phrases kept as phrases. Never put a word in another language there.",
+          "\"translation\": its meaning in "+el+" (1-3 short variants). \"example\": one short "+tl+" sentence at the learner's level using it; \"example_translation\": that sentence in "+el+".",
+          'Reply with only JSON: {"source_language": "target" | "other", "word": string, "translation": string, "gender": "m"|"f"|"n"|null, "pos": string, "example": string, "example_translation": string}'].join("\n"),{modelTier:"quick"});
+        if(r&&r.word)w={word:String(r.word),translation:String(r.translation||""),gender:r.gender||null,pos:r.pos||null,example:String(r.example||""),example_translation:String(r.example_translation||""),source_language:r.source_language==="other"?"other":"target"}}catch(e){}}
+    try{await db.collection("words").doc(safeId(lang+"--"+w.word+"--"+Date.now())).set(Object.assign({language:lang,lesson_id:lesson.id,section:(cur()||{}).key||"",selected:t,context:selCtx,added:today(),synced:false},w));
+      toast((w.needs_lookup?ui("Added «{w}» - your tutor will translate it when saving",{w:t}):(w.source_language==="other"?"«"+t+"» → «"+w.word+"»":ui("Added «{w}»",{w:w.word}))+(w.translation?" - "+w.translation:""))+" · "+ui("you'll learn it in a coming lesson"))}catch(e){toast(ui("Couldn't add the word just now"))}};
+
+  // ---------------- progress ----------------
+  function renderProgress(){
+    const d=dashes[lang];const pr=$("pr");
+    if(!d){pr.hidden=true;$("pr-empty").hidden=false;return}
+    pr.hidden=false;$("pr-empty").hidden=true;
+    const v=d.vocab||{},bx=v.boxes||{},mx=Math.max(1,...[1,2,3,4,5].map(b=>Number(bx[b])||0));
+    const boxes=[1,2,3,4,5].map(b=>{const n=Number(bx[b])||0;return'<div title="'+esc(ui("Box {b}: next review after {d} days",{b:b,d:[1,3,7,14,30][b-1]}))+'"><b>'+n+'</b><i style="height:'+Math.max(2,Math.round(70*n/mx))+'px"></i>'+esc(ui("Box {b}",{b:b}))+"</div>"}).join("");
+    const hist=(d.history||[]).slice().reverse().slice(0,8).map(h=>{const pass=/pass|сдан|пройден/i.test(h.result||"")&&!/fail|не сдан/i.test(h.result||"");return"<li><span>"+esc(h.topic)+'</span><span class="chip '+(pass?"pass":"fail")+'">'+esc(h.score||h.result||"")+'</span><span class="sub">'+esc(h.date||"")+(h.result?" · "+esc(h.result):"")+"</span></li>"}).join("")||'<li><span class="status">'+esc(ui("No finished topics yet"))+'</span></li>';
+    const road=(d.roadmap||[]).map(r=>{const s=String(r.status||"").toLowerCase();const cls=/done|pass|сдан|пройд/.test(s)?"pass":/now|current|next|closing|след|сейчас|текущ|закрыва/.test(s)?"next":"idle";return"<li><span>"+esc(r.topic)+'</span><span class="chip '+cls+'">'+esc(r.status||"-")+"</span>"+(r.grammar?'<span class="sub">'+esc(r.grammar)+"</span>":"")+"</li>"}).join("")||'<li><span class="status">'+esc(ui("No roadmap yet"))+'</span></li>';
+    const mist=(d.mistakes||[]).slice(0,6).map(m=>"<li><span>"+inline(m.rule||"")+'</span><span class="chip fail">×'+esc(m.count||1)+"</span>"+(m.example?'<span class="sub">'+inline(m.example)+"</span>":"")+"</li>").join("")||'<li><span class="status">'+esc(ui("Nothing recurring yet"))+'</span></li>';
+    const nw=words.filter(w=>w.language===lang&&!w.synced);
+    const nwl=nw.slice(-8).reverse().map(w=>"<li><span>"+esc(w.word)+'</span><span class="chip next">'+esc(ui("new"))+'</span><span class="sub">'+esc(w.translation||"")+"</span></li>").join("")||'<li><span class="status">'+esc(ui("Select a word in a lesson to add it here"))+'</span></li>';
+    pr.innerHTML=
+      '<div class="card"><div class="k">'+esc(ui("Level"))+'</div><div class="level">'+esc(d.level||"–")+'</div><div class="status">'+esc(ui("Explanations in: {lang}",{lang:d.explain_lang?langLabel(d.explain_lang):"–"}))+(d.updated?" · "+esc(ui("updated {date}",{date:d.updated})):"")+"</div></div>"+
+      '<div class="card"><div class="k">'+esc(ui("Current lesson"))+'</div><h2>'+esc((lesson&&lesson.topic)||d.topic||ui("None open"))+'</h2><div class="status">'+(lesson?esc(ui("Section {i} of {n}",{i:Math.min(st.index+1,sections().length),n:sections().length})):esc(d.step_label||""))+"</div></div>"+
+      '<div class="card"><div class="k">'+esc(ui("Vocabulary · {n} words",{n:v.total||0}))+'</div><div class="boxes">'+boxes+'</div><div class="status num">'+esc(ui("{a} due today · {b} this week",{a:v.due_today||0,b:v.due_week||0}))+(v.queued?" · "+esc(ui("{n} words waiting to be learned",{n:v.queued})):"")+"</div></div>"+
+      '<div class="card"><div class="k">'+esc(ui("New words · waiting to be saved"))+'</div><ul class="list">'+nwl+"</ul></div>"+
+      '<div class="card"><div class="k">'+esc(ui("Roadmap"))+'</div><ul class="list">'+road+"</ul></div>"+
+      '<div class="card"><div class="k">'+esc(ui("Exams"))+'</div><ul class="list">'+hist+"</ul></div>"+
+      '<div class="card"><div class="k">'+esc(ui("Recurring mistakes"))+'</div><ul class="list">'+mist+"</ul></div>"}
+
+  // ---------------- wiring ----------------
+  function watchLang(){
+    unsub.forEach(f=>f());unsub=[];if(unsubSubs){unsubSubs();unsubSubs=null}lesson=null;subs={};render();renderProgress();
+    if(!db||!lang)return;
+    let gotState=null;
+    unsub.push(db.doc("state/"+lang).onSnapshot(sn=>{gotState=sn.exists?sn.data():{};},()=>{}));
+    let lessonDoc=null,exDoc=null;
+    const pick=async()=>{
+      const prevId=lesson&&lesson.id;lesson=lessonDoc||(exDoc?fromLegacy(exDoc):null);
+      if(lesson&&lesson.id!==prevId){
+        subs={};
+        if(lesson.legacy){try{const g=await db.doc(subPath(lesson.sections[0])).get();if(g.exists)subs.main=Object.assign({section:"main",status:g.data().feedback?"checked":"saved"},g.data())}catch(e){}}
+        else{try{const q=await db.collection("sub").where("lesson_id","==",lesson.id).get();q.docs.forEach(x=>{const v=x.data();if(v&&v.section)subs[v.section]=v})}catch(e){}}
+        if(unsubSubs)unsubSubs();
+        unsubSubs=db.collection("sub").where("lesson_id","==",lesson.id).onSnapshot(q=>{
+          // feedback written by the tutor in chat appears without a reload
+          let refresh=false;const c=cur();
+          q.docs.forEach(x=>{const v=x.data();if(!v||!v.section)return;const old=subs[v.section];
+            if(c&&v.section===c.key&&v.feedback&&!(old&&old.feedback)&&!busy){subs[v.section]=v;if(st.phase==="test"){st.phase="drill"}refresh=true}
+            else if(!old||!busy)subs[v.section]=Object.assign({},old||{},v)});
+          if(refresh)render()},()=>{});
+        for(let k=0;k<20&&gotState===null;k++)await new Promise(r=>setTimeout(r,100));
+        if(gotState&&gotState.lesson_id===lesson.id){st.index=Number(gotState.index)||0;st.phase=gotState.phase||"material"}
+        else{st.index=0;st.phase=firstPhase(cur())}
+      }
+      setUiLang();render();renderProgress()};
+    unsub.push(db.doc("lesson/"+lang).onSnapshot(sn=>{lessonDoc=sn.exists?sn.data():null;pick()},()=>{}));
+    unsub.push(db.doc("ex/"+lang).onSnapshot(sn=>{exDoc=sn.exists?Object.assign({id:"x"},sn.data()):null;if(!lessonDoc)pick()},()=>{}));
+    unsub.push(db.collection("words").onSnapshot(q=>{words=q.docs.map(x=>x.data());renderProgress()},()=>{}));
+  }
+  (async()=>{
+    if(!window.claude||!window.claude.use){$("sub").dataset.src="Open this page in Claude to use it";applyStatic();return}
+    db=await window.claude.use("db");
+    if(!db){$("sub").dataset.src="Sign in to Claude to see your lessons";applyStatic();return}
+    window.claude.use("sample").then(s=>{sample=s;setUiLang();render()});
+    window.claude.use("assets").then(a=>{assets=a});
+    db.collection("dash").onSnapshot(q=>{dashes={};q.docs.forEach(d=>{if(d.exists)dashes[d.id]=d.data()});setUiLang();renderLangs();
+      if(lang&&!unsub.length)watchLang();else renderProgress()},()=>{});
+  })();
+})();
+</script>

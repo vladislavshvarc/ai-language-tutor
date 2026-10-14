@@ -1,0 +1,53 @@
+# This folder is the learner's "languages" root AND the git repository.
+# Everything is private by default: progress, vocabulary, mistakes, sessions, recordings,
+# generated audio and the downloaded models never go to git. Only the paths opened
+# below (the skill, the helper scripts, the courses = the learning roadmap) are shared.
+/*
+!/.gitignore
+!/README.md
+!/THIRD_PARTY.md
+!/setup/
+
+# --- the skill (the packed .skill archive is rebuilt from the folder) ---
+!/skill/
+/skill/*.skill
+
+# --- helper scripts, TTS / STT setup, background sounds ---
+!/script/
+/script/.cache/
+/script/.freesound_api_key
+/script/text-to-voice/wheels/
+/script/text-to-voice/samples/
+/script/text-to-voice/melo/
+/script/text-to-voice/models/*
+!/script/text-to-voice/models/chatterbox/
+/script/text-to-voice/models/chatterbox/*
+!/script/text-to-voice/models/chatterbox/voices.json
+!/script/text-to-voice/models/chatterbox/voices/
+/script/text-to-voice/models/chatterbox/voices/*.pt
+# reference clips made from XTTS-v2 voices (Coqui Public Model License) stay local
+/script/text-to-voice/models/chatterbox/voices/ana.wav
+/script/text-to-voice/models/chatterbox/voices/gitta.wav
+/script/text-to-voice/models/chatterbox/voices/luis.wav
+/script/text-to-voice/models/chatterbox/voices/damien.wav
+# TUT Urban Acoustic Scenes recordings (research licence) stay local
+/script/text-to-voice/ambience/**/*-helsinki-*
+/script/text-to-voice/ambience/**/*-london-*
+/script/text-to-voice/ambience/**/*-paris-[0-9]*
+/script/text-to-voice/ambience/**/*-stockholm-*
+/script/text-to-voice/ambience/**/*-barcelona-*
+/script/voice-to-text/models/
+/script/voice-to-text/whisper.cpp/
+/script/voice-to-text/samples/
+
+# --- languages: only the course (the roadmap of what to learn), without its audio ---
+# For a new language add the same three lines with its folder name.
+!/french/
+/french/*
+!/french/course/
+/french/course/audio/
+
+# --- everywhere ---
+.DS_Store
+__pycache__/
+*.pyc

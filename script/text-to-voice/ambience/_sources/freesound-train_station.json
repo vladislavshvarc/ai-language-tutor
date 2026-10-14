@@ -1,0 +1,22 @@
+[
+ {
+  "id": 833570,
+  "scene": "train_station",
+  "file": "train_station/fs-833570.ogg",
+  "name": "Train Passing by in the Train Station",
+  "author": "bassimat",
+  "license": "http://creativecommons.org/publicdomain/zero/1.0/",
+  "url": "https://freesound.org/people/bassimat/sounds/833570/",
+  "speech_words": 4
+ },
+ {
+  "id": 631994,
+  "scene": "train_station",
+  "file": "train_station/fs-631994.ogg",
+  "name": "Railway station Pragersko - Freight train.wav",
+  "author": "dibko",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "url": "https://freesound.org/people/dibko/sounds/631994/",
+  "speech_words": 0
+ }
+]
