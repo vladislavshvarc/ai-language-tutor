@@ -1,70 +1,63 @@
 # AI language tutor
 
-A personal language tutor for Claude: structured lessons (words, grammar, reading, translation, writing, listening, speaking, role-play), a workbook page where the learner answers and Claude checks right away, spaced-repetition vocabulary, a grammar course from A0 to C1, and offline speech: natural voices for listening dialogues and transcription of voice messages.
+A personal language tutor for Claude. It runs structured lessons, checks your answers right away and keeps your progress in plain files, so the next lesson - in any chat - picks up where you stopped.
 
-Ниже по-русски.
+- **One topic per lesson:** words → grammar → reading → translation → writing → listening → speaking → a conversation with a stranger → flashcards.
+- **Workbook** - a page in Claude where you answer; Claude checks each test at once and gives you a short drill on your own mistakes.
+- **Grammar course** A0 → C1 (`french/course/`) - the learning roadmap: every lesson takes the next unit.
+- **Offline speech:** natural listening dialogues (Chatterbox, native-speaker voices, café / metro / hotel backgrounds…), audio for every word and example (Supertonic).
+- **Voice messages transcribed** (whisper.cpp) and checked point by point in the speaking tasks.
+- **Spaced-repetition vocabulary** with flashcards.
 
-## Что это
+## How the folder works
 
-Навык (skill) для Claude, который ведёт уроки иностранного языка:
-
-- урок по одной теме: слова → грамматика → чтение → перевод → письмо → аудирование → говорение → разговор с незнакомцем → карточки;
-- **workbook** — страница в Claude, где ты отвечаешь, а Claude сразу проверяет и даёт мини-тест на свои ошибки;
-- **курс грамматики** A0 → C1 (`french/course/`) — дорожная карта: каждый урок берёт следующий раздел;
-- **озвучка без интернета**: диалоги «как в жизни» (Chatterbox, голоса носителей, фон кафе / метро / отеля…), слова и примеры (Supertonic);
-- **расшифровка голосовых** (whisper.cpp) для заданий на говорение.
-
-Прогресс хранится в обычных файлах в этой же папке, поэтому следующий урок в любом чате продолжает с того места, где ты остановился.
-
-## Как устроена папка
-
-Эта папка — одновременно **репозиторий** и **папка с твоими языками**. Клонируешь её один раз, подключаешь к Claude — и всё, что появится в процессе учёбы, остаётся у тебя, а в git не попадает.
+This folder is both the **repository** and **your languages folder**. Clone it once, connect it to Claude, and everything your studies produce stays with you - none of it goes to git.
 
 ```
-skill/language-tutor/     сам навык: SKILL.md, references/, scripts/, assets/workbook.html
-script/                   вспомогательные скрипты: vocab.py, tts.py, stt.py, ambience.py, проверки уроков
-  text-to-voice/          озвучка: настройка, голоса Chatterbox, фоновые звуки (ambience/)
-  voice-to-text/          расшифровка голосовых (whisper.cpp)
-setup/                    скачивание моделей и сборка whisper
-french/course/            курс французского A0 → C1 (syllabus.md + units/)
+skill/language-tutor/     the skill: SKILL.md, references/, scripts/, assets/workbook.html
+script/                   helper scripts: vocab.py, tts.py, stt.py, ambience.py, lesson checks
+  text-to-voice/          speech: setup, Chatterbox voices, background sounds (ambience/)
+  voice-to-text/          voice-message transcription (whisper.cpp)
+setup/                    model download and whisper build
+french/course/            French course A0 → C1 (syllabus.md + units/)
 ```
 
-**Не попадает в git** (см. `.gitignore`, там всё закрыто по умолчанию): `progress.md`, `vocabulary.json`, `mistakes.md`, `course-progress.md`, `sessions/`, любое аудио уроков и голосовые, модели (~4 ГБ), собранный whisper, ключи API.
+**Never in git** (see `.gitignore` - everything is private by default): `progress.md`, `vocabulary.json`, `mistakes.md`, `course-progress.md`, `sessions/`, any lesson audio and voice messages, the models (~4 GB), the installed engines and the whisper build, API keys.
 
-## Установка
+## Setup
 
-1. **Склонируй** репозиторий туда, где будут жить твои языки:
+1. **Clone** the repository where your languages will live:
    ```
    git clone https://github.com/vladislavshvarc/ai-language-tutor.git ~/Documents/Languages
    ```
-2. **Скачай модели** (~4 ГБ, один раз; в Терминале Mac или Linux):
+2. **Download the models** (~4 GB, once; in the macOS or Linux terminal):
    ```
    cd ~/Documents/Languages && sh setup/download_models.sh
    ```
-   Без Chatterbox (быстрые голоса и расшифровка, ~1 ГБ): `sh setup/download_models.sh fast`.
-3. **Добавь навык в Claude.** Упакуй папку навыка и загрузи её в настройках Claude в разделе навыков (Skills):
+   Without Chatterbox (fast voices and transcription only, ~1 GB): `sh setup/download_models.sh fast`.
+3. **Add the skill to Claude.** Pack the skill folder and upload it in Claude's settings, in the Skills section:
    ```
    cd ~/Documents/Languages/skill && zip -r ../language-tutor.skill language-tutor
    ```
-   В Claude Code вместо этого: `cp -R skill/language-tutor ~/.claude/skills/`.
-4. **Подключи папку** `Languages` к задаче в приложении Claude (Cowork) и напиши, например: «Давай учить французский, объяснения на русском».
-   В первом уроке Claude один раз поставит движки озвучки (`script/text-to-voice/setup_engines.sh all`) и соберёт whisper (`setup/build_whisper.sh`) — 2–5 минут. Всё ставится **внутрь этой папки** (`script/.env/`, ~1,7 ГБ, в git не попадает), поэтому в следующих сессиях ничего не устанавливается: скрипт за долю секунды отвечает `ready`.
+   In Claude Code instead: `cp -R skill/language-tutor ~/.claude/skills/`.
+4. **Connect the folder** `Languages` to a task in the Claude app (Cowork) and write, for example: "Let's learn French, explanations in English".
+   In the first lesson Claude installs the speech engines (`script/text-to-voice/setup_engines.sh all`) and builds whisper (`setup/build_whisper.sh`) once - 2-5 minutes. Everything is installed **inside this folder** (`script/.env/`, ~1.7 GB, not in git), so later sessions install nothing: the script answers `ready` in a fraction of a second.
 
-Начать новый язык: просто попроси. Если курса для языка ещё нет, тутор создаст его в `<язык>/course/`. Чтобы курс попал в git, добавь в `.gitignore` три строки по образцу `french`.
+**A new language:** just ask. If there is no course for it yet, the tutor creates one in `<language>/course/`. To share that course through git, add three lines to `.gitignore` following the `french` example.
 
-## Обновление
+## Updating
 
 ```
 git pull
 ```
-Прогресс, слова и записи не затрагиваются — их нет в репозитории.
+Your progress, words and recordings are untouched - they are not in the repository.
 
-## Требования
+## Requirements
 
-- Приложение Claude с навыками (skills); для workbook — публикация артефактов.
-- Для озвучки и расшифровки: ~5 ГБ на диске; генерация диалога Chatterbox на CPU — около 45 с на реплику.
-- Без моделей тутор тоже работает: аудирование заменяется текстом «прочитай один раз», голосовые можно продиктовать текстом.
+- The Claude app with skills; publishing artifacts for the workbook.
+- For speech and transcription: ~5 GB of disk space. Chatterbox dialogues take about 45 s per line on a CPU.
+- The tutor also works without the models: listening falls back to a read-once text, and voice answers can be typed or dictated.
 
-## Лицензии
+## Licences
 
-Код и тексты навыка — от автора репозитория. Модели скачиваются с сайтов их авторов и в репозиторий не входят. Фоновые записи и образцы голосов распространяются по своим лицензиям (CC0, CC BY, CC BY-SA, CC BY-NC) — список и авторы в [THIRD_PARTY.md](THIRD_PARTY.md). Используй для личной учёбы.
+The skill's code and texts are by the repository author. The models are downloaded from their authors' sites and are not part of the repository. Background recordings and voice samples are distributed under their own licences (CC0, CC BY, CC BY-SA, CC BY-NC) - authors and sources in [THIRD_PARTY.md](THIRD_PARTY.md). For personal study.
