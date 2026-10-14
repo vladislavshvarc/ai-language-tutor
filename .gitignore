@@ -15,6 +15,7 @@
 # --- helper scripts, TTS / STT setup, background sounds ---
 !/script/
 /script/.cache/
+/script/.env/
 /script/.freesound_api_key
 /script/text-to-voice/wheels/
 /script/text-to-voice/samples/

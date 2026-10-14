@@ -48,7 +48,7 @@ french/course/            курс французского A0 → C1 (syllabus.
    ```
    В Claude Code вместо этого: `cp -R skill/language-tutor ~/.claude/skills/`.
 4. **Подключи папку** `Languages` к задаче в приложении Claude (Cowork) и напиши, например: «Давай учить французский, объяснения на русском».
-   В первом уроке Claude сам поставит движки озвучки (`script/text-to-voice/setup_engines.sh all`) и соберёт whisper (`setup/build_whisper.sh`) внутри рабочей среды — это 2–5 минут.
+   В первом уроке Claude один раз поставит движки озвучки (`script/text-to-voice/setup_engines.sh all`) и соберёт whisper (`setup/build_whisper.sh`) — 2–5 минут. Всё ставится **внутрь этой папки** (`script/.env/`, ~1,7 ГБ, в git не попадает), поэтому в следующих сессиях ничего не устанавливается: скрипт за долю секунды отвечает `ready`.
 
 Начать новый язык: просто попроси. Если курса для языка ещё нет, тутор создаст его в `<язык>/course/`. Чтобы курс попал в git, добавь в `.gitignore` три строки по образцу `french`.
 

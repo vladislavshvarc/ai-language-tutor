@@ -23,7 +23,7 @@ next to this script, under a mounted languages root, or via --models-dir:
            + models/supertonic-3/{onnx/, voice_styles/} (Supertone/supertonic-3 on
            huggingface.co). 31 languages incl. fr, de, es, it, ru, uk; 10 voices
            F1-F5 (female), M1-M5 (male) shared by all languages.
-  chatterbox - Chatterbox Multilingual (PyTorch 2.6, own venv $HOME/.venvs/chatterbox):
+  chatterbox - Chatterbox Multilingual (PyTorch 2.6, installed once into script/.env/ by setup_engines.sh):
            models/chatterbox/ + voices/<name>.wav reference clips (+ voices.json with
            gender); ~10 s of work per second of audio. 23 languages.
   Chatterbox runs in a separate worker process (engines/chatterbox_worker.py; it needs most
@@ -75,6 +75,31 @@ import subprocess
 import sys
 import tempfile
 import unicodedata
+
+
+def env_dir(name):
+    """The engine packages installed once into the languages folder by setup_engines.sh:
+    script/.env/<name>-N with a .ok stamp for this Python (see that script). None if not installed."""
+    import platform
+    tag = "py%d.%d-%s" % (sys.version_info[0], sys.version_info[1], platform.machine())
+    here = os.path.dirname(os.path.abspath(__file__))
+    roots = [os.path.join(here, ".env")]
+    mnt = os.path.join(os.path.expanduser("~"), "mnt")
+    if os.path.isdir(mnt):
+        roots += [os.path.join(mnt, n, "script", ".env") for n in sorted(os.listdir(mnt))]
+    for r in roots:
+        if not os.path.isdir(r):
+            continue
+        for d in sorted(os.listdir(r), reverse=True):
+            p = os.path.join(r, d, ".ok")
+            if d.startswith(name + "-") and os.path.exists(p) and open(p).read().strip() == tag:
+                return os.path.join(r, d)
+    return None
+
+
+_FAST = env_dir("fast")
+if _FAST and _FAST not in sys.path:
+    sys.path.insert(0, _FAST)
 
 EDGE_VOICES = {  # (female, male)
     "fr": ("fr-FR-DeniseNeural", "fr-FR-HenriNeural"),
@@ -157,7 +182,8 @@ def engine_dir(sub):
 def worker_voices(engine, lang):
     sub = {"chatterbox": "chatterbox"}[engine]
     d = engine_dir(sub)
-    py = os.path.join(VENVS, engine, "bin", "python")
+    pp = env_dir(engine)  # installed once into the languages folder (setup_engines.sh) ...
+    py = sys.executable if pp else os.path.join(VENVS, engine, "bin", "python")  # ... or an old per-session venv
     script = os.path.join(os.path.dirname(os.path.dirname(d or "/x")), "engines", f"{engine}_worker.py") if d else ""
     vj = os.path.join(d or "", "voices.json")
     if not (d and os.path.exists(py) and os.path.exists(script) and os.path.exists(vj)):
@@ -169,7 +195,8 @@ def worker_voices(engine, lang):
         if engine == "chatterbox" and not any(os.path.exists(os.path.join(d, "voices", v["name"] + x)) for x in (".wav", ".pt")):
             continue  # listed but its reference clip isn't installed here (e.g. a fresh clone)
         out.append(dict(id=f"{engine}:{v['name'].replace(' ', '_')}", engine=engine, name=v["name"],
-                        gender=v.get("gender", "?"), model_dir=d, python=py, script=script))
+                        gender=v.get("gender", "?"), model_dir=d, python=py, pythonpath=pp, script=script,
+                        slow=bool(v.get("slow"))))
     return out
 
 
@@ -234,8 +261,10 @@ def assign_voices(turns, cast, seed, forced, vary, all_voices=False):
     if natural and (n_speakers <= len(natural) or vary):
         def tiers(g, hh):
             vs = [v for v in natural if v["gender"] == g]
-            return (_by_engine([v for v in vs if v["engine"] in FIRST], hh) +
-                    _by_engine([v for v in vs if v["engine"] not in FIRST], hh))
+            # voices marked "slow" in voices.json come last: their lines often had to be voiced again
+            return (_by_engine([v for v in vs if v["engine"] in FIRST and not v.get("slow")], hh) +
+                    _by_engine([v for v in vs if v["engine"] not in FIRST and not v.get("slow")], hh) +
+                    _by_engine([v for v in vs if v.get("slow")], hh))
         nf, nm = tiers("f", h), tiers("m", h // 7)
         a, b = (nf, nm) if (h // 13) % 2 == 0 else (nm, nf)
         order = []
@@ -371,6 +400,8 @@ def run_workers(jobs, lang, deadline):
         jf = os.path.join(CACHE, f"job-{eng}.json")
         json.dump(job, open(jf, "w", encoding="utf-8"), ensure_ascii=False)
         env = dict(os.environ, PYTHONWARNINGS="ignore")
+        if v0.get("pythonpath"):
+            env["PYTHONPATH"] = v0["pythonpath"]
         r = subprocess.run([v0["python"], v0["script"], jf], capture_output=True, text=True, env=env,
                            timeout=max(60, left + 120))
         if r.returncode != 0 and "remaining" not in r.stdout:
@@ -532,19 +563,29 @@ def _words(t):
 
 NUMS = {"fr": {"un": "1", "une": "1", "deux": "2", "trois": "3", "quatre": "4", "cinq": "5", "six": "6",
                "sept": "7", "huit": "8", "neuf": "9", "dix": "10", "onze": "11", "douze": "12",
-               "quinze": "15", "vingt": "20", "trente": "30", "cent": "100"}}
+               "quinze": "15", "vingt": "20", "trente": "30", "cent": "100", "premier": "1", "première": "1"}}
 
 
-def verify(path, text, lang):
+def verify_many(jobs, lang, workers=2):
+    """verify() for [(path, text)] - two transcriptions at a time (each with half the cores; the
+    'small' model needs ~0.6 GB, so more in parallel risks running out of memory)."""
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(workers) as ex:
+        return list(ex.map(lambda j: verify(j[0], j[1], lang, threads=max(1, (os.cpu_count() or 4) // workers)), jobs))
+
+
+def verify(path, text, lang, threads=None):
     """Transcribe with stt.py and compare with the text that was spoken."""
     import difflib
     stt = os.path.join(os.path.dirname(os.path.abspath(__file__)), "stt.py")
+    env = dict(os.environ, STT_THREADS=str(threads)) if threads else None
     try:
-        r = subprocess.run([sys.executable, stt, "--lang", lang, path], capture_output=True, text=True, timeout=300)
+        r = subprocess.run([sys.executable, stt, "--lang", lang, path], capture_output=True, text=True, timeout=300, env=env)
         heard = json.loads(r.stdout).get("text", "")
     except Exception as e:  # noqa
         return {"error": f"{type(e).__name__}: {str(e)[:80]}"}
     nums = NUMS.get(lang, {})
+    heard = re.sub(r"(\d+)(?:er|re|ère|ème|e)\b", r"\1", heard)  # "1er étage" = "premier étage"
     a = [nums.get(w, w) for w in _words(text)]
     b = [nums.get(w, w) for w in _words(heard)]
     return {"heard": heard.strip(), "match": round(difflib.SequenceMatcher(None, a, b).ratio(), 2)}
@@ -657,11 +698,14 @@ def main():
             items = []
             for i, (f, (spk, txt), v) in enumerate(zip(files, turns, used), 1):
                 dst = os.path.join(a.out_dir, f"{i:02d}-{slug(txt)}.{a.format.lstrip('.')}")
-                it = {"text": txt, "speaker": None if spk == "_narrator" else spk,
-                      "file": encode(f, dst), "voice": v}
-                if a.verify:
-                    it["check"] = verify(f, txt, a.lang)
-                items.append(it)
+                items.append({"text": txt, "speaker": None if spk == "_narrator" else spk,
+                              "file": encode(f, dst), "voice": v})
+            if a.verify:
+                # single words and short phrases are not checked: without context the recognizer can't
+                # tell homophones apart (inviter / invitez) and the check only causes needless re-voicing
+                todo = [(k, f, t) for k, (f, (_, t)) in enumerate(zip(files, turns)) if len(_words(t)) >= 3]
+                for (k, _, _), r in zip(todo, verify_many([(f, t) for _, f, t in todo], a.lang)):
+                    items[k]["check"] = r
             print(json.dumps({"backend": backend, "items": items}, ensure_ascii=False, indent=1))
         else:
             os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
@@ -679,7 +723,8 @@ def main():
             if amb:
                 res["ambience"] = amb
             if a.verify:
-                res["check"] = [dict(text=t, voice=v, **verify(f, t, a.lang)) for f, (_, t), v in zip(files, turns, used)]
+                res["check"] = [dict(text=t, voice=v, **r) for (_, t), v, r in
+                                zip(turns, used, verify_many([(f, t) for f, (_, t) in zip(files, turns)], a.lang))]
                 if amb:  # can a listener still follow it through the background?
                     res["check_with_ambience"] = verify(a.out, " ".join(t for _, t in turns), a.lang)
             print(json.dumps(res, ensure_ascii=False, indent=1))

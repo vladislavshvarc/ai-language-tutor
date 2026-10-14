@@ -6,6 +6,7 @@ set -e
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 DEST="$ROOT/script/voice-to-text/whisper.cpp/build/bin"
 B=${WHISPER_BUILD_DIR:-$HOME/wbuild}
+if [ -x "$DEST/whisper-cli" ] && "$DEST/whisper-cli" --help >/dev/null 2>&1; then echo "whisper-cli: ready ($DEST)"; exit 0; fi
 command -v cmake >/dev/null 2>&1 || { pip install --user -q cmake && PATH="$HOME/.local/bin:$PATH"; }
 [ -d "$B/whisper.cpp" ] || git clone --depth 1 https://github.com/ggml-org/whisper.cpp "$B/whisper.cpp"
 cd "$B/whisper.cpp"

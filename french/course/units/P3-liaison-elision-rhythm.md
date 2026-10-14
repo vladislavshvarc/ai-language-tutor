@@ -60,3 +60,9 @@ je ne aime (je n'aime), le école (l'école), de eau (d'eau), si il (s'il), que 
 1. je + habite à Lyon → j'habite à Lyon
 2. Liaison in "un ami"? → yes, [n]
 3. ce + est → c'est
+
+## Videos
+| Video | Channel | Start | Covers | Added |
+|---|---|---|---|---|
+| [LES LIAISONS OBLIGATOIRES!](https://www.youtube.com/watch?v=yRCD8vgohZo) | Learn French With Alexa | - | obligatory liaisons | 2026-10-14 · 83K views, 8:55, channel 2.45M subs |
+| [Liaisons in French: When NOT to pronounce the ending of words](https://www.youtube.com/watch?v=s4BLF5ipqLE) | Learn French With Alexa | - | forbidden liaisons (after et, h aspiré) - optional | 2026-10-14 · 31K views, 10:36 |

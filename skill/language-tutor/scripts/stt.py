@@ -116,7 +116,7 @@ def run_cpp(path, lang, _size, a):
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", path, "-ar", "16000", "-ac", "1",
                         "-c:a", "pcm_s16le", wav], check=True)
         base = os.path.join(tmp, "out")
-        cmd = [exe, "-m", model, "-f", wav, "-l", lang or "auto", "-t", str(os.cpu_count() or 4),
+        cmd = [exe, "-m", model, "-f", wav, "-l", lang or "auto", "-t", os.environ.get("STT_THREADS") or str(os.cpu_count() or 4),
                "-ojf", "-of", base, "-np"]
         subprocess.run(cmd, check=True, capture_output=True)
         with open(base + ".json", encoding="utf-8") as fh:

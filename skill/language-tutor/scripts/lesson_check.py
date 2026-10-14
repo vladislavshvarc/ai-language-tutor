@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """Check a workbook lesson JSON before it is set as lesson/<language>.
 
-    lesson_check.py lesson.json [--previous earlier1.lesson.json earlier2.lesson.json ...]
+    lesson_check.py lesson.json [--draft] [--previous earlier1.lesson.json earlier2.lesson.json ...]
+
+--draft: the text before any audio is made - audio checks are skipped. Run it on the draft FIRST, fix
+everything, and only then make the audio (media.md): a city, place or wording changed after the
+audio means voicing it again.
 
 Reports layout and audio problems the learner has complained about:
   ERROR  audio button reading several words/examples in one clip  ->  one clip per word or example
@@ -61,7 +65,7 @@ def scenes(lesson):
                   "places": in_title + [p for p in ranked if p not in in_title]}  # the place in the title, then the most mentioned
     return out
 
-BTN = re.compile(r"\[([^\]]+)\]\((/_blob/[A-Za-z0-9]+)\)")
+BTN = re.compile(r"\[([^\]]+)\]\((/_blob/[A-Za-z0-9]+|audio)\)")
 
 
 def texts(sec):
@@ -73,7 +77,7 @@ def texts(sec):
         yield f"item {it.get('id')}", it.get("prompt") or ""
 
 
-def main(path, previous=()):
+def main(path, previous=(), draft=False):
     d = json.load(open(path, encoding="utf-8"))
     d = d.get("data", d)
     out = []
@@ -142,14 +146,16 @@ def main(path, previous=()):
         m = s.get("material") or {}
         if m.get("audio_url") and not m.get("transcript"):
             out.append(("WARN", key, "material", "listening audio has no material.transcript"))
-        if key == "vocab":
+        if draft and key == "listening" and not m.get("transcript"):
+            out.append(("ERROR", key, "material", "no material.transcript - write the dialogue (Name: text lines) before voicing it"))
+        if key == "vocab" and not draft:
             for line in (m.get("body") or "").split("\n"):
                 if line.strip().startswith("|") and not re.match(r"^\s*\|\s*[-:|\s]+\|\s*$", line):
                     cells = [c for c in line.strip().strip("|").split("|")]
                     n = len(BTN.findall(line))
                     if 0 < n < 2 and len(cells) >= 4:
                         out.append(("WARN", key, "material.body", f"word or example without its own audio: «{line[:60]}»"))
-        if s.get("kind") == "flashcards":
+        if s.get("kind") == "flashcards" and not draft:
             no = [c.get("word") for c in s.get("cards", []) if not c.get("audio")]
             if no:
                 out.append(("WARN", key, "cards", f"{len(no)} cards without audio (e.g. {', '.join(map(str, no[:3]))})"))
@@ -168,6 +174,6 @@ def main(path, previous=()):
 
 
 if __name__ == "__main__":
-    args = [a for a in sys.argv[1:] if a != "-v"]
+    args = [a for a in sys.argv[1:] if a not in ("-v", "--draft")]
     prev = args[args.index("--previous") + 1:] if "--previous" in args else []
-    sys.exit(main(args[0], prev))
+    sys.exit(main(args[0], prev, "--draft" in sys.argv))

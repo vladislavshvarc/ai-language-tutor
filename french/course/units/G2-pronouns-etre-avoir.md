@@ -74,3 +74,6 @@ Topic phrases that come up with this unit (je m'appelle, je suis ingénieur, il 
 | Video | Channel | Start | Covers | Added |
 |---|---|---|---|---|
 | [Être & Avoir (French Essentials Lesson 10)](https://www.youtube.com/watch?v=84olv0BM4oY) | Learn French With Alexa | - | part 1: être, avoir (in English) | 2026-10-07 · 3.4M views, 51K likes, 3.2K comments, channel 2.45M subs · learner: great |
+| [French Subject Pronouns (French Essentials Lesson 9)](https://www.youtube.com/watch?v=8LBvMfR7fWc) | Learn French With Alexa | - | part 2: all subject pronouns (in English) | 2026-10-14 · 1.77M views, 1.4K comments, 17:34, channel 2.45M subs |
+| [TU or VOUS? How to say "YOU" in French.](https://www.youtube.com/watch?v=4CeCEUd53RI) | Learn French With Alexa | - | part 2: tu / vous | 2026-10-14 · 92K views, 142 comments, 4:40 |
+| [2 Ways of Saying "WE" in French: NOUS vs ON](https://www.youtube.com/watch?v=3M17yNc3qwk) | Learn French With Alexa | - | part 2: nous / on | 2026-10-14 · 85K views, 136 comments, 5:33 |

@@ -60,7 +60,8 @@
    "gender": "f",
    "from": "MLS French (CC BY 4.0) speaker 7591, LibriVox chansons_bilitis_1401_librivox",
    "pitch_hz": 213,
-   "note": "added 2026-10-09: real native reader (audiobook); 14 s reference; learner 2026-10-09 (hotel scene): good"
+   "note": "added 2026-10-09: real native reader (audiobook); 14 s reference; learner 2026-10-09 (hotel scene): good; 2026-10-14: speaks slowly - all her lines in the fr-intro-4 dialogue had to be redone; cast last",
+   "slow": true
   },
   {
    "name": "elise",

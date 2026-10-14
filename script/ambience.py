@@ -35,6 +35,14 @@ import subprocess
 import sys
 import tempfile
 
+# scipy / soundfile installed once into the languages folder (text-to-voice/setup_engines.sh)
+_here = os.path.dirname(os.path.abspath(__file__))
+if os.path.isdir(os.path.join(_here, ".env")):
+    for _d in sorted(os.listdir(os.path.join(_here, ".env")), reverse=True):
+        if _d.startswith("fast-") and os.path.exists(os.path.join(_here, ".env", _d, ".ok")):
+            sys.path.insert(0, os.path.join(_here, ".env", _d))
+            break
+
 SNR_BY_LEVEL = {"A0": 22, "A1": 20, "A2": 16, "B1": 12, "B2": 9, "C1": 6, "C2": 5}
 SR = 24000
 # scene -> (folder, events [(kind, mean seconds between, loudness vs bed in dB)], description)

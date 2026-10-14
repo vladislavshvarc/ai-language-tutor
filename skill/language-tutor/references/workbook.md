@@ -123,7 +123,11 @@ Fill the character fields carefully - the in-page Claude has no memory: every tu
 
 **Before setting a lesson:** `python3 <root>/script/lesson_check.py lesson.json --previous <the last 3 sessions/*.lesson.json>` (also in this skill's `scripts/`) - fix every ERROR (several words in one audio clip) and the WARNs about inline lists, one-block instructions, missing transcripts, missing word/example audio, a grammar section with several themes, and repeated cities / settings (within the lesson and against the previous ones - lesson-steps.md, "Variety").
 
-**Preparing a lesson:** choose the topic (SKILL.md §2), build all sections at once, upload audio (media.md), run `lesson_check.py`, `set` `lesson/<language>`, update progress.md (current topic, "Current step: workbook lesson <id>") and the dashboard, then one line in chat: "Your lesson is ready in the workbook." The page starts at section 1 for a new lesson id.
+**Preparing a lesson - text first, audio last.** Audio is made ONCE, from the checked final text; voicing a draft and then re-voicing after every fix is what made lessons take over an hour. In this order:
+1. Choose the topic (SKILL.md §2) and write ALL sections as the lesson JSON, with placeholder audio buttons `[J'ai une chambre.](audio)` (one per word / example sentence), cards without audio fields, and the listening dialogue as `material.transcript` (`Name: text` lines).
+2. `lesson_check.py lesson.json --draft --previous <last 3 lessons>` - fix every ERROR and WARN in the TEXT (cities, places, themes, leaks, speaking format). Nothing is voiced yet, so a change costs nothing.
+3. Only now the audio: `audio_plan.py lesson.json --list clips.txt` → `tts.py --each --vary --file clips.txt` (Supertonic, ~1 s per clip) → upload → `audio_plan.py --fill map.json`; the dialogue with `tts.py --ambience` from the transcript (Chatterbox, ~45 s per line - the slow part, done once). `--verify` checks only sentences and the dialogue, two at a time.
+4. `lesson_check.py` on the final JSON (now with the audio checks), then `set` `lesson/<language>`, update progress.md (current topic, "Current step: workbook lesson <id>") and the dashboard, then one line in chat: "Your lesson is ready in the workbook." The page starts at section 1 for a new lesson id.
 
 **If the learner answers in chat instead** (phone, habit): correct as usual and write the answers + feedback into the matching sub doc so the page shows the same state.
 
