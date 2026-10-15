@@ -1,0 +1,32 @@
+{
+ "theme": "rain",
+ "description": "rainy city street",
+ "leitmotif": "rain",
+ "loudness_db": 6,
+ "highpass_hz": 0,
+ "room": "outdoor",
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "thunder",
+   "every": 60,
+   "db": -2,
+   "signature": true
+  },
+  {
+   "sound": "footsteps",
+   "every": 70,
+   "db": -8
+  },
+  {
+   "sound": "car_horn",
+   "every": 120,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 3,
+ "calm": [
+  5,
+  14
+ ]
+}

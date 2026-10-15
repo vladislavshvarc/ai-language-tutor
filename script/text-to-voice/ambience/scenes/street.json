@@ -1,0 +1,59 @@
+{
+ "theme": "street",
+ "description": "busy pedestrian street",
+ "leitmotif": "street",
+ "loudness_db": 0,
+ "highpass_hz": 0,
+ "room": "outdoor",
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "car_horn",
+   "every": 30,
+   "db": -4,
+   "signature": true
+  },
+  {
+   "sound": "footsteps",
+   "every": 30,
+   "db": -6
+  },
+  {
+   "sound": "whistle",
+   "every": 60,
+   "db": -6,
+   "signature": true
+  },
+  {
+   "sound": "jackhammer",
+   "every": 80,
+   "db": -8,
+   "max_seconds": 4
+  },
+  {
+   "sound": "street_music",
+   "every": 120,
+   "db": -8
+  },
+  {
+   "sound": "laughing",
+   "every": 70,
+   "db": -8
+  },
+  {
+   "sound": "dog",
+   "every": 120,
+   "db": -8
+  },
+  {
+   "sound": "siren",
+   "every": 150,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 6,
+ "calm": [
+  2,
+  7
+ ]
+}

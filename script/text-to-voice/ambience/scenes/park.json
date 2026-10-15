@@ -1,0 +1,53 @@
+{
+ "theme": "park",
+ "description": "city park",
+ "leitmotif": "park",
+ "loudness_db": 7,
+ "highpass_hz": 0,
+ "room": "outdoor",
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "birds",
+   "every": 15,
+   "db": -3,
+   "signature": true
+  },
+  {
+   "sound": "children",
+   "every": 45,
+   "db": -8
+  },
+  {
+   "sound": "dog",
+   "every": 50,
+   "db": -6,
+   "signature": true
+  },
+  {
+   "sound": "footsteps",
+   "every": 40,
+   "db": -8
+  },
+  {
+   "sound": "laughing",
+   "every": 60,
+   "db": -8
+  },
+  {
+   "sound": "crow",
+   "every": 120,
+   "db": -10
+  },
+  {
+   "sound": "bells",
+   "every": 200,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 6,
+ "calm": [
+  2,
+  7
+ ]
+}

@@ -1,0 +1,24 @@
+{
+ "theme": "shop",
+ "description": "small shop / bakery",
+ "leitmotif": "shop",
+ "loudness_db": 0,
+ "highpass_hz": 0,
+ "room": [
+  0.4,
+  0.12
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "coughing",
+   "every": 90,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 1,
+ "calm": [
+  15,
+  30
+ ]
+}

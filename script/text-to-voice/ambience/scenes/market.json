@@ -1,0 +1,42 @@
+{
+ "theme": "market",
+ "description": "street market",
+ "leitmotif": "market",
+ "loudness_db": 0,
+ "highpass_hz": 0,
+ "room": "outdoor",
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "laughing",
+   "every": 40,
+   "db": -6
+  },
+  {
+   "sound": "footsteps",
+   "every": 50,
+   "db": -8
+  },
+  {
+   "sound": "street_music",
+   "every": 120,
+   "db": -10,
+   "signature": true
+  },
+  {
+   "sound": "children",
+   "every": 120,
+   "db": -10
+  },
+  {
+   "sound": "dog",
+   "every": 90,
+   "db": -8
+  }
+ ],
+ "max_per_minute": 5,
+ "calm": [
+  3,
+  9
+ ]
+}

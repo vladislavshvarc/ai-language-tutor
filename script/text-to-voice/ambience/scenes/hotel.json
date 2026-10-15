@@ -1,0 +1,29 @@
+{
+ "theme": "hotel",
+ "description": "hotel lobby",
+ "leitmotif": "hotel",
+ "loudness_db": 0,
+ "highpass_hz": 100,
+ "room": [
+  0.45,
+  0.13
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "footsteps",
+   "every": 45,
+   "db": -8
+  },
+  {
+   "sound": "laughing",
+   "every": 90,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 2,
+ "calm": [
+  8,
+  18
+ ]
+}

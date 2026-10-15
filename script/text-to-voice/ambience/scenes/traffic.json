@@ -1,0 +1,39 @@
+{
+ "theme": "traffic",
+ "description": "street with car traffic",
+ "leitmotif": "traffic",
+ "loudness_db": 0,
+ "highpass_hz": 0,
+ "room": "outdoor",
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "car_horn",
+   "every": 20,
+   "db": -2,
+   "signature": true
+  },
+  {
+   "sound": "whistle",
+   "every": 60,
+   "db": -6,
+   "signature": true
+  },
+  {
+   "sound": "jackhammer",
+   "every": 120,
+   "db": -8,
+   "max_seconds": 4
+  },
+  {
+   "sound": "siren",
+   "every": 90,
+   "db": -8
+  }
+ ],
+ "max_per_minute": 6,
+ "calm": [
+  2,
+  7
+ ]
+}

@@ -4,88 +4,92 @@
   {
    "name": "lea",
    "gender": "f",
-   "from": "supertonic:F1"
+   "from": "supertonic:F1",
+   "note": "2026-10-15 reel: excellent"
   },
   {
    "name": "marc",
    "gender": "m",
-   "from": "supertonic:M5"
+   "from": "supertonic:M5",
+   "note": "2026-10-15: voice excellent but a click/sound after the last word in 3 of 3 takes -> new reference (declarative text) made with Supertonic M5; 1 of 2 takes still had it; learner 2026-10-15 after the fix: sounds good"
   },
   {
    "name": "ana",
    "gender": "f",
-   "from": "xtts:Ana Florence"
+   "from": "xtts:Ana Florence",
+   "note": "2026-10-15 reel: good"
   },
   {
    "name": "gitta",
    "gender": "f",
-   "from": "xtts:Gitta Nikolina"
+   "from": "xtts:Gitta Nikolina",
+   "note": "2026-10-15 reel: excellent"
   },
   {
    "name": "luis",
    "gender": "m",
    "from": "xtts:Luis Moray",
-   "note": "learner 2026-10-09: fits a room scene best (with the lively settings and the scene placement)"
+   "note": "learner 2026-10-09: fits a room scene best (with the lively settings and the scene placement); 2026-10-15 reel: excellent"
   },
   {
    "name": "bernard",
    "gender": "m",
    "from": "MLS French (CC BY 4.0) speaker 4193, LibriVox 20000_lieues_sous_les_mers_1010_librivox",
    "pitch_hz": 82,
-   "note": "added 2026-10-09: real native reader (audiobook); 14 s reference; learner 2026-10-09 (hotel scene): good"
+   "note": "added 2026-10-09: real native reader (audiobook); 14 s reference; learner 2026-10-09 (hotel scene): good; 2026-10-15 reel: excellent"
   },
   {
    "name": "paul",
    "gender": "m",
    "from": "MLS French (CC BY 4.0) speaker 296, LibriVox tour_du_monde_en_80_jours_librivox",
    "pitch_hz": 124,
-   "note": "added 2026-10-09: real native reader (audiobook); 14 s reference; learner 2026-10-09 (hotel scene): good"
+   "note": "added 2026-10-09: real native reader (audiobook); 14 s reference; learner 2026-10-09 (hotel scene): good; 2026-10-15 reel: good"
   },
   {
    "name": "claire",
    "gender": "f",
    "from": "MLS French (CC BY 4.0) speaker 12205, LibriVox rougeetnoir_1810_librivox",
    "pitch_hz": 185,
-   "note": "added 2026-10-09: real native reader (audiobook); 14 s reference; learner 2026-10-09 (hotel scene): good"
+   "note": "added 2026-10-09: real native reader (audiobook); 14 s reference; learner 2026-10-09 (hotel scene): good; 2026-10-15: often ends a line with a sigh / breath / odd noise (cut automatically by ambience._trim); 2026-10-15: reference cleaned (it stopped mid-word -> a sigh after every line); learner: good now; 2026-10-15 park dialogue: a sound after the last word in 4 of 5 lines over 2 takes -> recast to lea. Prefer other female voices for long dialogues."
   },
   {
    "name": "ines",
    "gender": "f",
    "from": "MLS French (CC BY 4.0) speaker 10087, LibriVox fleurs_du_mal_2001_librivox",
    "pitch_hz": 180,
-   "note": "added 2026-10-09: real native reader (audiobook); 14 s reference; learner 2026-10-09 (hotel scene): good"
+   "note": "added 2026-10-09: real native reader (audiobook); 14 s reference; learner 2026-10-09 (hotel scene): good; 2026-10-15 reel: good"
   },
   {
    "name": "julie",
    "gender": "f",
    "from": "MLS French (CC BY 4.0) speaker 7591, LibriVox chansons_bilitis_1401_librivox",
    "pitch_hz": 213,
-   "note": "added 2026-10-09: real native reader (audiobook); 14 s reference; learner 2026-10-09 (hotel scene): good; 2026-10-14: speaks slowly - all her lines in the fr-intro-4 dialogue had to be redone; cast last",
+   "note": "added 2026-10-09: real native reader (audiobook); 14 s reference; learner 2026-10-09 (hotel scene): good; 2026-10-14: speaks slowly - all her lines in the fr-intro-4 dialogue had to be redone; cast last; 2026-10-15 reel: an extra sound after the last word in 1 take of 3 (random); learner 2026-10-15 after the fix: sounds good",
    "slow": true
   },
   {
    "name": "elise",
    "gender": "f",
    "from": "supertonic:F4",
-   "note": "added 2026-10-09: 13-15 s reference made with supertonic:F4; learner's favourite: the hotel receptionist that sounded recorded in the room (2026-10-09) learner 2026-10-09 (hotel scene): good"
+   "note": "added 2026-10-09: 13-15 s reference made with supertonic:F4; learner's favourite: the hotel receptionist that sounded recorded in the room (2026-10-09) learner 2026-10-09 (hotel scene): good; 2026-10-15 reel: excellent"
   },
   {
    "name": "maxime",
    "gender": "m",
    "from": "supertonic:M1",
-   "note": "added 2026-10-09: 13-15 s reference made with supertonic:M1; rated great as Karim (2026-10-09) learner 2026-10-09 (hotel scene): good"
+   "note": "added 2026-10-09: 13-15 s reference made with supertonic:M1; rated great as Karim (2026-10-09) learner 2026-10-09 (hotel scene): good; 2026-10-15 reel: excellent"
   },
   {
    "name": "antoine",
    "gender": "m",
    "from": "supertonic:M3",
-   "note": "added 2026-10-09: 13-15 s reference made with supertonic:M3; rated great as Karim (2026-10-09) learner 2026-10-09 (hotel scene): good"
+   "note": "added 2026-10-09: 13-15 s reference made with supertonic:M3; rated great as Karim (2026-10-09) learner 2026-10-09 (hotel scene): good; 2026-10-15: voice excellent but repeated «c'est ça» in 2 of 3 takes -> new reference (declarative text) made with Supertonic M3; 0 repeats in 2 takes; learner 2026-10-15 after the fix: sounds good"
   },
   {
    "name": "margaux",
    "gender": "f",
    "from": "kokoro:ff_siwis",
-   "note": "added 2026-10-09: 13-15 s reference made with kokoro:ff_siwis; rated very good in the hotel scene (2026-10-09) learner 2026-10-09 (hotel scene): good"
+   "note": "added 2026-10-09: 13-15 s reference made with kokoro:ff_siwis; rated very good in the hotel scene (2026-10-09) learner 2026-10-09 (hotel scene): good; 2026-10-15: voice excellent but repeated «c'est ça» in 2 of 3 takes -> new reference (declarative text, no questions) made with Kokoro ff_siwis; 0 repeats in 2 takes; learner 2026-10-15 after the fix: sounds good"
   }
  ],
  "note_2026_10_09_real": "Learner 2026-10-09: Chatterbox cloned from a real human recording fits a scene excellently. Real-reader references (bernard...julie) come from Multilingual LibriSpeech French (CC BY 4.0, Pratap et al. 2020; recordings from LibriVox, public domain): 14 s cut, 60 Hz high-pass, loudness -20 LUFS."

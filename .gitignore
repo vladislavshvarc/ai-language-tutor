@@ -52,3 +52,4 @@
 .DS_Store
 __pycache__/
 *.pyc
+/script/text-to-voice/ambience/_unused/

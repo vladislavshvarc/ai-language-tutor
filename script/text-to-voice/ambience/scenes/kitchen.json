@@ -1,0 +1,24 @@
+{
+ "theme": "kitchen",
+ "description": "home kitchen",
+ "leitmotif": "kitchen",
+ "loudness_db": 3,
+ "highpass_hz": 120,
+ "room": [
+  0.35,
+  0.12
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "pouring",
+   "every": 60,
+   "db": -6
+  }
+ ],
+ "max_per_minute": 1,
+ "calm": [
+  15,
+  30
+ ]
+}

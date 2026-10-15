@@ -382,6 +382,10 @@ RETRY = {}  # turn number (1-based) -> attempt, from --retry: a new take of that
 
 def clip_key(voice, text, lang, slow, attempt=0):
     style = "lively1" if voice["engine"] == "chatterbox" else ""
+    if voice["engine"] == "chatterbox" and voice.get("model_dir"):  # a cleaned / replaced reference clip
+        ref = os.path.join(voice["model_dir"], "voices", voice["name"] + ".wav")  # means new clips
+        if os.path.exists(ref):
+            style += "-ref%d" % int(os.path.getmtime(ref))
     k = "|".join([voice["id"], lang, "slow" if slow and voice["engine"] != "chatterbox" else "", style, text]
                  + ([f"take{attempt}"] if attempt else []))
     return os.path.join(CACHE, hashlib.sha1(k.encode("utf-8")).hexdigest()[:20] + ".wav")
@@ -733,11 +737,32 @@ def main():
                 outs = join(files, a.out)
             res = {"backend": backend, "files": outs, "voices": dict(zip([s for s, _ in turns], used))}
             if amb:
+                # Chatterbox sometimes repeats words («c'est ça ? c'est ça») or drops some: every new Chatterbox
+                # line is transcribed once (the result is cached next to the clip) and compared with its text
+                checks, todo = {}, []
+                for k, (f, (_, t), v) in enumerate(zip(files, turns, used)):
+                    if not str(v).startswith("chatterbox:"):
+                        continue
+                    sc = f + ".check.json"
+                    if os.path.exists(sc):
+                        checks[k] = json.load(open(sc, encoding="utf-8"))
+                    else:
+                        todo.append((k, f, t))
+                for (k, f, _), r in zip(todo, verify_many([(f, t) for _, f, t in todo], a.lang)):
+                    checks[k] = r
+                    if "match" in r:
+                        json.dump(r, open(f + ".check.json", "w", encoding="utf-8"), ensure_ascii=False)
+                for k, r in sorted(checks.items()):
+                    if r.get("match", 1) < 0.9:
+                        amb.setdefault("long_pauses", []).append(
+                            {"turn": k + 1, "speaker": turns[k][0], "kind": "words differ from the text (repeated or missing)",
+                             "heard": r.get("heard"), "match": r.get("match")})
                 res["ambience"] = amb
                 if amb.get("long_pauses"):
-                    res["next"] = ("lines with a long pause inside: run the same command again with --retry " +
+                    res["next"] = ("lines to make again (odd pause, a sound after the last word, or words repeated / "
+                                   "missing): run the same command again with --retry " +
                                    ",".join(sorted({str(x["turn"]) for x in amb["long_pauses"]}, key=int)) +
-                                   " (a new take; never cut the pause out)")
+                                   " (a new take - never cut the finished line)")
             if a.verify:
                 res["check"] = [dict(text=t, voice=v, **r) for (_, t), v, r in
                                 zip(turns, used, verify_many([(f, t) for f, (_, t) in zip(files, turns)], a.lang))]

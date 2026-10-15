@@ -1,0 +1,52 @@
+{
+ "theme": "square",
+ "description": "public square",
+ "leitmotif": "square",
+ "loudness_db": 0,
+ "highpass_hz": 0,
+ "room": "outdoor",
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "bells",
+   "every": 90,
+   "db": -4,
+   "signature": true
+  },
+  {
+   "sound": "footsteps",
+   "every": 40,
+   "db": -8
+  },
+  {
+   "sound": "laughing",
+   "every": 60,
+   "db": -8
+  },
+  {
+   "sound": "street_music",
+   "every": 90,
+   "db": -8
+  },
+  {
+   "sound": "children",
+   "every": 90,
+   "db": -10
+  },
+  {
+   "sound": "birds",
+   "every": 60,
+   "db": -8
+  },
+  {
+   "sound": "crow",
+   "every": 150,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 4,
+ "calm": [
+  4,
+  12
+ ]
+}

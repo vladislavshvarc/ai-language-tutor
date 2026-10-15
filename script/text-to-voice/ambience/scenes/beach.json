@@ -1,0 +1,37 @@
+{
+ "theme": "beach",
+ "description": "beach, waves and people",
+ "leitmotif": "beach",
+ "loudness_db": 5,
+ "highpass_hz": 0,
+ "room": "outdoor",
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "sea_waves",
+   "every": 12,
+   "db": 0,
+   "signature": true
+  },
+  {
+   "sound": "children",
+   "every": 50,
+   "db": -6
+  },
+  {
+   "sound": "laughing",
+   "every": 50,
+   "db": -6
+  },
+  {
+   "sound": "dog",
+   "every": 90,
+   "db": -8
+  }
+ ],
+ "max_per_minute": 6,
+ "calm": [
+  2,
+  7
+ ]
+}

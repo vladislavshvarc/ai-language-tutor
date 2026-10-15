@@ -1,0 +1,29 @@
+{
+ "theme": "airplane",
+ "description": "airplane cabin",
+ "leitmotif": "airplane",
+ "loudness_db": 1,
+ "highpass_hz": 0,
+ "room": [
+  0.25,
+  0.1
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "coughing",
+   "every": 70,
+   "db": -10
+  },
+  {
+   "sound": "laughing",
+   "every": 150,
+   "db": -12
+  }
+ ],
+ "max_per_minute": 1,
+ "calm": [
+  15,
+  30
+ ]
+}

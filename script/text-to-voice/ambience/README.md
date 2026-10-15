@@ -7,7 +7,11 @@ Used by `../../ambience.py` (and `tts.py --ambience <scene>`). Each scene folder
 | metro, metro_station, bus, tram, airport, street (pedestrian), traffic, park, square, mall | 3 per scene, mostly recorded in **Paris** (others: Helsinki, London, Barcelona...) | TUT Urban Acoustic Scenes 2018, development set (Tampere University; Mesaros, Heittola, Virtanen). Free for non-commercial / research use. Mirror used: huggingface.co/datasets/wetdog/TUT-urban-acoustic-scenes-2018-development-16bit |
 | most scenes (cafe, restaurant, train_station, office, kitchen, river, car + extra metro, bus, park, square, traffic) | DEMAND noise database (Thiemann, Ito, Vincent 2013), recorded in France; 2 × 75 s per environment, channel 1 | CC BY-SA 3.0 - zenodo.org/records/1227121 |
 | cafe (also) | 3 synthetic beds: unintelligible French chatter from 9 overlapping TTS voices + cups and spoons (`make_cafe.py`) | made here; the dataset has no café scene |
-| _events/birds, bells, laughing, pouring, car_horn, footsteps | 40 short clips each | ESC-50 (Karol J. Piczak), clips from freesound.org, CC BY-NC 3.0; per-clip sources in `_events/sources.json` |
+| _events/children, jackhammer, street_music | 25-30 clips each (foreground, ≥ 3.5 s, one per recording) | UrbanSound8K (Salamon, Jacoby, Bello 2014), clips from freesound.org, CC BY-NC; mirror huggingface.co/datasets/MahiA/UrbanSound8K; sources in `_events/sources.json` |
+| _events/whistle, rail_clatter | synthetic (`make_events.py`): a traffic officer's whistle, wheels over rail joints | made here |
+| scenes/*.json | one sound map per place: base recordings, details, how often, how loud | made here, see `scenes/README.md` |
+| rain | 2 stereo beds (`esc50-rain-*.ogg`) joined from the 40 ESC-50 rain clips (CC BY-NC 3.0) - the earlier Freesound recording (far thunder, wind, traffic) sounded like noise with an echo and is kept in `_unused/` |
+| _events/birds, bells, laughing, pouring, car_horn, footsteps, dog, crow, coughing, keyboard, siren, train, sea_waves, thunder | 40 short clips each | ESC-50 (Karol J. Piczak), clips from freesound.org, CC BY-NC 3.0; per-clip sources in `_events/sources.json` |
 
 Personal study only - don't publish lessons that contain these recordings commercially.
 
@@ -36,7 +40,6 @@ Personal study only - don't publish lessons that contain these recordings commer
 | park | [City Park - All sounds of the park.wav](https://freesound.org/people/dibko/sounds/624123/) | dibko | CC BY 4.0 |
 | park | [20250504 - 02 - H4n - Maribor - City park with fountain](https://freesound.org/people/dibko/sounds/803614/) | dibko | CC BY 4.0 |
 | park | [church-bell city-park Zuiderpark s-Hertogenbosch Netherlands 0901 am 250729_1184](https://freesound.org/people/klankbeeld/sounds/850139/) | klankbeeld | CC BY 4.0 |
-| rain | [city far thunder rain wind traffiic 506 pm 250913_0014](https://freesound.org/people/klankbeeld/sounds/826578/) | klankbeeld | CC BY 4.0 |
 | restaurant | [ambience - restaurant.WAV](https://freesound.org/people/soundtracvkradio/sounds/394678/) | soundtracvkradio | CC0 |
 | restaurant | [Restaurant ambience, Clachan Inn, Dryden, Scotland.  August 27, 2022.  2040 hours.](https://freesound.org/people/Robert.Crosley/sounds/730021/) | Robert.Crosley | CC BY 4.0 |
 | shop | [Inside Bakery, Shop Ambience, Day, London, 2OA - Spatial Audio](https://freesound.org/people/VizAion/sounds/802509/) | VizAion | CC0 |

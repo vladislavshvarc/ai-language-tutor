@@ -1,0 +1,34 @@
+{
+ "theme": "bus",
+ "description": "inside a city bus",
+ "leitmotif": "bus",
+ "loudness_db": 4,
+ "highpass_hz": 0,
+ "room": [
+  0.22,
+  0.1
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "coughing",
+   "every": 70,
+   "db": -10
+  },
+  {
+   "sound": "car_horn",
+   "every": 120,
+   "db": -12
+  },
+  {
+   "sound": "laughing",
+   "every": 120,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 2,
+ "calm": [
+  8,
+  20
+ ]
+}

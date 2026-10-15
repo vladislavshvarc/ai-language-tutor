@@ -1,0 +1,37 @@
+{
+ "theme": "river",
+ "description": "by a river",
+ "leitmotif": "river",
+ "loudness_db": 6,
+ "highpass_hz": 0,
+ "room": "outdoor",
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "birds",
+   "every": 20,
+   "db": -4,
+   "signature": true
+  },
+  {
+   "sound": "dog",
+   "every": 70,
+   "db": -8
+  },
+  {
+   "sound": "footsteps",
+   "every": 50,
+   "db": -8
+  },
+  {
+   "sound": "children",
+   "every": 90,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 4,
+ "calm": [
+  4,
+  12
+ ]
+}

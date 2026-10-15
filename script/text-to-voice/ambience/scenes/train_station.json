@@ -1,0 +1,40 @@
+{
+ "theme": "train_station",
+ "description": "railway station hall / platform",
+ "leitmotif": "train_station",
+ "loudness_db": 2,
+ "highpass_hz": 0,
+ "room": [
+  1.0,
+  0.12
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "train",
+   "every": 50,
+   "db": -4,
+   "signature": true
+  },
+  {
+   "sound": "footsteps",
+   "every": 40,
+   "db": -8
+  },
+  {
+   "sound": "coughing",
+   "every": 90,
+   "db": -10
+  },
+  {
+   "sound": "laughing",
+   "every": 120,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 3,
+ "calm": [
+  5,
+  15
+ ]
+}

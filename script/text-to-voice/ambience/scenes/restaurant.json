@@ -1,0 +1,29 @@
+{
+ "theme": "restaurant",
+ "description": "restaurant dining room",
+ "leitmotif": "restaurant",
+ "loudness_db": 0,
+ "highpass_hz": 0,
+ "room": [
+  0.55,
+  0.13
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "laughing",
+   "every": 40,
+   "db": -6
+  },
+  {
+   "sound": "pouring",
+   "every": 60,
+   "db": -8
+  }
+ ],
+ "max_per_minute": 2,
+ "calm": [
+  8,
+  18
+ ]
+}

@@ -71,7 +71,7 @@ def load(model_dir):
 def use_voice(m, model_dir, voice):
     vdir = Path(model_dir) / "voices"
     pt, wav = vdir / f"{voice}.pt", vdir / f"{voice}.wav"
-    if pt.exists():
+    if pt.exists() and (not wav.exists() or pt.stat().st_mtime >= wav.stat().st_mtime):
         m.conds = Conditionals.load(pt, map_location="cpu")
     elif wav.exists():
         m.prepare_conditionals(str(wav))

@@ -1,0 +1,35 @@
+{
+ "theme": "cafe",
+ "description": "café / bar: chatter, cups, coffee machine",
+ "leitmotif": "cafe",
+ "loudness_db": 0,
+ "highpass_hz": 0,
+ "room": [
+  0.5,
+  0.13
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "laughing",
+   "every": 30,
+   "db": -4
+  },
+  {
+   "sound": "pouring",
+   "every": 40,
+   "db": -6,
+   "signature": true
+  },
+  {
+   "sound": "coughing",
+   "every": 90,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 3,
+ "calm": [
+  5,
+  14
+ ]
+}

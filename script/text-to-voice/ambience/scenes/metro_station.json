@@ -1,0 +1,40 @@
+{
+ "theme": "metro_station",
+ "description": "metro platform or station hall",
+ "leitmotif": "metro_station",
+ "loudness_db": 3,
+ "highpass_hz": 0,
+ "room": [
+  0.9,
+  0.12
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "train",
+   "every": 60,
+   "db": -4,
+   "signature": true
+  },
+  {
+   "sound": "footsteps",
+   "every": 40,
+   "db": -8
+  },
+  {
+   "sound": "street_music",
+   "every": 150,
+   "db": -10
+  },
+  {
+   "sound": "coughing",
+   "every": 90,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 3,
+ "calm": [
+  5,
+  15
+ ]
+}

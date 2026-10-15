@@ -1198,5 +1198,2455 @@
 "file": "footsteps/5-51149-A-25.ogg",
 "category": "footsteps",
 "freesound_source": 51149
+},
+{
+"file": "dog/1-100032-A-0.ogg",
+"category": "dog",
+"freesound_source": 100032
+},
+{
+"file": "crow/1-103298-A-9.ogg",
+"category": "crow",
+"freesound_source": 103298
+},
+{
+"file": "dog/1-110389-A-0.ogg",
+"category": "dog",
+"freesound_source": 110389
+},
+{
+"file": "keyboard/1-137-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 137
+},
+{
+"file": "coughing/1-19111-A-24.ogg",
+"category": "coughing",
+"freesound_source": 19111
+},
+{
+"file": "coughing/1-19118-A-24.ogg",
+"category": "coughing",
+"freesound_source": 19118
+},
+{
+"file": "dog/1-30226-A-0.ogg",
+"category": "dog",
+"freesound_source": 30226
+},
+{
+"file": "dog/1-30344-A-0.ogg",
+"category": "dog",
+"freesound_source": 30344
+},
+{
+"file": "coughing/1-30830-A-24.ogg",
+"category": "coughing",
+"freesound_source": 30830
+},
+{
+"file": "siren/1-31482-A-42.ogg",
+"category": "siren",
+"freesound_source": 31482
+},
+{
+"file": "siren/1-31482-B-42.ogg",
+"category": "siren",
+"freesound_source": 31482
+},
+{
+"file": "dog/1-32318-A-0.ogg",
+"category": "dog",
+"freesound_source": 32318
+},
+{
+"file": "crow/1-39835-A-9.ogg",
+"category": "crow",
+"freesound_source": 39835
+},
+{
+"file": "crow/1-39835-B-9.ogg",
+"category": "crow",
+"freesound_source": 39835
+},
+{
+"file": "coughing/1-52266-A-24.ogg",
+"category": "coughing",
+"freesound_source": 52266
+},
+{
+"file": "coughing/1-52323-A-24.ogg",
+"category": "coughing",
+"freesound_source": 52323
+},
+{
+"file": "keyboard/1-53501-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 53501
+},
+{
+"file": "coughing/1-53663-A-24.ogg",
+"category": "coughing",
+"freesound_source": 53663
+},
+{
+"file": "siren/1-54084-A-42.ogg",
+"category": "siren",
+"freesound_source": 54084
+},
+{
+"file": "crow/1-56233-A-9.ogg",
+"category": "crow",
+"freesound_source": 56233
+},
+{
+"file": "crow/1-56234-A-9.ogg",
+"category": "crow",
+"freesound_source": 56234
+},
+{
+"file": "coughing/1-58792-A-24.ogg",
+"category": "coughing",
+"freesound_source": 58792
+},
+{
+"file": "dog/1-59513-A-0.ogg",
+"category": "dog",
+"freesound_source": 59513
+},
+{
+"file": "keyboard/1-61212-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 61212
+},
+{
+"file": "keyboard/1-62594-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 62594
+},
+{
+"file": "coughing/1-63679-A-24.ogg",
+"category": "coughing",
+"freesound_source": 63679
+},
+{
+"file": "crow/1-75162-A-9.ogg",
+"category": "crow",
+"freesound_source": 75162
+},
+{
+"file": "siren/1-76831-A-42.ogg",
+"category": "siren",
+"freesound_source": 76831
+},
+{
+"file": "siren/1-76831-B-42.ogg",
+"category": "siren",
+"freesound_source": 76831
+},
+{
+"file": "siren/1-76831-C-42.ogg",
+"category": "siren",
+"freesound_source": 76831
+},
+{
+"file": "siren/1-76831-D-42.ogg",
+"category": "siren",
+"freesound_source": 76831
+},
+{
+"file": "siren/1-76831-E-42.ogg",
+"category": "siren",
+"freesound_source": 76831
+},
+{
+"file": "keyboard/1-79711-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 79711
+},
+{
+"file": "keyboard/1-84393-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 84393
+},
+{
+"file": "dog/1-85362-A-0.ogg",
+"category": "dog",
+"freesound_source": 85362
+},
+{
+"file": "keyboard/1-94231-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 94231
+},
+{
+"file": "keyboard/1-94231-B-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 94231
+},
+{
+"file": "crow/1-96950-A-9.ogg",
+"category": "crow",
+"freesound_source": 96950
+},
+{
+"file": "crow/1-96950-B-9.ogg",
+"category": "crow",
+"freesound_source": 96950
+},
+{
+"file": "dog/1-97392-A-0.ogg",
+"category": "dog",
+"freesound_source": 97392
+},
+{
+"file": "keyboard/2-104168-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 104168
+},
+{
+"file": "coughing/2-108017-A-24.ogg",
+"category": "coughing",
+"freesound_source": 108017
+},
+{
+"file": "crow/2-108763-A-9.ogg",
+"category": "crow",
+"freesound_source": 108763
+},
+{
+"file": "crow/2-108766-A-9.ogg",
+"category": "crow",
+"freesound_source": 108766
+},
+{
+"file": "crow/2-108767-A-9.ogg",
+"category": "crow",
+"freesound_source": 108767
+},
+{
+"file": "crow/2-108767-B-9.ogg",
+"category": "crow",
+"freesound_source": 108767
+},
+{
+"file": "crow/2-108767-C-9.ogg",
+"category": "crow",
+"freesound_source": 108767
+},
+{
+"file": "crow/2-109231-A-9.ogg",
+"category": "crow",
+"freesound_source": 109231
+},
+{
+"file": "crow/2-109231-B-9.ogg",
+"category": "crow",
+"freesound_source": 109231
+},
+{
+"file": "crow/2-109231-C-9.ogg",
+"category": "crow",
+"freesound_source": 109231
+},
+{
+"file": "keyboard/2-109316-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 109316
+},
+{
+"file": "dog/2-114280-A-0.ogg",
+"category": "dog",
+"freesound_source": 114280
+},
+{
+"file": "dog/2-114587-A-0.ogg",
+"category": "dog",
+"freesound_source": 114587
+},
+{
+"file": "dog/2-116400-A-0.ogg",
+"category": "dog",
+"freesound_source": 116400
+},
+{
+"file": "dog/2-117271-A-0.ogg",
+"category": "dog",
+"freesound_source": 117271
+},
+{
+"file": "dog/2-118072-A-0.ogg",
+"category": "dog",
+"freesound_source": 118072
+},
+{
+"file": "keyboard/2-118459-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 118459
+},
+{
+"file": "keyboard/2-118459-B-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 118459
+},
+{
+"file": "keyboard/2-118817-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 118817
+},
+{
+"file": "dog/2-118964-A-0.ogg",
+"category": "dog",
+"freesound_source": 118964
+},
+{
+"file": "keyboard/2-120333-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 120333
+},
+{
+"file": "dog/2-122104-A-0.ogg",
+"category": "dog",
+"freesound_source": 122104
+},
+{
+"file": "dog/2-122104-B-0.ogg",
+"category": "dog",
+"freesound_source": 122104
+},
+{
+"file": "coughing/2-123896-A-24.ogg",
+"category": "coughing",
+"freesound_source": 123896
+},
+{
+"file": "siren/2-43802-A-42.ogg",
+"category": "siren",
+"freesound_source": 43802
+},
+{
+"file": "siren/2-43806-A-42.ogg",
+"category": "siren",
+"freesound_source": 43806
+},
+{
+"file": "siren/2-70052-A-42.ogg",
+"category": "siren",
+"freesound_source": 70052
+},
+{
+"file": "siren/2-70052-B-42.ogg",
+"category": "siren",
+"freesound_source": 70052
+},
+{
+"file": "siren/2-70936-A-42.ogg",
+"category": "siren",
+"freesound_source": 70936
+},
+{
+"file": "siren/2-70938-A-42.ogg",
+"category": "siren",
+"freesound_source": 70938
+},
+{
+"file": "siren/2-70939-A-42.ogg",
+"category": "siren",
+"freesound_source": 70939
+},
+{
+"file": "siren/2-72688-A-42.ogg",
+"category": "siren",
+"freesound_source": 72688
+},
+{
+"file": "coughing/2-85292-A-24.ogg",
+"category": "coughing",
+"freesound_source": 85292
+},
+{
+"file": "coughing/2-87412-A-24.ogg",
+"category": "coughing",
+"freesound_source": 87412
+},
+{
+"file": "coughing/2-87794-A-24.ogg",
+"category": "coughing",
+"freesound_source": 87794
+},
+{
+"file": "coughing/2-87795-A-24.ogg",
+"category": "coughing",
+"freesound_source": 87795
+},
+{
+"file": "coughing/2-87799-A-24.ogg",
+"category": "coughing",
+"freesound_source": 87799
+},
+{
+"file": "coughing/2-98676-A-24.ogg",
+"category": "coughing",
+"freesound_source": 98676
+},
+{
+"file": "keyboard/2-99795-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 99795
+},
+{
+"file": "keyboard/2-99796-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 99796
+},
+{
+"file": "crow/3-112397-A-9.ogg",
+"category": "crow",
+"freesound_source": 112397
+},
+{
+"file": "crow/3-117293-A-9.ogg",
+"category": "crow",
+"freesound_source": 117293
+},
+{
+"file": "crow/3-121348-A-9.ogg",
+"category": "crow",
+"freesound_source": 121348
+},
+{
+"file": "crow/3-124925-A-9.ogg",
+"category": "crow",
+"freesound_source": 124925
+},
+{
+"file": "coughing/3-125418-A-24.ogg",
+"category": "coughing",
+"freesound_source": 125418
+},
+{
+"file": "keyboard/3-125548-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 125548
+},
+{
+"file": "crow/3-127890-A-9.ogg",
+"category": "crow",
+"freesound_source": 127890
+},
+{
+"file": "crow/3-127890-B-9.ogg",
+"category": "crow",
+"freesound_source": 127890
+},
+{
+"file": "crow/3-127890-C-9.ogg",
+"category": "crow",
+"freesound_source": 127890
+},
+{
+"file": "crow/3-129264-A-9.ogg",
+"category": "crow",
+"freesound_source": 129264
+},
+{
+"file": "coughing/3-132601-A-24.ogg",
+"category": "coughing",
+"freesound_source": 132601
+},
+{
+"file": "keyboard/3-132830-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 132830
+},
+{
+"file": "dog/3-136288-A-0.ogg",
+"category": "dog",
+"freesound_source": 136288
+},
+{
+"file": "coughing/3-142604-A-24.ogg",
+"category": "coughing",
+"freesound_source": 142604
+},
+{
+"file": "dog/3-144028-A-0.ogg",
+"category": "dog",
+"freesound_source": 144028
+},
+{
+"file": "keyboard/3-144106-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 144106
+},
+{
+"file": "keyboard/3-144120-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 144120
+},
+{
+"file": "coughing/3-145487-A-24.ogg",
+"category": "coughing",
+"freesound_source": 145487
+},
+{
+"file": "coughing/3-146873-A-24.ogg",
+"category": "coughing",
+"freesound_source": 146873
+},
+{
+"file": "coughing/3-149042-A-24.ogg",
+"category": "coughing",
+"freesound_source": 149042
+},
+{
+"file": "coughing/3-151212-A-24.ogg",
+"category": "coughing",
+"freesound_source": 151212
+},
+{
+"file": "coughing/3-151213-A-24.ogg",
+"category": "coughing",
+"freesound_source": 151213
+},
+{
+"file": "keyboard/3-153444-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 153444
+},
+{
+"file": "keyboard/3-154781-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 154781
+},
+{
+"file": "dog/3-155312-A-0.ogg",
+"category": "dog",
+"freesound_source": 155312
+},
+{
+"file": "keyboard/3-155568-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 155568
+},
+{
+"file": "keyboard/3-155570-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 155570
+},
+{
+"file": "dog/3-157695-A-0.ogg",
+"category": "dog",
+"freesound_source": 157695
+},
+{
+"file": "dog/3-163459-A-0.ogg",
+"category": "dog",
+"freesound_source": 163459
+},
+{
+"file": "dog/3-170015-A-0.ogg",
+"category": "dog",
+"freesound_source": 170015
+},
+{
+"file": "dog/3-180256-A-0.ogg",
+"category": "dog",
+"freesound_source": 180256
+},
+{
+"file": "dog/3-180977-A-0.ogg",
+"category": "dog",
+"freesound_source": 180977
+},
+{
+"file": "siren/3-51376-A-42.ogg",
+"category": "siren",
+"freesound_source": 51376
+},
+{
+"file": "siren/3-51731-A-42.ogg",
+"category": "siren",
+"freesound_source": 51731
+},
+{
+"file": "siren/3-51731-B-42.ogg",
+"category": "siren",
+"freesound_source": 51731
+},
+{
+"file": "siren/3-51909-A-42.ogg",
+"category": "siren",
+"freesound_source": 51909
+},
+{
+"file": "siren/3-51909-B-42.ogg",
+"category": "siren",
+"freesound_source": 51909
+},
+{
+"file": "siren/3-58772-A-42.ogg",
+"category": "siren",
+"freesound_source": 58772
+},
+{
+"file": "siren/3-62878-A-42.ogg",
+"category": "siren",
+"freesound_source": 62878
+},
+{
+"file": "siren/3-62878-B-42.ogg",
+"category": "siren",
+"freesound_source": 62878
+},
+{
+"file": "siren/4-102871-A-42.ogg",
+"category": "siren",
+"freesound_source": 102871
+},
+{
+"file": "siren/4-111671-A-42.ogg",
+"category": "siren",
+"freesound_source": 111671
+},
+{
+"file": "siren/4-111671-B-42.ogg",
+"category": "siren",
+"freesound_source": 111671
+},
+{
+"file": "siren/4-121532-A-42.ogg",
+"category": "siren",
+"freesound_source": 121532
+},
+{
+"file": "crow/4-136381-A-9.ogg",
+"category": "crow",
+"freesound_source": 136381
+},
+{
+"file": "crow/4-138344-A-9.ogg",
+"category": "crow",
+"freesound_source": 138344
+},
+{
+"file": "crow/4-145081-A-9.ogg",
+"category": "crow",
+"freesound_source": 145081
+},
+{
+"file": "coughing/4-152995-A-24.ogg",
+"category": "coughing",
+"freesound_source": 152995
+},
+{
+"file": "coughing/4-154443-A-24.ogg",
+"category": "coughing",
+"freesound_source": 154443
+},
+{
+"file": "coughing/4-155650-A-24.ogg",
+"category": "coughing",
+"freesound_source": 155650
+},
+{
+"file": "coughing/4-155650-B-24.ogg",
+"category": "coughing",
+"freesound_source": 155650
+},
+{
+"file": "crow/4-156227-A-9.ogg",
+"category": "crow",
+"freesound_source": 156227
+},
+{
+"file": "coughing/4-157296-A-24.ogg",
+"category": "coughing",
+"freesound_source": 157296
+},
+{
+"file": "keyboard/4-158653-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 158653
+},
+{
+"file": "crow/4-159426-A-9.ogg",
+"category": "crow",
+"freesound_source": 159426
+},
+{
+"file": "keyboard/4-167155-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 167155
+},
+{
+"file": "coughing/4-169726-A-24.ogg",
+"category": "coughing",
+"freesound_source": 169726
+},
+{
+"file": "coughing/4-171396-A-24.ogg",
+"category": "coughing",
+"freesound_source": 171396
+},
+{
+"file": "keyboard/4-172180-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 172180
+},
+{
+"file": "keyboard/4-172742-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 172742
+},
+{
+"file": "crow/4-173865-A-9.ogg",
+"category": "crow",
+"freesound_source": 173865
+},
+{
+"file": "crow/4-173865-B-9.ogg",
+"category": "crow",
+"freesound_source": 173865
+},
+{
+"file": "keyboard/4-177243-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 177243
+},
+{
+"file": "coughing/4-177835-A-24.ogg",
+"category": "coughing",
+"freesound_source": 177835
+},
+{
+"file": "keyboard/4-181707-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 181707
+},
+{
+"file": "keyboard/4-181708-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 181708
+},
+{
+"file": "dog/4-182395-A-0.ogg",
+"category": "dog",
+"freesound_source": 182395
+},
+{
+"file": "dog/4-183992-A-0.ogg",
+"category": "dog",
+"freesound_source": 183992
+},
+{
+"file": "dog/4-184575-A-0.ogg",
+"category": "dog",
+"freesound_source": 184575
+},
+{
+"file": "keyboard/4-185613-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 185613
+},
+{
+"file": "crow/4-188287-A-9.ogg",
+"category": "crow",
+"freesound_source": 188287
+},
+{
+"file": "dog/4-191687-A-0.ogg",
+"category": "dog",
+"freesound_source": 191687
+},
+{
+"file": "dog/4-192236-A-0.ogg",
+"category": "dog",
+"freesound_source": 192236
+},
+{
+"file": "dog/4-194754-A-0.ogg",
+"category": "dog",
+"freesound_source": 194754
+},
+{
+"file": "dog/4-199261-A-0.ogg",
+"category": "dog",
+"freesound_source": 199261
+},
+{
+"file": "dog/4-207124-A-0.ogg",
+"category": "dog",
+"freesound_source": 207124
+},
+{
+"file": "siren/4-67358-A-42.ogg",
+"category": "siren",
+"freesound_source": 67358
+},
+{
+"file": "siren/4-80761-A-42.ogg",
+"category": "siren",
+"freesound_source": 80761
+},
+{
+"file": "siren/4-90014-A-42.ogg",
+"category": "siren",
+"freesound_source": 90014
+},
+{
+"file": "siren/4-90014-B-42.ogg",
+"category": "siren",
+"freesound_source": 90014
+},
+{
+"file": "siren/5-117118-A-42.ogg",
+"category": "siren",
+"freesound_source": 117118
+},
+{
+"file": "siren/5-117120-A-42.ogg",
+"category": "siren",
+"freesound_source": 117120
+},
+{
+"file": "siren/5-117122-A-42.ogg",
+"category": "siren",
+"freesound_source": 117122
+},
+{
+"file": "siren/5-133989-A-42.ogg",
+"category": "siren",
+"freesound_source": 133989
+},
+{
+"file": "siren/5-133989-B-42.ogg",
+"category": "siren",
+"freesound_source": 133989
+},
+{
+"file": "siren/5-150409-A-42.ogg",
+"category": "siren",
+"freesound_source": 150409
+},
+{
+"file": "siren/5-160551-A-42.ogg",
+"category": "siren",
+"freesound_source": 160551
+},
+{
+"file": "coughing/5-178997-A-24.ogg",
+"category": "coughing",
+"freesound_source": 178997
+},
+{
+"file": "siren/5-184323-A-42.ogg",
+"category": "siren",
+"freesound_source": 184323
+},
+{
+"file": "coughing/5-184871-A-24.ogg",
+"category": "coughing",
+"freesound_source": 184871
+},
+{
+"file": "dog/5-203128-A-0.ogg",
+"category": "dog",
+"freesound_source": 203128
+},
+{
+"file": "dog/5-203128-B-0.ogg",
+"category": "dog",
+"freesound_source": 203128
+},
+{
+"file": "coughing/5-204604-A-24.ogg",
+"category": "coughing",
+"freesound_source": 204604
+},
+{
+"file": "keyboard/5-205090-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 205090
+},
+{
+"file": "coughing/5-207681-A-24.ogg",
+"category": "coughing",
+"freesound_source": 207681
+},
+{
+"file": "dog/5-208030-A-0.ogg",
+"category": "dog",
+"freesound_source": 208030
+},
+{
+"file": "coughing/5-208761-A-24.ogg",
+"category": "coughing",
+"freesound_source": 208761
+},
+{
+"file": "coughing/5-209719-A-24.ogg",
+"category": "coughing",
+"freesound_source": 209719
+},
+{
+"file": "coughing/5-211197-A-24.ogg",
+"category": "coughing",
+"freesound_source": 211197
+},
+{
+"file": "dog/5-212454-A-0.ogg",
+"category": "dog",
+"freesound_source": 212454
+},
+{
+"file": "crow/5-213836-A-9.ogg",
+"category": "crow",
+"freesound_source": 213836
+},
+{
+"file": "crow/5-213836-B-9.ogg",
+"category": "crow",
+"freesound_source": 213836
+},
+{
+"file": "crow/5-213836-C-9.ogg",
+"category": "crow",
+"freesound_source": 213836
+},
+{
+"file": "crow/5-213836-D-9.ogg",
+"category": "crow",
+"freesound_source": 213836
+},
+{
+"file": "dog/5-213855-A-0.ogg",
+"category": "dog",
+"freesound_source": 213855
+},
+{
+"file": "crow/5-214869-A-9.ogg",
+"category": "crow",
+"freesound_source": 214869
+},
+{
+"file": "keyboard/5-215005-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 215005
+},
+{
+"file": "keyboard/5-216131-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 216131
+},
+{
+"file": "dog/5-217158-A-0.ogg",
+"category": "dog",
+"freesound_source": 217158
+},
+{
+"file": "crow/5-222041-A-9.ogg",
+"category": "crow",
+"freesound_source": 222041
+},
+{
+"file": "keyboard/5-222894-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 222894
+},
+{
+"file": "keyboard/5-223099-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 223099
+},
+{
+"file": "keyboard/5-223099-B-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 223099
+},
+{
+"file": "dog/5-231762-A-0.ogg",
+"category": "dog",
+"freesound_source": 231762
+},
+{
+"file": "keyboard/5-234923-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 234923
+},
+{
+"file": "crow/5-242711-A-9.ogg",
+"category": "crow",
+"freesound_source": 242711
+},
+{
+"file": "keyboard/5-244178-A-32.ogg",
+"category": "keyboard_typing",
+"freesound_source": 244178
+},
+{
+"file": "coughing/5-251489-A-24.ogg",
+"category": "coughing",
+"freesound_source": 251489
+},
+{
+"file": "crow/5-261325-A-9.ogg",
+"category": "crow",
+"freesound_source": 261325
+},
+{
+"file": "dog/5-9032-A-0.ogg",
+"category": "dog",
+"freesound_source": 9032
+},
+{
+"file": "train/1-119125-A-45.ogg",
+"category": "train",
+"freesound_source": 119125
+},
+{
+"file": "(rain bed) 1-17367-A-10.ogg",
+"category": "rain",
+"freesound_source": 17367
+},
+{
+"file": "(rain bed) 1-21189-A-10.ogg",
+"category": "rain",
+"freesound_source": 21189
+},
+{
+"file": "(rain bed) 1-26222-A-10.ogg",
+"category": "rain",
+"freesound_source": 26222
+},
+{
+"file": "sea_waves/1-28135-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 28135
+},
+{
+"file": "sea_waves/1-28135-B-11.ogg",
+"category": "sea_waves",
+"freesound_source": 28135
+},
+{
+"file": "(rain bed) 1-29561-A-10.ogg",
+"category": "rain",
+"freesound_source": 29561
+},
+{
+"file": "sea_waves/1-39901-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 39901
+},
+{
+"file": "sea_waves/1-39901-B-11.ogg",
+"category": "sea_waves",
+"freesound_source": 39901
+},
+{
+"file": "sea_waves/1-43760-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 43760
+},
+{
+"file": "(rain bed) 1-50060-A-10.ogg",
+"category": "rain",
+"freesound_source": 50060
+},
+{
+"file": "train/1-54065-A-45.ogg",
+"category": "train",
+"freesound_source": 54065
+},
+{
+"file": "train/1-54065-B-45.ogg",
+"category": "train",
+"freesound_source": 54065
+},
+{
+"file": "(rain bed) 1-54958-A-10.ogg",
+"category": "rain",
+"freesound_source": 54958
+},
+{
+"file": "(rain bed) 1-56311-A-10.ogg",
+"category": "rain",
+"freesound_source": 56311
+},
+{
+"file": "sea_waves/1-61252-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 61252
+},
+{
+"file": "train/1-62509-A-45.ogg",
+"category": "train",
+"freesound_source": 62509
+},
+{
+"file": "(rain bed) 1-63871-A-10.ogg",
+"category": "rain",
+"freesound_source": 63871
+},
+{
+"file": "train/1-64473-A-45.ogg",
+"category": "train",
+"freesound_source": 64473
+},
+{
+"file": "train/1-70300-A-45.ogg",
+"category": "train",
+"freesound_source": 70300
+},
+{
+"file": "train/1-88409-A-45.ogg",
+"category": "train",
+"freesound_source": 88409
+},
+{
+"file": "train/1-88409-B-45.ogg",
+"category": "train",
+"freesound_source": 88409
+},
+{
+"file": "sea_waves/1-91359-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 91359
+},
+{
+"file": "sea_waves/1-91359-B-11.ogg",
+"category": "sea_waves",
+"freesound_source": 91359
+},
+{
+"file": "(rain bed) 2-101676-A-10.ogg",
+"category": "rain",
+"freesound_source": 101676
+},
+{
+"file": "sea_waves/2-102852-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 102852
+},
+{
+"file": "(rain bed) 2-117625-A-10.ogg",
+"category": "rain",
+"freesound_source": 117625
+},
+{
+"file": "train/2-122066-A-45.ogg",
+"category": "train",
+"freesound_source": 122066
+},
+{
+"file": "train/2-122066-B-45.ogg",
+"category": "train",
+"freesound_source": 122066
+},
+{
+"file": "train/2-122067-A-45.ogg",
+"category": "train",
+"freesound_source": 122067
+},
+{
+"file": "train/2-122067-B-45.ogg",
+"category": "train",
+"freesound_source": 122067
+},
+{
+"file": "sea_waves/2-124662-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 124662
+},
+{
+"file": "sea_waves/2-125966-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 125966
+},
+{
+"file": "sea_waves/2-132157-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 132157
+},
+{
+"file": "sea_waves/2-132157-B-11.ogg",
+"category": "sea_waves",
+"freesound_source": 132157
+},
+{
+"file": "sea_waves/2-133863-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 133863
+},
+{
+"file": "train/2-135649-A-45.ogg",
+"category": "train",
+"freesound_source": 135649
+},
+{
+"file": "train/2-135649-B-45.ogg",
+"category": "train",
+"freesound_source": 135649
+},
+{
+"file": "train/2-135649-C-45.ogg",
+"category": "train",
+"freesound_source": 135649
+},
+{
+"file": "sea_waves/2-137162-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 137162
+},
+{
+"file": "sea_waves/2-155801-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 155801
+},
+{
+"file": "train/2-262579-A-45.ogg",
+"category": "train",
+"freesound_source": 262579
+},
+{
+"file": "(rain bed) 2-72970-A-10.ogg",
+"category": "rain",
+"freesound_source": 72970
+},
+{
+"file": "(rain bed) 2-73027-A-10.ogg",
+"category": "rain",
+"freesound_source": 73027
+},
+{
+"file": "(rain bed) 2-73260-A-10.ogg",
+"category": "rain",
+"freesound_source": 73260
+},
+{
+"file": "(rain bed) 2-81731-A-10.ogg",
+"category": "rain",
+"freesound_source": 81731
+},
+{
+"file": "(rain bed) 2-82367-A-10.ogg",
+"category": "rain",
+"freesound_source": 82367
+},
+{
+"file": "(rain bed) 2-87781-A-10.ogg",
+"category": "rain",
+"freesound_source": 87781
+},
+{
+"file": "(rain bed) 3-132852-A-10.ogg",
+"category": "rain",
+"freesound_source": 132852
+},
+{
+"file": "train/3-135650-A-45.ogg",
+"category": "train",
+"freesound_source": 135650
+},
+{
+"file": "train/3-135650-B-45.ogg",
+"category": "train",
+"freesound_source": 135650
+},
+{
+"file": "train/3-136451-A-45.ogg",
+"category": "train",
+"freesound_source": 136451
+},
+{
+"file": "train/3-138212-A-45.ogg",
+"category": "train",
+"freesound_source": 138212
+},
+{
+"file": "(rain bed) 3-140774-A-10.ogg",
+"category": "rain",
+"freesound_source": 140774
+},
+{
+"file": "train/3-141559-A-45.ogg",
+"category": "train",
+"freesound_source": 141559
+},
+{
+"file": "(rain bed) 3-142005-A-10.ogg",
+"category": "rain",
+"freesound_source": 142005
+},
+{
+"file": "(rain bed) 3-142006-A-10.ogg",
+"category": "rain",
+"freesound_source": 142006
+},
+{
+"file": "(rain bed) 3-143929-A-10.ogg",
+"category": "rain",
+"freesound_source": 143929
+},
+{
+"file": "sea_waves/3-144827-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 144827
+},
+{
+"file": "sea_waves/3-144827-B-11.ogg",
+"category": "sea_waves",
+"freesound_source": 144827
+},
+{
+"file": "sea_waves/3-155642-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 155642
+},
+{
+"file": "sea_waves/3-155642-B-11.ogg",
+"category": "sea_waves",
+"freesound_source": 155642
+},
+{
+"file": "(rain bed) 3-157149-A-10.ogg",
+"category": "rain",
+"freesound_source": 157149
+},
+{
+"file": "(rain bed) 3-157487-A-10.ogg",
+"category": "rain",
+"freesound_source": 157487
+},
+{
+"file": "train/3-157492-A-45.ogg",
+"category": "train",
+"freesound_source": 157492
+},
+{
+"file": "(rain bed) 3-157615-A-10.ogg",
+"category": "rain",
+"freesound_source": 157615
+},
+{
+"file": "train/3-159445-A-45.ogg",
+"category": "train",
+"freesound_source": 159445
+},
+{
+"file": "train/3-159445-B-45.ogg",
+"category": "train",
+"freesound_source": 159445
+},
+{
+"file": "sea_waves/3-164120-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 164120
+},
+{
+"file": "sea_waves/3-164630-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 164630
+},
+{
+"file": "sea_waves/3-166422-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 166422
+},
+{
+"file": "sea_waves/3-187710-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 187710
+},
+{
+"file": "(rain bed) 4-160999-A-10.ogg",
+"category": "rain",
+"freesound_source": 160999
+},
+{
+"file": "(rain bed) 4-161127-A-10.ogg",
+"category": "rain",
+"freesound_source": 161127
+},
+{
+"file": "(rain bed) 4-163264-A-10.ogg",
+"category": "rain",
+"freesound_source": 163264
+},
+{
+"file": "(rain bed) 4-164206-A-10.ogg",
+"category": "rain",
+"freesound_source": 164206
+},
+{
+"file": "train/4-165606-A-45.ogg",
+"category": "train",
+"freesound_source": 165606
+},
+{
+"file": "train/4-165791-A-45.ogg",
+"category": "train",
+"freesound_source": 165791
+},
+{
+"file": "train/4-165791-B-45.ogg",
+"category": "train",
+"freesound_source": 165791
+},
+{
+"file": "train/4-165845-A-45.ogg",
+"category": "train",
+"freesound_source": 165845
+},
+{
+"file": "train/4-165845-B-45.ogg",
+"category": "train",
+"freesound_source": 165845
+},
+{
+"file": "train/4-165933-A-45.ogg",
+"category": "train",
+"freesound_source": 165933
+},
+{
+"file": "(rain bed) 4-166661-A-10.ogg",
+"category": "rain",
+"freesound_source": 166661
+},
+{
+"file": "sea_waves/4-167063-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 167063
+},
+{
+"file": "sea_waves/4-167063-B-11.ogg",
+"category": "sea_waves",
+"freesound_source": 167063
+},
+{
+"file": "sea_waves/4-167063-C-11.ogg",
+"category": "sea_waves",
+"freesound_source": 167063
+},
+{
+"file": "train/4-168446-A-45.ogg",
+"category": "train",
+"freesound_source": 168446
+},
+{
+"file": "(rain bed) 4-177250-A-10.ogg",
+"category": "rain",
+"freesound_source": 177250
+},
+{
+"file": "train/4-178881-A-45.ogg",
+"category": "train",
+"freesound_source": 178881
+},
+{
+"file": "(rain bed) 4-180380-A-10.ogg",
+"category": "rain",
+"freesound_source": 180380
+},
+{
+"file": "(rain bed) 4-181286-A-10.ogg",
+"category": "rain",
+"freesound_source": 181286
+},
+{
+"file": "sea_waves/4-182613-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 182613
+},
+{
+"file": "sea_waves/4-182613-B-11.ogg",
+"category": "sea_waves",
+"freesound_source": 182613
+},
+{
+"file": "sea_waves/4-195497-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 195497
+},
+{
+"file": "sea_waves/4-195497-B-11.ogg",
+"category": "sea_waves",
+"freesound_source": 195497
+},
+{
+"file": "sea_waves/4-204618-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 204618
+},
+{
+"file": "(rain bed) 5-181766-A-10.ogg",
+"category": "rain",
+"freesound_source": 181766
+},
+{
+"file": "(rain bed) 5-188655-A-10.ogg",
+"category": "rain",
+"freesound_source": 188655
+},
+{
+"file": "train/5-188796-A-45.ogg",
+"category": "train",
+"freesound_source": 188796
+},
+{
+"file": "train/5-188945-A-45.ogg",
+"category": "train",
+"freesound_source": 188945
+},
+{
+"file": "(rain bed) 5-193339-A-10.ogg",
+"category": "rain",
+"freesound_source": 193339
+},
+{
+"file": "(rain bed) 5-194892-A-10.ogg",
+"category": "rain",
+"freesound_source": 194892
+},
+{
+"file": "(rain bed) 5-195710-A-10.ogg",
+"category": "rain",
+"freesound_source": 195710
+},
+{
+"file": "train/5-197118-A-45.ogg",
+"category": "train",
+"freesound_source": 197118
+},
+{
+"file": "train/5-197121-A-45.ogg",
+"category": "train",
+"freesound_source": 197121
+},
+{
+"file": "train/5-197121-B-45.ogg",
+"category": "train",
+"freesound_source": 197121
+},
+{
+"file": "(rain bed) 5-198321-A-10.ogg",
+"category": "rain",
+"freesound_source": 198321
+},
+{
+"file": "train/5-198600-A-45.ogg",
+"category": "train",
+"freesound_source": 198600
+},
+{
+"file": "train/5-199284-A-45.ogg",
+"category": "train",
+"freesound_source": 199284
+},
+{
+"file": "train/5-199284-B-45.ogg",
+"category": "train",
+"freesound_source": 199284
+},
+{
+"file": "sea_waves/5-200461-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 200461
+},
+{
+"file": "sea_waves/5-200461-B-11.ogg",
+"category": "sea_waves",
+"freesound_source": 200461
+},
+{
+"file": "(rain bed) 5-202898-A-10.ogg",
+"category": "rain",
+"freesound_source": 202898
+},
+{
+"file": "(rain bed) 5-203739-A-10.ogg",
+"category": "rain",
+"freesound_source": 203739
+},
+{
+"file": "sea_waves/5-208810-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 208810
+},
+{
+"file": "sea_waves/5-208810-B-11.ogg",
+"category": "sea_waves",
+"freesound_source": 208810
+},
+{
+"file": "sea_waves/5-213077-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 213077
+},
+{
+"file": "sea_waves/5-219379-A-11.ogg",
+"category": "sea_waves",
+"freesound_source": 219379
+},
+{
+"file": "sea_waves/5-219379-B-11.ogg",
+"category": "sea_waves",
+"freesound_source": 219379
+},
+{
+"file": "sea_waves/5-219379-C-11.ogg",
+"category": "sea_waves",
+"freesound_source": 219379
+},
+{
+"file": "jackhammer/us8k-68080-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 68080
+},
+{
+"file": "jackhammer/us8k-188823-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 188823
+},
+{
+"file": "jackhammer/us8k-174276-7-2-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 174276
+},
+{
+"file": "jackhammer/us8k-171305-7-2-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 171305
+},
+{
+"file": "jackhammer/us8k-77751-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 77751
+},
+{
+"file": "jackhammer/us8k-104998-7-0-5.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 104998
+},
+{
+"file": "jackhammer/us8k-131918-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 131918
+},
+{
+"file": "jackhammer/us8k-125678-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 125678
+},
+{
+"file": "jackhammer/us8k-14772-7-9-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 14772
+},
+{
+"file": "jackhammer/us8k-188813-7-10-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 188813
+},
+{
+"file": "jackhammer/us8k-165039-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 165039
+},
+{
+"file": "jackhammer/us8k-24728-7-2-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 24728
+},
+{
+"file": "jackhammer/us8k-98223-7-1-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 98223
+},
+{
+"file": "jackhammer/us8k-178261-7-1-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 178261
+},
+{
+"file": "jackhammer/us8k-33340-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 33340
+},
+{
+"file": "jackhammer/us8k-103074-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 103074
+},
+{
+"file": "jackhammer/us8k-31884-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 31884
+},
+{
+"file": "jackhammer/us8k-90013-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 90013
+},
+{
+"file": "jackhammer/us8k-132021-7-1-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 132021
+},
+{
+"file": "jackhammer/us8k-178260-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 178260
+},
+{
+"file": "jackhammer/us8k-30206-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 30206
+},
+{
+"file": "jackhammer/us8k-42097-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 42097
+},
+{
+"file": "jackhammer/us8k-180937-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 180937
+},
+{
+"file": "jackhammer/us8k-187920-7-1-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 187920
+},
+{
+"file": "jackhammer/us8k-110621-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 110621
+},
+{
+"file": "jackhammer/us8k-98859-7-2-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 98859
+},
+{
+"file": "jackhammer/us8k-105029-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 105029
+},
+{
+"file": "jackhammer/us8k-54697-7-0-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 54697
+},
+{
+"file": "jackhammer/us8k-62837-7-0-12.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 62837
+},
+{
+"file": "jackhammer/us8k-73623-7-1-0.ogg",
+"category": "jackhammer",
+"dataset": "UrbanSound8K",
+"freesound_source": 73623
+},
+{
+"file": "children/us8k-159735-2-0-11.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 159735
+},
+{
+"file": "children/us8k-69962-2-0-11.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 69962
+},
+{
+"file": "children/us8k-60591-2-0-11.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 60591
+},
+{
+"file": "children/us8k-162318-2-0-17.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 162318
+},
+{
+"file": "children/us8k-196070-2-0-0.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 196070
+},
+{
+"file": "children/us8k-196084-2-0-0.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 196084
+},
+{
+"file": "children/us8k-108362-2-0-11.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 108362
+},
+{
+"file": "children/us8k-123399-2-0-13.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 123399
+},
+{
+"file": "children/us8k-178520-2-0-11.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 178520
+},
+{
+"file": "children/us8k-137969-2-0-18.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 137969
+},
+{
+"file": "children/us8k-15356-2-0-0.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 15356
+},
+{
+"file": "children/us8k-14470-2-0-10.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 14470
+},
+{
+"file": "children/us8k-182800-2-0-0.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 182800
+},
+{
+"file": "children/us8k-52882-2-0-0.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 52882
+},
+{
+"file": "children/us8k-133494-2-0-18.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 133494
+},
+{
+"file": "children/us8k-185909-2-0-102.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 185909
+},
+{
+"file": "children/us8k-178826-2-0-10.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 178826
+},
+{
+"file": "children/us8k-196057-2-0-0.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 196057
+},
+{
+"file": "children/us8k-13579-2-0-15.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 13579
+},
+{
+"file": "children/us8k-85249-2-0-10.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 85249
+},
+{
+"file": "children/us8k-169043-2-0-10.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 169043
+},
+{
+"file": "children/us8k-100263-2-0-117.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 100263
+},
+{
+"file": "children/us8k-182739-2-0-13.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 182739
+},
+{
+"file": "children/us8k-178825-2-0-4.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 178825
+},
+{
+"file": "children/us8k-82368-2-0-0.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 82368
+},
+{
+"file": "children/us8k-9223-2-0-10.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 9223
+},
+{
+"file": "children/us8k-187110-2-0-1.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 187110
+},
+{
+"file": "children/us8k-169045-2-0-0.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 169045
+},
+{
+"file": "children/us8k-6902-2-0-12.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 6902
+},
+{
+"file": "children/us8k-159439-2-0-0.ogg",
+"category": "children_playing",
+"dataset": "UrbanSound8K",
+"freesound_source": 159439
+},
+{
+"file": "street_music/us8k-155227-9-0-2.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 155227
+},
+{
+"file": "street_music/us8k-34866-9-0-10.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 34866
+},
+{
+"file": "street_music/us8k-126153-9-0-0.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 126153
+},
+{
+"file": "street_music/us8k-164344-9-0-0.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 164344
+},
+{
+"file": "street_music/us8k-194733-9-0-1.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 194733
+},
+{
+"file": "street_music/us8k-96475-9-0-0.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 96475
+},
+{
+"file": "street_music/us8k-109263-9-0-34.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 109263
+},
+{
+"file": "street_music/us8k-89443-9-0-1.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 89443
+},
+{
+"file": "street_music/us8k-60608-9-0-0.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 60608
+},
+{
+"file": "street_music/us8k-89442-9-0-14.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 89442
+},
+{
+"file": "street_music/us8k-61789-9-0-10.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 61789
+},
+{
+"file": "street_music/us8k-165192-9-0-118.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 165192
+},
+{
+"file": "street_music/us8k-21683-9-0-15.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 21683
+},
+{
+"file": "street_music/us8k-71866-9-0-14.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 71866
+},
+{
+"file": "street_music/us8k-168906-9-0-114.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 168906
+},
+{
+"file": "street_music/us8k-96921-9-0-1.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 96921
+},
+{
+"file": "street_music/us8k-115418-9-0-11.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 115418
+},
+{
+"file": "street_music/us8k-161702-9-0-26.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 161702
+},
+{
+"file": "street_music/us8k-155241-9-0-50.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 155241
+},
+{
+"file": "street_music/us8k-77901-9-0-0.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 77901
+},
+{
+"file": "street_music/us8k-157940-9-0-0.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 157940
+},
+{
+"file": "street_music/us8k-61790-9-0-10.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 61790
+},
+{
+"file": "street_music/us8k-61791-9-1-1.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 61791
+},
+{
+"file": "street_music/us8k-77766-9-0-0.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 77766
+},
+{
+"file": "street_music/us8k-49485-9-0-138.ogg",
+"category": "street_music",
+"dataset": "UrbanSound8K",
+"freesound_source": 49485
+},
+{
+"file": "thunder/1-101296-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 101296
+},
+{
+"file": "thunder/1-101296-B-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 101296
+},
+{
+"file": "thunder/1-115521-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 115521
+},
+{
+"file": "thunder/1-23222-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 23222
+},
+{
+"file": "thunder/1-23222-B-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 23222
+},
+{
+"file": "thunder/1-24524-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 24524
+},
+{
+"file": "thunder/1-24524-B-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 24524
+},
+{
+"file": "thunder/1-24524-C-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 24524
+},
+{
+"file": "thunder/2-104105-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 104105
+},
+{
+"file": "thunder/2-104105-B-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 104105
+},
+{
+"file": "thunder/2-39441-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 39441
+},
+{
+"file": "thunder/2-39443-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 39443
+},
+{
+"file": "thunder/2-39443-B-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 39443
+},
+{
+"file": "thunder/2-39945-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 39945
+},
+{
+"file": "thunder/2-39945-B-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 39945
+},
+{
+"file": "thunder/2-39945-C-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 39945
+},
+{
+"file": "thunder/3-103050-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 103050
+},
+{
+"file": "thunder/3-103051-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 103051
+},
+{
+"file": "thunder/3-103051-B-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 103051
+},
+{
+"file": "thunder/3-103051-C-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 103051
+},
+{
+"file": "thunder/3-123224-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 123224
+},
+{
+"file": "thunder/3-124600-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 124600
+},
+{
+"file": "thunder/3-144891-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 144891
+},
+{
+"file": "thunder/3-144891-B-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 144891
+},
+{
+"file": "thunder/4-125070-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 125070
+},
+{
+"file": "thunder/4-125071-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 125071
+},
+{
+"file": "thunder/4-125072-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 125072
+},
+{
+"file": "thunder/4-125072-B-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 125072
+},
+{
+"file": "thunder/4-156993-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 156993
+},
+{
+"file": "thunder/4-161519-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 161519
+},
+{
+"file": "thunder/4-165813-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 165813
+},
+{
+"file": "thunder/4-165813-B-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 165813
+},
+{
+"file": "thunder/5-156999-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 156999
+},
+{
+"file": "thunder/5-156999-B-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 156999
+},
+{
+"file": "thunder/5-156999-C-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 156999
+},
+{
+"file": "thunder/5-156999-D-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 156999
+},
+{
+"file": "thunder/5-156999-E-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 156999
+},
+{
+"file": "thunder/5-188495-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 188495
+},
+{
+"file": "thunder/5-192191-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 192191
+},
+{
+"file": "thunder/5-195557-A-19.ogg",
+"category": "thunderstorm",
+"freesound_source": 195557
+},
+{
+"file": "whistle/synth-whistle-00.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-01.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-02.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-03.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-04.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-05.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-06.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-07.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-08.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-09.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-10.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-11.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-12.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-13.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-14.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-15.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-16.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-17.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-18.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-19.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-20.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-21.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-22.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "whistle/synth-whistle-23.ogg",
+"category": "whistle",
+"made_by": "make_events.py"
+},
+{
+"file": "rail_clatter/synth-rails-0.ogg",
+"category": "rail_clatter",
+"made_by": "make_events.py"
+},
+{
+"file": "rail_clatter/synth-rails-1.ogg",
+"category": "rail_clatter",
+"made_by": "make_events.py"
+},
+{
+"file": "rail_clatter/synth-rails-2.ogg",
+"category": "rail_clatter",
+"made_by": "make_events.py"
+},
+{
+"file": "rail_clatter/synth-rails-3.ogg",
+"category": "rail_clatter",
+"made_by": "make_events.py"
 }
 ]

@@ -1,0 +1,29 @@
+{
+ "theme": "supermarket",
+ "description": "supermarket / grocery store",
+ "leitmotif": "supermarket",
+ "loudness_db": 0,
+ "highpass_hz": 0,
+ "room": [
+  0.6,
+  0.12
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "coughing",
+   "every": 80,
+   "db": -10
+  },
+  {
+   "sound": "children",
+   "every": 120,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 2,
+ "calm": [
+  8,
+  20
+ ]
+}

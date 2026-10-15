@@ -1,0 +1,35 @@
+{
+ "theme": "office",
+ "description": "open-plan office",
+ "leitmotif": "office",
+ "loudness_db": 3,
+ "highpass_hz": 180,
+ "room": [
+  0.4,
+  0.12
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "keyboard",
+   "every": 12,
+   "db": -2,
+   "signature": true
+  },
+  {
+   "sound": "coughing",
+   "every": 70,
+   "db": -8
+  },
+  {
+   "sound": "laughing",
+   "every": 80,
+   "db": -8
+  }
+ ],
+ "max_per_minute": 4,
+ "calm": [
+  4,
+  12
+ ]
+}

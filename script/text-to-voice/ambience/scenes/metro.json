@@ -1,0 +1,29 @@
+{
+ "theme": "metro",
+ "description": "inside a metro / underground train",
+ "leitmotif": "metro",
+ "loudness_db": 7,
+ "highpass_hz": 0,
+ "room": [
+  0.25,
+  0.1
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "coughing",
+   "every": 70,
+   "db": -10
+  },
+  {
+   "sound": "laughing",
+   "every": 120,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 2,
+ "calm": [
+  10,
+  25
+ ]
+}

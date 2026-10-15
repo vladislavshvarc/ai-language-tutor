@@ -1,0 +1,40 @@
+{
+ "theme": "airport",
+ "description": "airport terminal",
+ "leitmotif": "airport",
+ "loudness_db": 0,
+ "highpass_hz": 0,
+ "room": [
+  1.0,
+  0.12
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "footsteps",
+   "every": 50,
+   "db": -8,
+   "signature": true
+  },
+  {
+   "sound": "coughing",
+   "every": 90,
+   "db": -10
+  },
+  {
+   "sound": "laughing",
+   "every": 120,
+   "db": -10
+  },
+  {
+   "sound": "children",
+   "every": 150,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 3,
+ "calm": [
+  5,
+  15
+ ]
+}

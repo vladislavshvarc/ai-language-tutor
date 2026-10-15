@@ -1,0 +1,29 @@
+{
+ "theme": "car",
+ "description": "inside a car on the road",
+ "leitmotif": "car",
+ "loudness_db": 4,
+ "highpass_hz": 0,
+ "room": [
+  0.15,
+  0.08
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "car_horn",
+   "every": 90,
+   "db": -10
+  },
+  {
+   "sound": "siren",
+   "every": 200,
+   "db": -12
+  }
+ ],
+ "max_per_minute": 1,
+ "calm": [
+  15,
+  30
+ ]
+}

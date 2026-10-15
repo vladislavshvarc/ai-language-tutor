@@ -1,0 +1,34 @@
+{
+ "theme": "mall",
+ "description": "shopping mall",
+ "leitmotif": "mall",
+ "loudness_db": 0,
+ "highpass_hz": 0,
+ "room": [
+  0.9,
+  0.12
+ ],
+ "layers": [],
+ "sounds": [
+  {
+   "sound": "footsteps",
+   "every": 50,
+   "db": -8
+  },
+  {
+   "sound": "laughing",
+   "every": 70,
+   "db": -8
+  },
+  {
+   "sound": "children",
+   "every": 90,
+   "db": -10
+  }
+ ],
+ "max_per_minute": 3,
+ "calm": [
+  6,
+  15
+ ]
+}
