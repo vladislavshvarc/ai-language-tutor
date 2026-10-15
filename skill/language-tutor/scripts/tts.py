@@ -125,7 +125,9 @@ KOKORO = {  # lang -> (kokoro lang code, [(voice, gender)])
 }
 MODELS_DIR = None  # set from --models-dir
 VENVS = os.path.join(os.path.expanduser("~"), ".venvs")
-CACHE = os.path.join(os.path.expanduser("~"), ".cache", "tts-clips")
+# finished clips are kept next to the scripts (the session's home is wiped every session): a re-run, a fixed
+# line or the next lesson reuses them instead of waiting ~45 s per Chatterbox line again
+CACHE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache", "tts-clips")
 WORKER_ENGINES = ("chatterbox",)          # runs in its own venv + process
 EACH_ENGINES = ("supertonic",)            # word lists / example sentences: fast, one clip per line
 
@@ -375,9 +377,13 @@ CHATTERBOX_STYLE = {"exaggeration": 0.6, "cfg_weight": 0.3, "temperature": 0.7}
 SCENE = False   # set for --ambience dialogues: pace is evened out in ambience.scene_dialogue
 
 
-def clip_key(voice, text, lang, slow):
+RETRY = {}  # turn number (1-based) -> attempt, from --retry: a new take of that line instead of the cached one
+
+
+def clip_key(voice, text, lang, slow, attempt=0):
     style = "lively1" if voice["engine"] == "chatterbox" else ""
-    k = "|".join([voice["id"], lang, "slow" if slow and voice["engine"] != "chatterbox" else "", style, text])
+    k = "|".join([voice["id"], lang, "slow" if slow and voice["engine"] != "chatterbox" else "", style, text]
+                 + ([f"take{attempt}"] if attempt else []))
     return os.path.join(CACHE, hashlib.sha1(k.encode("utf-8")).hexdigest()[:20] + ".wav")
 
 
@@ -420,7 +426,7 @@ def run_local(turns, lang, tmp, slow, engines, seed, forced, vary, all_voices=Fa
     os.makedirs(CACHE, exist_ok=True)
     cast = cast_for(lang, engines)
     voices = assign_voices(turns, cast, seed, forced, vary, all_voices)
-    paths = [clip_key(v, txt, lang, slow) for (_, txt), v in zip(turns, voices)]
+    paths = [clip_key(v, txt, lang, slow, RETRY.get(i + 1, 0)) for i, ((_, txt), v) in enumerate(zip(turns, voices))]
     # slow engines first, in their own processes, before this process loads any model (RAM)
     jobs = [(v, txt, p) for (_, txt), v, p in zip(turns, voices, paths) if v["engine"] in WORKER_ENGINES]
     if jobs:
@@ -657,12 +663,18 @@ def main():
     p.add_argument("--ambience", help="put the joined result into a place: metro, cafe, airport, street, park... (ambience.py --list)")
     p.add_argument("--level", help="with --ambience: learner level A0-C1, sets how loud the background is")
     p.add_argument("--snr", type=float, help="with --ambience: speech above background in dB (overrides --level)")
+    p.add_argument("--retry", help="turns to generate again (new take), e.g. 3,7 or 3:2 for a second retry - "
+                                   "for lines reported in ambience.long_pauses")
     p.add_argument("--budget", type=float, default=140, help="seconds to spend on slow engines before stopping (exit 3)")
     p.add_argument("--all-voices", action="store_true", help="with --each: use every engine (default: Supertonic only)")
     p.add_argument("--list-voices", action="store_true")
     p.add_argument("--check", action="store_true")
     p.add_argument("--models-dir", help="folder holding supertonic-3/, kokoro-*.onnx + voices-v1.0.bin, chatterbox/")
     a = p.parse_args()
+    for part in (a.retry or "").split(","):
+        if part.strip():
+            t, _, k = part.strip().partition(":")
+            RETRY[int(t)] = int(k or 1)
     global MODELS_DIR, SCENE
     MODELS_DIR = a.models_dir
     SCENE = bool(a.ambience and not a.each)
@@ -722,6 +734,10 @@ def main():
             res = {"backend": backend, "files": outs, "voices": dict(zip([s for s, _ in turns], used))}
             if amb:
                 res["ambience"] = amb
+                if amb.get("long_pauses"):
+                    res["next"] = ("lines with a long pause inside: run the same command again with --retry " +
+                                   ",".join(sorted({str(x["turn"]) for x in amb["long_pauses"]}, key=int)) +
+                                   " (a new take; never cut the pause out)")
             if a.verify:
                 res["check"] = [dict(text=t, voice=v, **r) for (_, t), v, r in
                                 zip(turns, used, verify_many([(f, t) for f, (_, t) in zip(files, turns)], a.lang))]

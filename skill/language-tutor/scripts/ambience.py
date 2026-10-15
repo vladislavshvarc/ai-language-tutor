@@ -177,7 +177,7 @@ def mix(speech_path, out_path, scene, snr=None, level=None, seed=None, intro=2.0
                 continue
             t = rnd.uniform(0.3, every)
             while t < n / SR - 1:
-                e = load(rnd.choice(ev_files))
+                e = _soft(load(rnd.choice(ev_files)))
                 e = e / (active_rms(e) + 1e-9) * bed_rms * 10 ** ((rel_db + rnd.uniform(-4, 2)) / 20)
                 i = int(t * SR)
                 bed[i:i + len(e)] += e[: n - i]
@@ -297,6 +297,77 @@ def _tempo(a, f):
         return sf.read(o, dtype="float32")[0]
 
 
+def _trim(a, keep_in=0.05, keep_out=0.1):
+    """Cut the silence a TTS engine leaves before and after a line (Chatterbox often adds 0.5-1.5 s) -
+    otherwise the dialogue gets long dead holes. Only the ends: pauses inside the speech are never cut."""
+    import numpy as np
+    hop = int(SR * 0.01)
+    if len(a) < hop * 10:
+        return a
+    fr = np.sqrt(np.add.reduceat(a.astype(np.float64) ** 2, np.arange(0, len(a), hop)) / hop)
+    on = np.where(fr > fr.max() * 10 ** (-40 / 20))[0]
+    if not len(on):
+        return a
+    return a[max(0, on[0] * hop - int(SR * keep_in)): min(len(a), (on[-1] + 1) * hop + int(SR * keep_out))]
+
+
+def _inner_pauses(a, min_s=0.4):
+    """Silences inside a line longer than min_s seconds (Chatterbox sometimes stops mid-sentence: «c'est ...
+    ça»). They are reported so the line is generated again - never cut out (cutting caused a rasp)."""
+    import numpy as np
+    hop = int(SR * 0.01)
+    fr = np.sqrt(np.add.reduceat(a.astype(np.float64) ** 2, np.arange(0, len(a), hop)) / hop)
+    loud = fr > fr.max() * 10 ** (-35 / 20)
+    out, i, n = [], 0, len(loud)
+    first, last = (np.where(loud)[0][[0, -1]] if loud.any() else (0, 0))
+    i = first
+    while i < last:
+        if not loud[i]:
+            j = i
+            while j < last and not loud[j]:
+                j += 1
+            if (j - i) * 0.01 >= min_s:
+                out.append({"at": round(i * 0.01, 2), "seconds": round((j - i) * 0.01, 2)})
+            i = j
+        else:
+            i += 1
+    return out
+
+
+def _soft(e, fin=0.03, fout=0.6):
+    """An event clip (birds, bells...) with soft edges. ESC-50 clips are 5 s cuts from longer recordings and
+    often stop mid-sound - added as they are, the birdsong broke off abruptly (park dialogue, 2026-10-15)."""
+    import numpy as np
+    e = _trim(e, 0.0, 0.0)
+    a, b = min(len(e) // 4, int(SR * fin)), min(len(e) // 2, int(SR * fout))
+    e = e.astype(np.float32).copy()
+    if a:
+        e[:a] *= np.linspace(0, 1, a, dtype=np.float32)
+    if b:
+        e[-b:] *= np.linspace(1, 0, b, dtype=np.float32) ** 2
+    return e
+
+
+def _odd_pauses(a, text):
+    """Pauses a listener hears as a jump in the recording:
+    - >= 0.45 s away from any punctuation mark («Tu es japonaise, c'est … ça»);
+    - > 0.5 s at a , . ! ? - a real speaker breathes for 0.2-0.4 s there; longer sounded like a cut
+      («Bonjour ! … Vous êtes Yuki ?», learner 2026-10-15);
+    - > 0.9 s at «…» / after «Euh», where a longer hesitation is meant.
+    A pause's place in the line is compared with the punctuation's place in the text (by characters)."""
+    import re
+    dur = len(a) / SR
+    marks = [(m.end() / max(1, len(text)), 0.9 if ("…" in m.group() or "..." in m.group()) else 0.5)
+             for m in re.finditer(r"[.,;:!?…»]+", text.rstrip(" .!?…"))]
+    out = []
+    for p in _inner_pauses(a):
+        f = (p["at"] + p["seconds"] / 2) / max(dur, 1e-6)
+        allowed = [lim for m, lim in marks if abs(f - m) < 0.12]
+        if (not allowed and p["seconds"] >= 0.45) or (allowed and p["seconds"] > max(allowed)):
+            out.append(p)
+    return out
+
+
 def scene_dialogue(clips, speakers, texts, out_path, scene, snr=None, level=None, seed=None, intro=2.0, outro=2.0,
                    events=True):
     """Place a dialogue (one clean clip per turn) into a recorded scene. Returns a summary dict."""
@@ -307,7 +378,9 @@ def scene_dialogue(clips, speakers, texts, out_path, scene, snr=None, level=None
     lvl = (level or "B1").upper()
     snr = snr if snr is not None else SNR_BY_LEVEL.get(lvl, 12)
     rnd = random.Random(seed if seed is not None else "|".join(texts))
-    lines = [load(c) for c in clips]
+    lines = [_trim(load(c)) for c in clips]
+    long_pauses = [dict(turn=k + 1, speaker=w, **p) for k, (a, w, t) in enumerate(zip(lines, speakers, texts))
+                   for p in _odd_pauses(a, t)]
     order = []
     for s in speakers:
         if s not in order:
@@ -358,6 +431,10 @@ def scene_dialogue(clips, speakers, texts, out_path, scene, snr=None, level=None
     if not files:
         raise SystemExit(f"no recordings in {os.path.join(root, folder)}")
     bed = bed_of_length(files, n, rnd)
+    # the level is set on the steady bed alone: measured with the events (birds, bells...) in it, the bed came
+    # out much quieter between them and the background seemed to drop out (park dialogue, 2026-10-15)
+    g = active_rms(speech.mean(1)) / (active_rms(bed) + 1e-9) / 10 ** (snr / 20)
+    bed = bed * g
     if events:
         bed_rms = active_rms(bed)
         for kind, every, rel_db in evs:
@@ -366,13 +443,11 @@ def scene_dialogue(clips, speakers, texts, out_path, scene, snr=None, level=None
                 continue
             t = rnd.uniform(0.3, every)
             while t < n / SR - 1:
-                e = load(rnd.choice(ev_files))
+                e = _soft(load(rnd.choice(ev_files)))
                 e = e / (active_rms(e) + 1e-9) * bed_rms * 10 ** ((rel_db + rnd.uniform(-4, 2)) / 20)
                 i = int(t * SR)
                 bed[i:i + len(e)] += e[: n - i]
                 t += rnd.expovariate(1 / every) + 0.5
-    g = active_rms(speech.mean(1)) / (active_rms(bed) + 1e-9) / 10 ** (snr / 20)
-    bed = bed * g
     fi = int(SR * 1.5)
     bed[:fi] *= np.linspace(0, 1, fi, dtype=np.float32)
     bed[-fi:] *= np.linspace(1, 0, fi, dtype=np.float32)
@@ -391,7 +466,8 @@ def scene_dialogue(clips, speakers, texts, out_path, scene, snr=None, level=None
         ff("-i", w, *codec, out_path)
     return {"scene": scene, "snr_db": snr, "file": out_path, "seconds": round(n / SR, 1), "room": {"rt60": rt60, "wet": wet},
             "pace_target": target, "pace": {s: round(v, 2) for s, v in pace.items()},
-            "tempo": {s: round(v, 3) for s, v in tempo.items()}, "places": {s: place[s][0] for s in order}}
+            "tempo": {s: round(v, 3) for s, v in tempo.items()}, "places": {s: place[s][0] for s in order},
+            "long_pauses": long_pauses}
 
 
 def main():
