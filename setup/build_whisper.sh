@@ -1,10 +1,12 @@
 #!/bin/sh
 # Build whisper.cpp's whisper-cli for THIS machine (the Claude desktop workspace VM is Linux; a Mac
-# build won't run there and vice versa). Needs git, a C/C++ compiler and cmake (installed with pip if
-# missing). The source is built outside the languages folder; only the binary is copied in.
+# build won't run there and vice versa, so a Mac build goes to build-mac/). Needs git, a C/C++ compiler
+# and cmake (installed with pip if missing; on a Mac: brew install cmake). The source is built outside the
+# languages folder; only the binary is copied in.
 set -e
 ROOT=$(cd "$(dirname "$0")/.." && pwd)
 DEST="$ROOT/script/voice-to-text/whisper.cpp/build/bin"
+[ "$(uname -s)" = Darwin ] && DEST="$ROOT/script/voice-to-text/whisper.cpp/build-mac/bin"
 B=${WHISPER_BUILD_DIR:-$HOME/wbuild}
 if [ -x "$DEST/whisper-cli" ] && "$DEST/whisper-cli" --help >/dev/null 2>&1; then echo "whisper-cli: ready ($DEST)"; exit 0; fi
 command -v cmake >/dev/null 2>&1 || { pip install --user -q cmake && PATH="$HOME/.local/bin:$PATH"; }

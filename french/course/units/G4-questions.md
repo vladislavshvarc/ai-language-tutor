@@ -57,3 +57,10 @@ est-ce que + no verb, est la gare loin, quel heure, est-ce que tu veux? for "wha
 1. (est-ce que) Tu es fatigué. → Est-ce que tu es fatigué ?
 2. ___ ville ? (which) → Quelle
 3. «Почему ты здесь?» → Pourquoi est-ce que tu es ici ? / Pourquoi es-tu ici ?
+
+## Videos
+| Video | Channel | Start | Covers | Added |
+|---|---|---|---|---|
+| [Asking questions in French with EST-CE QUE (French Essentials Lesson 30)](https://www.youtube.com/watch?v=o0tgXagvolU) | Learn French With Alexa | - | est-ce que, yes/no and question-word questions | 2026-10-23 · 1.75M views, 33.7K likes, 1.5K comments, 11:06 |
+| [Asking questions in French with INVERSIONS (French Essentials Lesson 31)](https://www.youtube.com/watch?v=58kpyGQpamQ) | Learn French With Alexa | - | inversion, -t- (optional) | 2026-10-23 · 778K views, 14.4K likes, 801 comments, 13:30 |
+| [Asking WHAT/WHICH questions in French with QUEL (Lesson 27)](https://www.youtube.com/watch?v=dozFkBHeRyY) | Learn French With Alexa | - | quel / quelle (spare) | 2026-10-23 · 797K views, 13.8K likes, 513 comments, 10:00 |

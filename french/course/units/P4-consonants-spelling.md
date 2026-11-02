@@ -45,6 +45,16 @@ Read and spell the consonant combinations that differ from Russian/English: r, c
 - fille read [fil] → [fij]; but ville [vil].
 - nous mangons (spelling) → nous mangeons; nous commencons → nous commençons.
 
+## Lesson parts
+1. **c, g, s - one letter, two sounds**: c [k]/[s], ç; g [g]/[ʒ], ge before a/o (nous mangeons, voyageons), gu before e/i (guitare), j; s [s]/[z], ss (poisson / poison). - fr-intro-5
+2. **r, ch, gn, ill, qu / th / ph, double letters**: uvular r, chat, montagne, fille / ville, qui, thé, pharmacie, belle.
+
+## Videos
+| Video | Channel | Start | Covers | Added |
+|---|---|---|---|---|
+| [How to pronounce the "G" & "J" sounds in French](https://www.youtube.com/watch?v=9q13ialA0gU) | Learn French With Alexa | - | g / j (part 1) | 2026-10-23 · 83K views, 1.4K likes, 49 comments, 4:18 |
+| [How to pronounce R in French](https://www.youtube.com/watch?v=MrjMJ_PAlB8) | Learn French With Alexa | - | uvular r (part 2) | 2026-10-23 · 1.79M views, 41.6K likes, 1.9K comments, 4:12 |
+
 ## Practice bank
 | # | Type | Prompt | Answer | Accept also |
 |---|---|---|---|---|

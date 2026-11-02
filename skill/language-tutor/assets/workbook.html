@@ -1179,18 +1179,23 @@ textarea.fin{text-align:left;min-height:4.5em}
     const pick=async()=>{
       const prevId=lesson&&lesson.id;lesson=lessonDoc||(exDoc?fromLegacy(exDoc):null);
       if(lesson&&lesson.id!==prevId){
-        subs={};
-        if(lesson.legacy){try{const g=await db.doc(subPath(lesson.sections[0])).get();if(g.exists)subs.main=Object.assign({section:"main",status:g.data().feedback?"checked":"saved"},g.data())}catch(e){}}
-        else{try{const q=await db.collection("sub").where("lesson_id","==",lesson.id).get();q.docs.forEach(x=>{const v=x.data();if(v&&v.section)subs[v.section]=v})}catch(e){}}
-        if(unsubSubs)unsubSubs();
-        unsubSubs=db.collection("sub").where("lesson_id","==",lesson.id).onSnapshot(q=>{
+        const id=lesson.id,got={};
+        subs={};if(unsubSubs){unsubSubs();unsubSubs=null}
+        if(lesson.legacy){try{const g=await db.doc(subPath(lesson.sections[0])).get();if(g.exists)got.main=Object.assign({section:"main",status:g.data().feedback?"checked":"saved"},g.data())}catch(e){}}
+        else{try{const q=await db.collection("sub").where("lesson_id","==",id).get();q.docs.forEach(x=>{const v=x.data();if(v&&v.section)got[v.section]=v})}catch(e){}}
+        // a newer lesson arrived while this one was loading: lessons share section keys, so its answers must not land in the newer one
+        if(!lesson||lesson.id!==id)return;
+        subs=Object.assign(got,subs);
+        unsubSubs=db.collection("sub").where("lesson_id","==",id).onSnapshot(q=>{
           // feedback written by the tutor in chat appears without a reload
+          if(!lesson||lesson.id!==id)return;
           let refresh=false;const c=cur();
-          q.docs.forEach(x=>{const v=x.data();if(!v||!v.section)return;const old=subs[v.section];
+          q.docs.forEach(x=>{const v=x.data();if(!v||!v.section||v.lesson_id!==id)return;const old=subs[v.section];
             if(c&&v.section===c.key&&v.feedback&&!(old&&old.feedback)&&!busy){subs[v.section]=v;if(st.phase==="test"){st.phase="drill"}refresh=true}
             else if(!old||!busy)subs[v.section]=Object.assign({},old||{},v)});
           if(refresh)render()},()=>{});
         for(let k=0;k<20&&gotState===null;k++)await new Promise(r=>setTimeout(r,100));
+        if(!lesson||lesson.id!==id)return;
         if(gotState&&gotState.lesson_id===lesson.id){st.index=Number(gotState.index)||0;st.phase=gotState.phase||"material"}
         else{st.index=0;st.phase=firstPhase(cur())}
       }

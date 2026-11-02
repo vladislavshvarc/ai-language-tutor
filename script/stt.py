@@ -82,8 +82,11 @@ def candidate_dirs(audio, explicit):
 
 def find_cpp(audio, explicit_dir, explicit_model):
     exe = model = None
+    rels = ("whisper.cpp/build/bin/whisper-cli", "build/bin/whisper-cli", "whisper-cli")
+    if sys.platform == "darwin":
+        rels = ("whisper.cpp/build-mac/bin/whisper-cli",) + rels  # build/ holds the Linux binary of the workspace VM
     for d in candidate_dirs(audio, explicit_dir):
-        for rel in ("whisper.cpp/build/bin/whisper-cli", "build/bin/whisper-cli", "whisper-cli"):
+        for rel in rels:
             p = os.path.join(d, rel)
             if os.path.isfile(p) and os.access(p, os.X_OK):
                 exe = exe or p

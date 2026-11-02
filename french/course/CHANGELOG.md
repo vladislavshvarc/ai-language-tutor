@@ -10,3 +10,4 @@
 | 2026-10-08 | - | G1, P1 | Added `## Videos` to G1 (Alexa, Essentials 7 and 8) and an accents video to P1 - picked by views and likes. | First lesson on G1 (fr-intro-2). |
 | 2026-10-12 | 1 | G3, P2 | added ## Videos (Alexa: -ER verbs, Simple Negations 1; What NOT to pronounce) with checked numbers | course.md «Videos for units»; used in fr-intro-3 |
 | 2026-10-14 | - | G2, P3 | Videos for G2 part 2 (Alexa: Subject Pronouns, Tu or Vous, Nous vs On) and P3 (Alexa: liaisons) - numbers from the channel search (YouTube's watch pages no longer expose likes to youtube_stats.js) | first lesson on G2 part 2 and P3 (fr-intro-4) |
+| 2026-10-23 | - | G4, P4 | Added ## Videos to G4 (Alexa: est-ce que, inversions, quel) and P4 (Alexa: G & J, R); P4 split into two ## Lesson parts (c/g/s; r, ch, gn, ill…) | first lesson on G4 and P4 (fr-intro-5); numbers from the channel search |

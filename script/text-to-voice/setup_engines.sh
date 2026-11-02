@@ -21,7 +21,7 @@ ready() { for d in "$E/$1"-*; do [ -f "$d/.ok" ] && [ "$(cat "$d/.ok")" = "$TAG"
 workdir() {  # an unfinished install for this python, or a new folder
   for d in "$E/$1"-*; do [ -d "$d" ] && [ ! -f "$d/.ok" ] && [ "$(cat "$d/.tag" 2>/dev/null)" = "$TAG" ] && { echo "$d"; return; }; done
   n=1; while [ -e "$E/$1-$n" ]; do n=$((n+1)); done; mkdir -p "$E/$1-$n"; echo "$TAG" > "$E/$1-$n/.tag"; echo "$E/$1-$n"; }
-src() { [ -d "$D/wheels/$1" ] && echo "--no-index --find-links $D/wheels/$1"; }
+src() { [ "$(uname -s)" = Linux ] && [ -d "$D/wheels/$1" ] && echo "--no-index --find-links $D/wheels/$1"; }  # the offline wheels are Linux builds; a Mac installs from PyPI
 step() {  # dir name args... : run once, remember it
   [ -f "$1/.$2" ] && return 0; d=$1; s=$2; shift 2
   $PY -m pip install -q --disable-pip-version-check --target "$d" "$@" > "$d/.log" 2>&1 || { grep -v "already exists" "$d/.log" | tail -3; return 1; }

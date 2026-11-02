@@ -6,6 +6,8 @@ Offline neural voices used by `../tts.py` for listening dialogues, word clips an
 
 **Setup each session:** `sh setup_engines.sh all` (about 1-2 minutes; without `all` only Supertonic and Kokoro - enough for word clips). Then `python3 ../tts.py --lang fr --list-voices`.
 
+**On the Mac itself** (not the Linux workspace): Chatterbox needs torch 2.6, which has no build for Homebrew's default Python 3.14, so use Python 3.12 for both setup and every `tts.py` call: `PYTHON=/opt/homebrew/bin/python3.12 sh setup_engines.sh all`, then `/opt/homebrew/bin/python3.12 ../tts.py …`. The Mac installs from PyPI (`wheels/` holds Linux builds) into its own `.env/*-N` folders next to the workspace's.
+
 ## Engines (learner's choice 2026-10-09)
 
 | Folder | What | Used for | Size |
