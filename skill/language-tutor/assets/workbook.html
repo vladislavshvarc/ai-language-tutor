@@ -368,6 +368,7 @@ textarea.fin{text-align:left;min-height:4.5em}
     "Done for today? Finish the lesson - Claude writes a short recap here, and your tutor saves everything (answers, mistakes, new words, flashcard results) to your files.":"На сегодня всё? Заверши урок - Claude напишет здесь короткий итог, а репетитор сохранит всё (ответы, ошибки, новые слова, результаты карточек) в твои файлы.",
     "✓ Finish - save the lesson":"✓ Завершить - сохранить урок",
     "Claude is writing your recap…":"Claude пишет итог урока…","Couldn't save just now - try again.":"Сейчас не получилось сохранить - попробуй ещё раз.",
+    "Couldn't load your saved answers - reload the page.":"Не получилось загрузить сохранённые ответы - обнови страницу.",
     "Looking up «{w}»…":"Ищу «{w}»…","Added «{w}» - your tutor will translate it when saving":"Добавлено «{w}» - репетитор переведёт при сохранении",
     "Added «{w}»":"Добавлено «{w}»","you'll learn it in a coming lesson":"выучим в одном из следующих уроков","{n} words waiting to be learned":"ждут изучения: {n}","Couldn't add the word just now":"Сейчас не получилось добавить слово",
     "Level":"Уровень","Explanations in: {lang}":"Объяснения: {lang}","updated {date}":"обновлено {date}",
@@ -433,6 +434,8 @@ textarea.fin{text-align:left;min-height:4.5em}
   const now=()=>new Date().toISOString();
   const today=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
   function toast(t){const el=$("toast");el.textContent=t;el.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>el.hidden=true,3200)}
+  // A database write that failed is said out loud: answers the learner believes are saved would otherwise be lost.
+  async function saved(p){try{await p;return true}catch(e){toast(ui("Couldn't save just now - try again."));return false}}
   const SAMPLE_OFF=new Set(["not_granted","sampling_disabled","not_declared","capability_disabled","capability_removed"]);
   function sampleMsg(e){const c=e&&e.code;
     if(SAMPLE_OFF.has(c)){sample=null;return ui("Checking with Claude isn't available on this page. Your answers are saved - say \"check\" in chat.")}
@@ -478,7 +481,7 @@ textarea.fin{text-align:left;min-height:4.5em}
     if(!(ex.items||[]).length){sec.material=sec.material||{body:ex.body||""};sec.test.items=[]}
     return{id:ex.id||"x",legacy:true,target_lang:ex.target_lang||"",sections:[sec]}}
   const draftKey=s=>"lt.d."+lang+"."+lesson.id+"."+s.key;
-  async function saveState(){if(!db||!lesson)return;try{await db.doc("state/"+lang).set({lesson_id:lesson.id,index:st.index,phase:st.phase,updated:now()})}catch(e){}}
+  async function saveState(){if(!db||!lesson)return;await saved(db.doc("state/"+lang).set({lesson_id:lesson.id,index:st.index,phase:st.phase,updated:now()}))}
   async function saveSub(s,patch){const p=subPath(s);const base=subs[s.key]||{language:lang,lesson_id:lesson.id,section:s.key,label:s.label||"",title:s.title||"",kind:s.kind||"lesson"};
     const doc=Object.assign({},base,patch,{updated:now(),synced:false});subs[s.key]=doc;await db.doc(p).set(doc);return doc}
   const firstPhase=s=>!s?"end":s.kind==="flashcards"?"cards":s.material?"material":(s.kind==="roleplay"?"chat":"test");
@@ -499,8 +502,8 @@ textarea.fin{text-align:left;min-height:4.5em}
       if(!b.classList.contains("armed")){b.classList.add("armed");b.textContent=ui("Yes, skip it");tm=setTimeout(()=>{b.classList.remove("armed");b.textContent=ui("Skip this section")},4000);return}
       clearTimeout(tm);b.disabled=true;
       const prev=subs[s.key]||{};
-      try{await saveSub(s,{status:"skipped",skipped_at:now(),answers:prev.answers||{}})}catch(e){}
-      go(st.index+1)};
+      if(await saved(saveSub(s,{status:"skipped",skipped_at:now(),answers:prev.answers||{}})))go(st.index+1);
+      else b.disabled=false};
     return b}
 
   function render(){
@@ -698,7 +701,8 @@ textarea.fin{text-align:left;min-height:4.5em}
         recBtn.disabled=false;setRecUI(true);note.textContent=ui("Recording… speak, then press Stop. Nothing is uploaded until you check your answers.")}
       catch(e){recBtn.disabled=false;recording=null;const n=e&&e.name;
         fallback(ui(n==="NotAllowedError"||n==="SecurityError"?"The microphone was blocked (by you, the browser or the page's frame).":n==="NotFoundError"?"No microphone was found.":"Recording couldn't start."))}};
-    if(recording&&recording.key===s.key){setRecUI(true);recording.onDone=onDone;recording.onTick=onTick;note.textContent=ui("Recording… press Stop when you're done.")}
+    const recordingHere=recording&&recording.key===s.key;
+    if(recordingHere){setRecUI(true);recording.onDone=onDone;recording.onTick=onTick;note.textContent=ui("Recording… press Stop when you're done.")}
     const show=file=>{
       pendingAudio[s.key]=file;prevEl.textContent="";
       try{const a=document.createElement("audio");a.controls=true;a.src=URL.createObjectURL(file);prevEl.append(a)}catch(e){}
@@ -709,8 +713,8 @@ textarea.fin{text-align:left;min-height:4.5em}
     const drop=box.querySelector(".drop");
     drop.ondragover=e=>{e.preventDefault();drop.classList.add("over")};drop.ondragleave=()=>drop.classList.remove("over");
     drop.ondrop=e=>{e.preventDefault();drop.classList.remove("over");const f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f)show(f)};
-    if(prev){show(prev);if(!(recording&&recording.key===s.key))recBtn.textContent=ui("🎙 Record again")}
-    else if(!(recording&&recording.key===s.key))note.textContent=voiceFirst(s)&&subs[s.key]&&subs[s.key].status==="awaiting_transcript"?ui("Recording saved. Write «check my speaking» in chat - Claude will transcribe it and check it point by point."):voiceFirst(s)?ui("Answer every point in one voice message, then press Check."):ui("Optional. Press Record, speak, press Stop - you can listen back before checking. If the microphone is blocked here, choose or drop a file recorded elsewhere. Your tutor gives pronunciation feedback from it.");
+    if(prev){show(prev);if(!recordingHere)recBtn.textContent=ui("🎙 Record again")}
+    else if(!recordingHere)note.textContent=voiceFirst(s)&&subs[s.key]&&subs[s.key].status==="awaiting_transcript"?ui("Recording saved. Write «check my speaking» in chat - Claude will transcribe it and check it point by point."):voiceFirst(s)?ui("Answer every point in one voice message, then press Check."):ui("Optional. Press Record, speak, press Stop - you can listen back before checking. If the microphone is blocked here, choose or drop a file recorded elsewhere. Your tutor gives pronunciation feedback from it.");
     return box}
   // A note "«context with the **wrong part**» -> fix: rule" shows the learner's words (mistake in red bold),
   // the fix in green bold and the rule in normal text; other notes are shown as written.
@@ -836,12 +840,12 @@ textarea.fin{text-align:left;min-height:4.5em}
     if(drill.length&&!done){const b=document.createElement("button");b.className="btn";b.type="button";b.textContent=ui("Check the drill");
       b.onclick=async()=>{const ans=drill.map((q,k)=>{const c=box.querySelector('input[name="d-'+k+'"]:checked');return c?Number(c.value):-1});
         const sc=ans.filter((x,k)=>x===drill[k].answer).length;b.disabled=true;
-        try{await saveSub(s,{drill_answers:ans,drill_score:sc+"/"+drill.length})}catch(e){}render()};a.append(b)}
+        await saved(saveSub(s,{drill_answers:ans,drill_score:sc+"/"+drill.length}));render()};a.append(b)}
     else{const n=document.createElement("button");n.className="btn";n.type="button";n.textContent=ui(st.index+1<sections().length?"Next section →":"Finish the lesson →");
       n.onclick=()=>finishSection(s,{status:"done"});a.append(n);
       if(done){const sc=document.createElement("span");sc.className="status";sc.textContent=ui("Drill: {score}",{score:sub.drill_score||""});a.append(sc)}}
     box.append(a);sec.append(box)}
-  async function finishSection(s,patch){try{await saveSub(s,patch)}catch(e){}go(st.index+1)}
+  async function finishSection(s,patch){if(await saved(saveSub(s,patch)))go(st.index+1)}
 
   // ---------------- roleplay ----------------
   // The role-play state goes to Claude as ONE JSON object (theme, character, agenda, conversation with
@@ -946,7 +950,7 @@ textarea.fin{text-align:left;min-height:4.5em}
   function restartBtn(s){const b=document.createElement("button");b.type="button";b.className="btn ghost rs";b.textContent=ui("↺ Start the conversation over");
     b.onclick=async()=>{if(b.dataset.armed!=="1"){b.dataset.armed="1";b.textContent=ui("Tap again to start over");setTimeout(()=>{if(b.isConnected){b.dataset.armed="";b.textContent=ui("↺ Start the conversation over")}},4000);return}
       if(busy)cancelBusy();const sub=subs[s.key]||{};busy=true;
-      try{await saveSub(s,{attempts:(sub.attempts||[]).concat([{turns:sub.turns||[],feedback:sub.feedback||null,drill_score:sub.drill_score||null,ended:now()}]),turns:[],feedback:null,drill_answers:null,drill_score:null,status:"chatting"})}catch(e){}
+      await saved(saveSub(s,{attempts:(sub.attempts||[]).concat([{turns:sub.turns||[],feedback:sub.feedback||null,drill_score:sub.drill_score||null,ended:now()}]),turns:[],feedback:null,drill_answers:null,drill_score:null,status:"chatting"}));
       busy=false;store.set(draftKey(s),"");st.phase="chat";saveState();render()};return b}
 
   // ---------------- flashcards (carousel) ----------------
@@ -978,7 +982,7 @@ textarea.fin{text-align:left;min-height:4.5em}
     // this round - never right away or one card later.
     d.queue.shift();d.last=card.id;if(g!=="right"&&!d.again.includes(card.id))d.again.push(card.id);
     d.phase="ask";d.answer="";d.verdict=null;
-    try{await saveSub(s,{cards:res,word_results:wordResults(s,res),status:d.queue.length||d.again.length?"in-progress":"done"})}catch(e){}
+    await saved(saveSub(s,{cards:res,word_results:wordResults(s,res),status:d.queue.length||d.again.length?"in-progress":"done"}));
     render();setTimeout(()=>{const x=$("card-in");if(x)x.focus()},40)}
   function renderCards(sec,s){
     const d=getDeck(s),res=(subs[s.key]&&subs[s.key].cards)||{},all=s.cards||[];
@@ -1181,8 +1185,11 @@ textarea.fin{text-align:left;min-height:4.5em}
       if(lesson&&lesson.id!==prevId){
         const id=lesson.id,got={};
         subs={};if(unsubSubs){unsubSubs();unsubSubs=null}
-        if(lesson.legacy){try{const g=await db.doc(subPath(lesson.sections[0])).get();if(g.exists)got.main=Object.assign({section:"main",status:g.data().feedback?"checked":"saved"},g.data())}catch(e){}}
-        else{try{const q=await db.collection("sub").where("lesson_id","==",id).get();q.docs.forEach(x=>{const v=x.data();if(v&&v.section)got[v.section]=v})}catch(e){}}
+        // without the saved answers the sections look new, and the next save would replace them: say so
+        try{
+          if(lesson.legacy){const g=await db.doc(subPath(lesson.sections[0])).get();if(g.exists)got.main=Object.assign({section:"main",status:g.data().feedback?"checked":"saved"},g.data())}
+          else{const q=await db.collection("sub").where("lesson_id","==",id).get();q.docs.forEach(x=>{const v=x.data();if(v&&v.section)got[v.section]=v})}}
+        catch(e){toast(ui("Couldn't load your saved answers - reload the page."))}
         // a newer lesson arrived while this one was loading: lessons share section keys, so its answers must not land in the newer one
         if(!lesson||lesson.id!==id)return;
         subs=Object.assign(got,subs);

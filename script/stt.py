@@ -87,9 +87,15 @@ def find_cpp(audio, explicit_dir, explicit_model):
         rels = ("whisper.cpp/build-mac/bin/whisper-cli",) + rels  # build/ holds the Linux binary of the workspace VM
     for d in candidate_dirs(audio, explicit_dir):
         for rel in rels:
+            if exe:
+                break
             p = os.path.join(d, rel)
             if os.path.isfile(p) and os.access(p, os.X_OK):
-                exe = exe or p
+                try:  # a binary built for another system (the VM's Linux build on the Mac) can't start here
+                    if subprocess.run([p, "--help"], capture_output=True, timeout=20).returncode == 0:
+                        exe = p
+                except OSError:
+                    pass
         mdir = os.path.join(d, "models")
         if not model and os.path.isdir(mdir):
             bins = [f for f in os.listdir(mdir) if f.startswith("ggml-") and f.endswith(".bin")
@@ -174,7 +180,8 @@ BACKENDS = {"cpp": run_cpp, "faster": run_faster, "whisper": run_whisper}
 
 def check(a):
     exe, model = find_cpp(None, a.whisper_dir, a.model)
-    rep = {"cpp": f"ready: {exe} + {model}" if exe and model else f"not ready (binary={exe}, model={model})"}
+    rep = {"cpp": f"ready: {exe} + {model}" if exe and model else
+           f"not ready (binary={exe}, model={model})" + ("" if exe else " - no whisper-cli that runs on this system: sh setup/build_whisper.sh")}
     for mod, name, pkg in (("faster_whisper", "faster", "faster-whisper"), ("whisper", "whisper", "openai-whisper")):
         try:
             __import__(mod)

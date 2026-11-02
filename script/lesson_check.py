@@ -82,7 +82,8 @@ def main(path, previous=(), draft=False):
     d = d.get("data", d)
     out = []
     g = d.get("grammar") or {}
-    if not (g.get("known") or g.get("later")):
+    taught_listed = g.get("known") or g.get("later")
+    if not taught_listed:
         out.append(("WARN", "lesson", "grammar", "no lesson.grammar {known, later} - the in-page checks will count slips in grammar not taught yet"))
     sc = scenes(d)
     city_count = {}

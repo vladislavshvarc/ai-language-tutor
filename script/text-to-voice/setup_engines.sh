@@ -13,6 +13,12 @@
 D=$(cd "$(dirname "$0")" && pwd)
 E=$(dirname "$D")/.env
 PY=${PYTHON:-python3}
+# Chatterbox needs torch 2.6, built for Python 3.9-3.13 only (Homebrew's python3 on the Mac is 3.14): take an older one
+if [ -z "$PYTHON" ] && [ "$*" = all ] && $PY -c 'import sys; sys.exit(sys.version_info < (3, 14))'; then
+  for v in 3.13 3.12 3.11 3.10; do command -v "python$v" >/dev/null 2>&1 && { PY=python$v; break; }; done
+  $PY -c 'import sys; sys.exit(sys.version_info < (3, 14))' && { echo "Chatterbox needs Python 3.10-3.13 (torch 2.6): brew install python@3.12, then run this again"; exit 1; }
+  echo "using $PY - torch 2.6 has no build for $(python3 --version); tts.py switches to it by itself"
+fi
 mkdir -p "$E"
 TAG=$($PY -c 'import sys,platform;print("py%d.%d-%s"%(sys.version_info[0],sys.version_info[1],platform.machine()))')
 want="fast"; [ "$*" = "all" ] && want="fast chatterbox"; [ -n "$*" ] && [ "$*" != "all" ] && want="$*"
@@ -42,6 +48,6 @@ for e in $want; do
       step "$T" s3 $(src chatterbox) --no-deps -r "$Q/chatterbox-nodeps.txt" || { echo "$e: FAILED"; continue; } ;;
     *) echo "unknown engine: $e (fast, chatterbox)"; continue ;;
   esac
-  probe="import supertonic, kokoro_onnx, soundfile, scipy.signal"; [ "$e" = chatterbox ] && probe="import torch, chatterbox.mtl_tts"
+  probe="import supertonic, kokoro_onnx, soundfile, scipy.signal"; [ "$e" = chatterbox ] && probe="import torch, chatterbox.mtl_tts, perth; assert perth.PerthImplicitWatermarker"  # None without setuptools: the model then fails to load
   if PYTHONPATH="$T" $PY -c "$probe" >/dev/null 2>&1; then echo "$TAG" > "$T/.ok"; echo "$e: ready ($T)"; else echo "$e: installed but the import test failed - run again"; fi
 done

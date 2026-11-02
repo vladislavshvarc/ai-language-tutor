@@ -28,8 +28,19 @@ next to this script, under a mounted languages root, or via --models-dir:
            gender); ~10 s of work per second of audio. 23 languages.
   Chatterbox runs in a separate worker process (engines/chatterbox_worker.py; it needs most
   of the sandbox's RAM). Finished clips are cached in
-  ~/.cache/tts-clips, and a run stops starting new slow clips after --budget seconds
+  script/.cache/tts-clips, and a run stops starting new slow clips after --budget seconds
   (default 140) with exit code 3: run the SAME command again to continue.
+  It is installed for one Python (torch 2.6: Python 3.9-3.13); when this Python has no Chatterbox
+  install but another Python of this machine has one (the Mac: python3 = 3.14, Chatterbox for 3.12),
+  the command restarts itself with that Python.
+Checking every line: after voicing, each line is checked for odd pauses, a sound after the last
+word and - for Chatterbox lines and lines holding a --must-hear word - what Whisper hears (words
+repeated, dropped or babbled after the sentence; homophones like Rennes / reine count as the
+same). A Chatterbox line with a problem gets up to --auto-retry new takes (default 2) and keeps
+the better take; the chosen take of every line is kept in .cache/tts-clips/takes.json, so a
+later --retry 9 changes line 9 only. What is still wrong is listed in "line_problems".
+An exact voice (--voice, "Léa=chatterbox:elise") never falls back to another backend: its
+error is printed instead; a fallback that did happen is listed in "fallback_from".
 Casting (learner's choice 2026-10-09; XTTS-v2, MeloTTS and Piper were removed):
   dialogues  - Chatterbox voices first (they sit in a room best), then Supertonic and Kokoro;
   --each     - word lists and example sentences use Supertonic only (fast); --all-voices
@@ -69,6 +80,7 @@ import asyncio
 import hashlib
 import json
 import os
+import platform
 import re
 import shutil
 import subprocess
@@ -77,24 +89,32 @@ import tempfile
 import unicodedata
 
 
-def env_dir(name):
-    """The engine packages installed once into the languages folder by setup_engines.sh:
-    script/.env/<name>-N with a .ok stamp for this Python (see that script). None if not installed."""
-    import platform
-    tag = "py%d.%d-%s" % (sys.version_info[0], sys.version_info[1], platform.machine())
+PY_TAG = "py%d.%d-%s" % (sys.version_info[0], sys.version_info[1], platform.machine())
+
+
+def envs(name):
+    """[(folder, python tag)] of every finished install of an engine: script/.env/<name>-N next to this
+    script or under a languages root mounted in ~/mnt, with the Python it was made for in .ok."""
     here = os.path.dirname(os.path.abspath(__file__))
     roots = [os.path.join(here, ".env")]
     mnt = os.path.join(os.path.expanduser("~"), "mnt")
     if os.path.isdir(mnt):
         roots += [os.path.join(mnt, n, "script", ".env") for n in sorted(os.listdir(mnt))]
+    out = []
     for r in roots:
         if not os.path.isdir(r):
             continue
         for d in sorted(os.listdir(r), reverse=True):
             p = os.path.join(r, d, ".ok")
-            if d.startswith(name + "-") and os.path.exists(p) and open(p).read().strip() == tag:
-                return os.path.join(r, d)
-    return None
+            if d.startswith(name + "-") and os.path.exists(p):
+                out.append((os.path.join(r, d), open(p).read().strip()))
+    return out
+
+
+def env_dir(name):
+    """The engine packages installed once into the languages folder by setup_engines.sh for THIS Python
+    (see that script). None if not installed."""
+    return next((d for d, tag in envs(name) if tag == PY_TAG), None)
 
 
 _FAST = env_dir("fast")
@@ -129,6 +149,7 @@ VENVS = os.path.join(os.path.expanduser("~"), ".venvs")
 # line or the next lesson reuses them instead of waiting ~45 s per Chatterbox line again
 CACHE = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".cache", "tts-clips")
 WORKER_ENGINES = ("chatterbox",)          # runs in its own venv + process
+ENGINE_ERRORS = {}  # engine -> why its voices could not be listed; shown by --check and in every result
 EACH_ENGINES = ("supertonic",)            # word lists / example sentences: fast, one clip per line
 
 
@@ -188,7 +209,8 @@ def worker_voices(engine, lang):
     py = sys.executable if pp else os.path.join(VENVS, engine, "bin", "python")  # ... or an old per-session venv
     script = os.path.join(os.path.dirname(os.path.dirname(d or "/x")), "engines", f"{engine}_worker.py") if d else ""
     vj = os.path.join(d or "", "voices.json")
-    if not (d and os.path.exists(py) and os.path.exists(script) and os.path.exists(vj)):
+    installed = d and os.path.exists(py) and os.path.exists(script) and os.path.exists(vj)
+    if not installed:
         return []
     out = []
     for v in json.load(open(vj, encoding="utf-8")).get("voices", []):
@@ -215,22 +237,22 @@ def cast_for(lang, engines=("supertonic", "kokoro", "chatterbox")):
                         n = f[:-5]
                         voices.append(dict(id=f"supertonic:{n}", engine="supertonic", name=n,
                                            gender="f" if n.startswith("F") else "m"))
-        except Exception:  # noqa
-            pass
+        except Exception as e:  # noqa
+            ENGINE_ERRORS["supertonic"] = f"{type(e).__name__}: {str(e)[:160]}"
     if "kokoro" in engines and lang in KOKORO:
         try:
             find_kokoro_models()
             import kokoro_onnx  # noqa
             for name, g in KOKORO[lang][1]:
                 voices.append(dict(id=f"kokoro:{name}", engine="kokoro", name=name, gender=g))
-        except Exception:  # noqa
-            pass
+        except Exception as e:  # noqa
+            ENGINE_ERRORS["kokoro"] = f"{type(e).__name__}: {str(e)[:160]}"
     for eng in WORKER_ENGINES:
         if eng in engines:
             try:
                 voices += worker_voices(eng, lang)
-            except Exception:  # noqa
-                pass
+            except Exception as e:  # noqa
+                ENGINE_ERRORS[eng] = f"{type(e).__name__}: {str(e)[:160]}"
     return voices
 
 
@@ -377,7 +399,12 @@ CHATTERBOX_STYLE = {"exaggeration": 0.6, "cfg_weight": 0.3, "temperature": 0.7}
 SCENE = False   # set for --ambience dialogues: pace is evened out in ambience.scene_dialogue
 
 
-RETRY = {}  # turn number (1-based) -> attempt, from --retry: a new take of that line instead of the cached one
+RETRY = {}  # turn number (1-based) -> take, from --retry; "next" = a take of that line not made yet
+# The take chosen for every Chatterbox line, kept between runs: clip key -> {"use": take, "tried": highest take
+# made}. Without it a later --retry 9 put every other line back to its first take (2026-11-02).
+TAKES_FILE = os.path.join(CACHE, "takes.json")
+TAKES = {}
+LINE_KEYS = []  # clip key (without the take) of every turn of the last run_local: the TAKES entries
 
 
 def clip_key(voice, text, lang, slow, attempt=0):
@@ -430,7 +457,16 @@ def run_local(turns, lang, tmp, slow, engines, seed, forced, vary, all_voices=Fa
     os.makedirs(CACHE, exist_ok=True)
     cast = cast_for(lang, engines)
     voices = assign_voices(turns, cast, seed, forced, vary, all_voices)
-    paths = [clip_key(v, txt, lang, slow, RETRY.get(i + 1, 0)) for i, ((_, txt), v) in enumerate(zip(turns, voices))]
+    LINE_KEYS[:] = [os.path.basename(clip_key(v, txt, lang, slow)) for (_, txt), v in zip(turns, voices)]
+    paths = []
+    for i, ((_, txt), v, key) in enumerate(zip(turns, voices, LINE_KEYS)):
+        rec = TAKES.get(key, {"use": 0, "tried": 0})
+        if RETRY.get(i + 1) == "next":
+            RETRY[i + 1] = rec["tried"] + 1
+        take = RETRY.get(i + 1, rec["use"])
+        if v["engine"] in WORKER_ENGINES:
+            TAKES[key] = {"use": take, "tried": max(rec["tried"], take)}
+        paths.append(clip_key(v, txt, lang, slow, take))
     # slow engines first, in their own processes, before this process loads any model (RAM)
     jobs = [(v, txt, p) for (_, txt), v, p in zip(turns, voices, paths) if v["engine"] in WORKER_ENGINES]
     if jobs:
@@ -576,6 +612,58 @@ NUMS = {"fr": {"un": "1", "une": "1", "deux": "2", "trois": "3", "quatre": "4", 
                "quinze": "15", "vingt": "20", "trente": "30", "cent": "100", "premier": "1", "première": "1"}}
 
 
+def sound_key(w, lang):
+    """A rough spelling of how a French word sounds, so homophones match: Rennes = reine, à = a, trois = troi.
+    Whisper writes the more frequent one and every take of «Rennes» was reported as a wrong word (2026-11-02)."""
+    if lang != "fr":
+        return w
+    w = "".join(c for c in unicodedata.normalize("NFD", w) if unicodedata.category(c) != "Mn")
+    for spelled, sound in (("eau", "o"), ("au", "o"), ("ai", "e"), ("ei", "e"), ("qu", "k"), ("ph", "f")):
+        w = w.replace(spelled, sound)
+    w = re.sub(r"(es|ent|e|s|t|d|x|z)$", "", w)  # silent endings
+    return re.sub(r"(.)\1", r"\1", w)  # a double letter sounds single
+
+
+def sounds(text, lang):
+    nums = NUMS.get(lang, {})
+    return [sound_key(nums.get(w, w), lang) for w in _words(text)]
+
+
+def check_lines(files, turns, used, lang, must, ks):
+    """Problems of the generated lines ks (turn index -> list): odd pauses and a sound after the last word, and
+    for Chatterbox lines and lines holding a --must-hear word what a listener hears - words that differ from the
+    text (Chatterbox repeats or drops words, or babbles on after the sentence), a must-hear word not heard.
+    A transcript is made once per clip and cached next to it."""
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import ambience
+    out = {k: [dict(turn=k + 1, speaker=turns[k][0], **p) for p in ambience.line_problems(files[k], turns[k][1])]
+           for k in ks}
+    wanted, todo, heard = {}, [], {}
+    for k in ks:
+        line = set(sounds(turns[k][1], lang))
+        wanted[k] = [w for w in must if set(sounds(w, lang)) <= line]
+        if used[k].startswith("chatterbox:") or wanted[k]:
+            sc = files[k] + ".check.json"
+            if os.path.exists(sc):  # the transcript is kept, the score is counted again (the comparison may change)
+                h = json.load(open(sc, encoding="utf-8")).get("heard", "")
+                heard[k] = {"heard": h, "match": match_score(turns[k][1], h, lang)}
+            else:
+                todo.append(k)
+    for k, r in zip(todo, verify_many([(files[k], turns[k][1]) for k in todo], lang)):
+        heard[k] = r
+        if "match" in r:
+            json.dump(r, open(files[k] + ".check.json", "w", encoding="utf-8"), ensure_ascii=False)
+    for k, r in heard.items():
+        if r.get("match", 1) < 0.9:
+            out[k].append({"turn": k + 1, "speaker": turns[k][0], "kind": "words differ from the text (repeated or missing)",
+                           "heard": r.get("heard"), "match": r.get("match")})
+        missing = [w for w in wanted[k] if not set(sounds(w, lang)) <= set(sounds(r.get("heard", ""), lang))]
+        if missing:
+            out[k].append({"turn": k + 1, "speaker": turns[k][0], "kind": "must-hear word not heard",
+                           "words": missing, "heard": r.get("heard")})
+    return out
+
+
 def verify_many(jobs, lang, workers=2):
     """verify() for [(path, text)] - two transcriptions at a time (each with half the cores; the
     'small' model needs ~0.6 GB, so more in parallel risks running out of memory)."""
@@ -586,7 +674,6 @@ def verify_many(jobs, lang, workers=2):
 
 def verify(path, text, lang, threads=None):
     """Transcribe with stt.py and compare with the text that was spoken."""
-    import difflib
     stt = os.path.join(os.path.dirname(os.path.abspath(__file__)), "stt.py")
     env = dict(os.environ, STT_THREADS=str(threads)) if threads else None
     try:
@@ -594,11 +681,13 @@ def verify(path, text, lang, threads=None):
         heard = json.loads(r.stdout).get("text", "")
     except Exception as e:  # noqa
         return {"error": f"{type(e).__name__}: {str(e)[:80]}"}
-    nums = NUMS.get(lang, {})
     heard = re.sub(r"(\d+)(?:er|re|ère|ème|e)\b", r"\1", heard)  # "1er étage" = "premier étage"
-    a = [nums.get(w, w) for w in _words(text)]
-    b = [nums.get(w, w) for w in _words(heard)]
-    return {"heard": heard.strip(), "match": round(difflib.SequenceMatcher(None, a, b).ratio(), 2)}
+    return {"heard": heard.strip(), "match": match_score(text, heard, lang)}
+
+
+def match_score(text, heard, lang):
+    import difflib
+    return round(difflib.SequenceMatcher(None, sounds(text, lang), sounds(heard, lang)).ratio(), 2)
 
 
 def slug(text, n=40):
@@ -610,18 +699,25 @@ def synthesize(turns, a, tmp, forced):
     import time
     errors = {}
     deadline = START + a.budget
-    order = ["local", "edge", "gtts", "say", "espeak"] if a.backend == "auto" else [a.backend]
+    exact = any(":" in v for v in forced.values())
+    if a.backend != "auto":
+        order = [a.backend]
+    elif exact:
+        # an exact voice was asked for: when it fails, its error is the answer - a silent switch to macOS «say»
+        # hid a broken Chatterbox install (2026-11-02)
+        order = ["local"]
+    else:
+        order = ["local", "edge", "gtts", "say", "espeak"]
     seed = a.seed or "\n".join(t for _, t in turns)
     for name in order:
         try:
             if name in LOCAL:
                 engines = LOCAL[name]
-                exact = any(":" in v for v in forced.values())
                 if a.each and name == "local" and not a.all_voices and not exact:
                     engines = EACH_ENGINES  # word lists: Supertonic only (fast)
                 return name, *run_local(turns, a.lang, tmp, a.slow, engines, seed, forced, a.vary,
-                                        a.all_voices, deadline)
-            return name, *FALLBACKS[name](turns, a.lang, tmp, a.slow)
+                                        a.all_voices, deadline), errors
+            return name, *FALLBACKS[name](turns, a.lang, tmp, a.slow), errors
         except Incomplete:
             raise
         except Exception as e:  # noqa
@@ -635,6 +731,16 @@ START = _time.time()
 
 def check():
     report = {}
+    for name in ("fast", "chatterbox"):
+        here = env_dir(name)
+        others = [f"{os.path.basename(d)} ({tag})" for d, tag in envs(name) if d != here]
+        report[f"{name} engines"] = (f"installed for this Python: {here}" if here else f"none for this Python ({PY_TAG})") + \
+            (f"; other installs: {', '.join(others)}" if others else "")
+    cb = worker_voices("chatterbox", "fr")
+    if cb:  # load it the way the worker does: a broken install still lists its voices (no setuptools, 2026-11-02)
+        r = subprocess.run([cb[0]["python"], "-c", "import torch, chatterbox.mtl_tts, perth; assert perth.PerthImplicitWatermarker"],
+                           capture_output=True, text=True, env=dict(os.environ, PYTHONPATH=cb[0]["pythonpath"] or ""))
+        report["chatterbox load test"] = "ok" if r.returncode == 0 else "FAILED: " + r.stderr.strip()[-200:]
     for lang in ("fr", "es", "de", "en"):
         report[f"local voices {lang}"] = [v["id"] for v in cast_for(lang)] or "none"
     for name, fn in FALLBACKS.items():
@@ -644,11 +750,21 @@ def check():
                 report[name] = "ok"
             except Exception as e:  # noqa
                 report[name] = f"unavailable: {type(e).__name__}: {str(e)[:100]}"
+    report["engine errors"] = ENGINE_ERRORS or "none"
     report["ffmpeg"] = "ok" if shutil.which("ffmpeg") else "missing (segments won't be joined/converted)"
     print(json.dumps(report, indent=1, ensure_ascii=False))
 
 
 def main():
+    # Chatterbox is installed for one Python (torch 2.6 has no build for Homebrew's python3 3.14 on the Mac):
+    # without it here, run this same command with the Python it was installed for
+    if not env_dir("chatterbox") and not os.environ.get("TTS_SWITCHED_PYTHON"):
+        for _, tag in envs("chatterbox"):
+            m = re.match(r"py(\d+\.\d+)-(.+)$", tag)
+            py = m and m.group(2) == platform.machine() and shutil.which("python" + m.group(1))
+            if py:
+                os.environ["TTS_SWITCHED_PYTHON"] = py
+                os.execv(py, [py, os.path.abspath(__file__)] + sys.argv[1:])
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--lang", help="ISO 639-1 code: fr, es, de, it, ...")
     p.add_argument("--out", help="joined output file, e.g. course/audio/P2/dialogue.webm")
@@ -667,8 +783,11 @@ def main():
     p.add_argument("--ambience", help="put the joined result into a place: metro, cafe, airport, street, park... (ambience.py --list)")
     p.add_argument("--level", help="with --ambience: learner level A0-C1, sets how loud the background is")
     p.add_argument("--snr", type=float, help="with --ambience: speech above background in dB (overrides --level)")
-    p.add_argument("--retry", help="turns to generate again (new take), e.g. 3,7 or 3:2 for a second retry - "
-                                   "for lines reported in ambience.long_pauses")
+    p.add_argument("--retry", help="turns to generate again: 3,7 = a take of each not made yet, 3:2 = exactly take 2; "
+                                   "every other line keeps the take chosen in earlier runs")
+    p.add_argument("--auto-retry", type=int, default=2, help="new takes of a Chatterbox line with a problem (default 2); 0 = off")
+    p.add_argument("--must-hear", help="comma-separated words a listener must hear (answers the test asks for), "
+                                       "e.g. cuisinier,Dakar,trois - checked in each line that holds them")
     p.add_argument("--budget", type=float, default=140, help="seconds to spend on slow engines before stopping (exit 3)")
     p.add_argument("--all-voices", action="store_true", help="with --each: use every engine (default: Supertonic only)")
     p.add_argument("--list-voices", action="store_true")
@@ -678,7 +797,7 @@ def main():
     for part in (a.retry or "").split(","):
         if part.strip():
             t, _, k = part.strip().partition(":")
-            RETRY[int(t)] = int(k or 1)
+            RETRY[int(t)] = int(k) if k else "next"
     global MODELS_DIR, SCENE
     MODELS_DIR = a.models_dir
     SCENE = bool(a.ambience and not a.each)
@@ -688,7 +807,8 @@ def main():
         if not a.lang:
             p.error("--list-voices needs --lang")
         return print(json.dumps(cast_for(a.lang), indent=1, ensure_ascii=False))
-    if not (a.lang and (a.text or a.file) and (a.out or (a.each and a.out_dir))):
+    complete = a.lang and (a.text or a.file) and (a.out or (a.each and a.out_dir))
+    if not complete:
         p.error("--lang, --text/--file and --out (or --each --out-dir) are required")
     text = a.text if a.text is not None else open(a.file, encoding="utf-8").read()
     turns = parse_turns(text)
@@ -700,15 +820,53 @@ def main():
                 forced[k.strip()] = v.strip()
     if a.voice:
         forced = {spk: a.voice for spk, _ in turns}
+    must = [w.strip() for w in (a.must_hear or "").split(",") if w.strip()]
+    if os.path.exists(TAKES_FILE):  # a damaged file stops the run: starting over would silently drop the chosen takes
+        TAKES.update(json.load(open(TAKES_FILE, encoding="utf-8")))
     with tempfile.TemporaryDirectory() as tmp:
         try:
-            backend, files, ext, used = synthesize(turns, a, tmp, forced)
+            backend, files, ext, used, errors = synthesize(turns, a, tmp, forced)
+            problems = {}
+            if backend in LOCAL:
+                # word lists: only Chatterbox lines are checked - Supertonic word clips are many and reliable
+                ks = [k for k, v in enumerate(used) if v.startswith("chatterbox:")] if a.each else list(range(len(turns)))
+                problems = check_lines(files, turns, used, a.lang, must, ks)
+                for _ in range(a.auto_retry):
+                    # a new take of every Chatterbox line with a problem; the take with fewer problems stays
+                    bad = [k for k in ks if problems[k] and used[k].startswith("chatterbox:")]
+                    if not bad:
+                        break
+                    before = {k: (TAKES[LINE_KEYS[k]]["use"], files[k], problems[k]) for k in bad}
+                    for k in bad:
+                        RETRY[k + 1] = TAKES[LINE_KEYS[k]]["tried"] + 1
+                    backend, files, ext, used, errors = synthesize(turns, a, tmp, forced)
+                    problems.update(check_lines(files, turns, used, a.lang, must, bad))
+                    for k, (take, f, old) in before.items():
+                        if len(problems[k]) >= len(old):
+                            RETRY[k + 1] = TAKES[LINE_KEYS[k]]["use"] = take
+                            files[k], problems[k] = f, old
         except Incomplete as e:
             print(str(e))
             sys.exit(3)
         except RuntimeError as e:
-            print(json.dumps({"error": "no TTS backend worked", "details": json.loads(str(e))}, indent=1))
+            print(json.dumps({"error": "no TTS backend worked", "details": json.loads(str(e)), "engine_errors": ENGINE_ERRORS}, indent=1))
             sys.exit(2)
+        finally:
+            if TAKES:
+                json.dump(TAKES, open(TAKES_FILE, "w", encoding="utf-8"))
+        left = [p for k in sorted(problems) for p in problems[k]]
+        report = {}
+        if errors:
+            report["fallback_from"] = errors
+        if ENGINE_ERRORS:
+            report["engine_errors"] = ENGINE_ERRORS
+        if left:
+            report["line_problems"] = left
+            report["next"] = (f"still a problem after {a.auto_retry} new takes per line: --retry " +
+                              ",".join(sorted({str(x["turn"]) for x in left}, key=int)) +
+                              " makes one more take of each (the other lines keep theirs), or cast another voice for "
+                              "that speaker; a word Whisper keeps mishearing reads clearer at the end of a phrase - "
+                              "rephrase the line")
         if a.each:
             os.makedirs(a.out_dir, exist_ok=True)
             items = []
@@ -722,7 +880,7 @@ def main():
                 todo = [(k, f, t) for k, (f, (_, t)) in enumerate(zip(files, turns)) if len(_words(t)) >= 3]
                 for (k, _, _), r in zip(todo, verify_many([(f, t) for _, f, t in todo], a.lang)):
                     items[k]["check"] = r
-            print(json.dumps({"backend": backend, "items": items}, ensure_ascii=False, indent=1))
+            print(json.dumps({"backend": backend, "items": items, **report}, ensure_ascii=False, indent=1))
         else:
             os.makedirs(os.path.dirname(os.path.abspath(a.out)), exist_ok=True)
             amb = None
@@ -735,39 +893,19 @@ def main():
                 outs = [a.out]
             else:
                 outs = join(files, a.out)
-            res = {"backend": backend, "files": outs, "voices": dict(zip([s for s, _ in turns], used))}
+            res = {"backend": backend, "files": outs, "voices": dict(zip([s for s, _ in turns], used)), **report}
             if amb:
-                # Chatterbox sometimes repeats words («c'est ça ? c'est ça») or drops some: every new Chatterbox
-                # line is transcribed once (the result is cached next to the clip) and compared with its text
-                checks, todo = {}, []
-                for k, (f, (_, t), v) in enumerate(zip(files, turns, used)):
-                    if not str(v).startswith("chatterbox:"):
-                        continue
-                    sc = f + ".check.json"
-                    if os.path.exists(sc):
-                        checks[k] = json.load(open(sc, encoding="utf-8"))
-                    else:
-                        todo.append((k, f, t))
-                for (k, f, _), r in zip(todo, verify_many([(f, t) for _, f, t in todo], a.lang)):
-                    checks[k] = r
-                    if "match" in r:
-                        json.dump(r, open(f + ".check.json", "w", encoding="utf-8"), ensure_ascii=False)
-                for k, r in sorted(checks.items()):
-                    if r.get("match", 1) < 0.9:
-                        amb.setdefault("long_pauses", []).append(
-                            {"turn": k + 1, "speaker": turns[k][0], "kind": "words differ from the text (repeated or missing)",
-                             "heard": r.get("heard"), "match": r.get("match")})
                 res["ambience"] = amb
-                if amb.get("long_pauses"):
-                    res["next"] = ("lines to make again (odd pause, a sound after the last word, or words repeated / "
-                                   "missing): run the same command again with --retry " +
-                                   ",".join(sorted({str(x["turn"]) for x in amb["long_pauses"]}, key=int)) +
-                                   " (a new take - never cut the finished line)")
             if a.verify:
                 res["check"] = [dict(text=t, voice=v, **r) for (_, t), v, r in
                                 zip(turns, used, verify_many([(f, t) for f, (_, t) in zip(files, turns)], a.lang))]
-                if amb:  # can a listener still follow it through the background?
-                    res["check_with_ambience"] = verify(a.out, " ".join(t for _, t in turns), a.lang)
+            if amb and (a.verify or must):  # can a listener still follow it through the background?
+                mix = verify(a.out, " ".join(t for _, t in turns), a.lang)
+                if a.verify:
+                    res["check_with_ambience"] = mix
+                missing = [w for w in must if not set(sounds(w, a.lang)) <= set(sounds(mix.get("heard", ""), a.lang))]
+                if missing:
+                    res["must_hear_missing_in_mix"] = missing
             print(json.dumps(res, ensure_ascii=False, indent=1))
 
 

@@ -49,6 +49,7 @@ s3tokenizer==0.3.0
 safetensors==0.5.3
 scikit-learn==1.7.2
 scipy==1.15.3
+setuptools==80.10.2
 soundfile==0.14.0
 soxr==1.1.0
 sympy==1.13.1

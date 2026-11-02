@@ -6,7 +6,7 @@ Offline neural voices used by `../tts.py` for listening dialogues, word clips an
 
 **Setup each session:** `sh setup_engines.sh all` (about 1-2 minutes; without `all` only Supertonic and Kokoro - enough for word clips). Then `python3 ../tts.py --lang fr --list-voices`.
 
-**On the Mac itself** (not the Linux workspace): Chatterbox needs torch 2.6, which has no build for Homebrew's default Python 3.14, so use Python 3.12 for both setup and every `tts.py` call: `PYTHON=/opt/homebrew/bin/python3.12 sh setup_engines.sh all`, then `/opt/homebrew/bin/python3.12 ../tts.py …`. The Mac installs from PyPI (`wheels/` holds Linux builds) into its own `.env/*-N` folders next to the workspace's.
+**On the Mac itself** (not the Linux workspace): Chatterbox needs torch 2.6, which has no build for Homebrew's default Python 3.14. `setup_engines.sh all` then installs for python3.13 / 3.12 by itself (or says `brew install python@3.12`), and `tts.py` restarts itself with that Python - keep calling it with plain `python3`. The Mac installs from PyPI (`wheels/` holds Linux builds) into its own `.env/*-N` folders next to the workspace's; `tts.py --check` lists which install belongs to which Python and runs a Chatterbox load test.
 
 ## Engines (learner's choice 2026-10-09)
 
@@ -15,7 +15,7 @@ Offline neural voices used by `../tts.py` for listening dialogues, word clips an
 | `models/chatterbox/` | Chatterbox Multilingual (MIT) - voices = 12-15 s reference clips in `voices/` + `voices.json` | dialogues (cast first) | 3.1 GB |
 | `models/supertonic-3/` | Supertonic 3 (Open RAIL-M, huggingface.co Supertone/supertonic-3) - 10 voices F1-F5 / M1-M5, 31 languages, fast | words and example sentences (`--each`: Supertonic only); dialogue backup | 0.4 GB |
 | `models/kokoro-v1.0.int8.onnx`, `models/voices-v1.0.bin` | Kokoro-82M (github.com/thewh1teagle/kokoro-onnx) - French: ff_siwis | dialogue backup | 0.1 GB |
-| `requirements/` | pinned Python packages for Chatterbox's own venv (`$HOME/.venvs/chatterbox`), installed from PyPI - or from `wheels/chatterbox/` when that offline copy exists | setup | - |
+| `requirements/` | pinned Python packages for Chatterbox, installed into `script/.env/chatterbox-N` from PyPI - or, on Linux, from `wheels/chatterbox/` when that offline copy exists | setup | - |
 | `engines/chatterbox_worker.py` | the worker tts.py runs inside that venv | - | - |
 
 XTTS-v2, MeloTTS and Piper were removed on 2026-10-09 (learner: not needed; Piper robotic, XTTS dictation-like) - their models, wheels and samples were deleted to free ~3 GB.
@@ -26,7 +26,7 @@ python3 ../tts.py --lang fr --file /tmp/dialogue.txt --ambience hotel --level A1
 python3 ../tts.py --lang fr --each --vary --file /tmp/words.txt --out-dir /tmp/clips --verify               # Supertonic, one clip per line
 ```
 
-Chatterbox is slow (~45 s per sentence on 4 CPU cores): tts.py stops after `--budget` seconds with exit code 3 - run the same command again until it exits 0 (finished clips are cached in `~/.cache/tts-clips`). It occasionally stops a sentence early (seen once: 1.8 s instead of 4.4 s) - check with `--verify` (in a separate run when there are many clips) and regenerate that clip by deleting its file in the cache.
+Chatterbox is slow (~45 s per sentence on 4 CPU cores): tts.py stops after `--budget` seconds with exit code 3 - run the same command again until it exits 0 (finished clips are cached in `script/.cache/tts-clips`). It occasionally stops a sentence early, repeats words or babbles on after a sentence: tts.py checks every Chatterbox line (pauses, a sound after the last word, Whisper's transcript, `--must-hear` words), makes up to `--auto-retry` new takes of a bad line (default 2) and keeps the better one; the chosen takes are remembered in `takes.json` in that cache. What is still wrong is listed in `line_problems`.
 
 ## Chatterbox voices
 

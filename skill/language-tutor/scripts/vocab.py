@@ -305,17 +305,22 @@ def cmd_grade(args):
             w["last_reviewed"] = t.isoformat()
             report.append({"word": w["word"], "result": "nearly", "box": f"{old}->{new}", "next_review": w["next_review"]})
             continue
-        if v == "right":
-            new = old if already else min(5, old + 1)
+        if v == "right" and already:
+            # the first right answer today already moved the box and set the next review: both stay
+            new = old
             w["right"] = w.get("right", 0) + 1
             w["last_result"] = "right"
+        elif v == "right":
+            new = min(5, old + 1)
+            w["right"] = w.get("right", 0) + 1
+            w["last_result"] = "right"
+            w["next_review"] = (t + dt.timedelta(days=INTERVALS[new])).isoformat()
         else:
             new = 1
             w["wrong"] = w.get("wrong", 0) + 1
             w["last_result"] = "wrong"
-        w["box"] = new
-        if not (v == "right" and already):
             w["next_review"] = (t + dt.timedelta(days=INTERVALS[new])).isoformat()
+        w["box"] = new
         w["last_reviewed"] = t.isoformat()
         report.append({"word": w["word"], "result": v, "box": f"{old}->{new}",
                        "next_review": w["next_review"]})

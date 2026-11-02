@@ -586,6 +586,12 @@ def _odd_pauses(a, text):
     return out
 
 
+def line_problems(clip, text):
+    """Odd pauses and sounds after the last word in one generated line, trimmed as a scene trims it."""
+    a = _trim(load(clip))
+    return _odd_pauses(a, text) + _tail_noise(a)
+
+
 def scene_dialogue(clips, speakers, texts, out_path, scene, snr=None, level=None, seed=None, intro=2.0, outro=2.0,
                    events=True):
     """Place a dialogue (one clean clip per turn) into a recorded scene. Returns a summary dict."""
@@ -597,10 +603,6 @@ def scene_dialogue(clips, speakers, texts, out_path, scene, snr=None, level=None
     snr = snr if snr is not None else SNR_BY_LEVEL.get(lvl, 12)
     rnd = random.Random(seed if seed is not None else "|".join(texts))
     lines = [_trim(load(c)) for c in clips]
-    long_pauses = [dict(turn=k + 1, speaker=w, **p) for k, (a, w, t) in enumerate(zip(lines, speakers, texts))
-                   for p in _odd_pauses(a, t)]
-    long_pauses += [dict(turn=k + 1, speaker=w, **p) for k, (a, w) in enumerate(zip(lines, speakers))
-                    for p in _tail_noise(a)]
     order = []
     for s in speakers:
         if s not in order:
@@ -683,8 +685,7 @@ def scene_dialogue(clips, speakers, texts, out_path, scene, snr=None, level=None
         ff("-i", w, *codec, out_path)
     return {"scene": scene, "snr_db": snr_eff, "file": out_path, "seconds": round(n / SR, 1), "events": ev_counts, "room": {"rt60": rt60, "wet": wet},
             "pace_target": target, "pace": {s: round(v, 2) for s, v in pace.items()},
-            "tempo": {s: round(v, 3) for s, v in tempo.items()}, "places": {s: place[s][0] for s in order},
-            "long_pauses": long_pauses}
+            "tempo": {s: round(v, 3) for s, v in tempo.items()}, "places": {s: place[s][0] for s in order}}
 
 
 def main():
@@ -706,7 +707,8 @@ def main():
             det = [x["sound"] for x in m["layers"]] + [x["sound"] for x in m["sounds"]]
             print(f"{s:14s} {n} recordings  {m.get('description', '')}" + (f"  (+ {', '.join(det)})" if det else ""))
         return
-    if not (a.scene and a.inp and a.out):
+    complete = a.scene and a.inp and a.out
+    if not complete:
         p.error("--scene, --in and --out are required")
     print(json.dumps(mix(a.inp, a.out, a.scene, a.snr, a.level, a.seed, events=not a.no_events)))
 
