@@ -102,13 +102,18 @@ If you must edit it by hand (no Python), keep the same fields and apply exactly 
 
 ## mistakes.md
 
-Grouped by rule, most frequent first. Update the count and add a dated example each time; mark `status: fixed?` after the learner gets it right several times in a row.
+Grouped by rule, most frequent first. Update the count and add a dated example each time.
+
+**Streak and `fixed?`.** `streak` = lessons in a row in which the learner got the construction right on the first try in an item aimed at it (a construction card, a translation sentence, an exam item). At most +1 per lesson, so one lucky answer can't close a mistake.
+- Right → `streak` +1. At `streak: 3` the entry becomes `status: fixed?`.
+- Wrong, or the same error in free writing / speaking → `streak: 0`, count +1, a dated example, `status: active` again.
+- A `fixed?` entry still comes back as one construction card every 4-5 lessons; a miss there makes it `active` again, three more right answers in those checks make it `status: fixed`.
 
 ```markdown
 # French - recurring mistakes
 
 ## à + le → au, de + le → du (contraction)
-- count: 3 · last: 2026-10-02 · status: active
+- count: 3 · last: 2026-10-02 · status: active · streak: 0
 - 2026-09-30: "à le travail" → "au travail"
 - 2026-10-02: "de le bus" → "du bus"
 

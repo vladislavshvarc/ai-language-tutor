@@ -206,6 +206,9 @@ textarea.fin{text-align:left;min-height:4.5em}
 .fopt.right{border-color:var(--ok);background:var(--ok-soft);color:var(--ok);font-weight:700}
 .fopt.wrong{border-color:var(--pen);background:var(--bad-soft);color:var(--pen);text-decoration:line-through}
 .fres{text-align:center}
+.fres.long{text-align:left}
+.fnotes{margin:8px 0;padding-left:1.2em;display:grid;gap:6px;font-size:.95rem;line-height:1.5;color:var(--ink)}
+.fnotes .err,.fnotes strong{color:var(--pen);font-weight:700}.fnotes .fix{color:var(--ok);font-weight:700}
 .fres.right{color:var(--ok)}.fres.wrong{color:var(--pen)}.fres.nearly{color:var(--warn)}
 .factions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center}
 .grades{display:grid;gap:8px;justify-items:center;width:100%}
@@ -395,7 +398,8 @@ textarea.fin{text-align:left;min-height:4.5em}
   // Shared by every check (tests, flashcard sentences, role-play): what is NOT an error, and grammar the
   // learner hasn't been taught yet (lesson.grammar = {known: [...], later: [...]}, written by the tutor).
   function checkRules(){const g=(lesson&&lesson.grammar)||{},fr=/^fr/i.test(langCode((lesson&&lesson.target_lang)||lang)||"");
-    const out=["KEEP THE LEARNER'S MEANING. \"corrected\" is the learner's own text with only the language errors fixed - minimal edits, same sentences, same facts, same opinions. Never add, drop or change content: if they wrote «J'aime parler avec mes amis et ma famille», it stays about talking with friends and family; «avec de sucre» becomes «avec du sucre», never «sans sucre». A correct sentence is copied unchanged. A missing task point may be added as a short extra sentence where it fits, wrapped in **double asterisks** so it shows in bold and starting with the task point's number when the task numbers its points (use what the learner already said - «Ma femme» → **⑤ Je suis marié.**), and named in a note; the learner's own sentences are never replaced to make room for it.",
+    const out=["KEEP THE LEARNER'S MEANING. \"corrected\" is the learner's own text with only the language errors fixed - minimal edits, same sentences, same facts, same opinions. Never add, drop or change content: if they wrote «J'aime parler avec mes amis et ma famille», it stays about talking with friends and family; «avec de sucre» becomes «avec du sucre», never «sans sucre». A correct sentence is copied unchanged. A missing task point may be added as a short extra sentence where it fits, wrapped in **double asterisks** so it shows in bold and starting with the task point's number when the task numbers its points (use what the learner already said - «Ma femme» → **⑤ Je suis marié.**), and named in a note; the learner's own sentences are never replaced to make room for it. Before adding one, check every task point against the learner's text: a point already covered in any wording is never added again, a note never says a point is done while the corrected text adds it, and only the task's own points count - never invent one.",
+      "EVERY FIX MUST BE RIGHT. Before calling something an error, read the learner's sentence as written: if it is correct standard language («Ma femme et moi parlons russe» - nous is optional), it is not an error, at most a \"more natural:\" tip. Fix the smallest wrong part, not the words around it: «on prévoit manger» lacks only de → «on prévoit de manger», not another verb. Every corrected form, look-alike and \"more natural:\" tip must itself be correct - never offer a wrong form as acceptable («un peu l'allemand»).",
       "WHAT IS NOT AN ERROR - never count it and never mention it, not even as a tip: punctuation and typography (a missing full stop, the space French puts before ? ! : ;, quote marks, a missing capital letter); the ligatures the learner's keyboard can't type - «oe» for «œ» (soeur, coeur, oeuf), «ae» for «æ» (a missing accent, also on a capital like École, IS a spelling error); a different correct word order or wording. Accept every correct variant (e.g. «je parle un peu français» and «je parle un peu de français» are both fine). When you are not sure something is wrong, it is not an error."];
     if(fr)out.push("Countries (French): de / d' + a feminine country or any country starting with a vowel - je viens de France, d'Italie, d'Ouzbékistan, d'Iran (never «de l'Ouzbékistan»); du + a masculine country starting with a consonant - du Maroc, du Japon; des + plural - des États-Unis.");
     if(Array.isArray(g.known)&&g.known.length)out.push("Grammar the learner HAS studied so far: "+g.known.join("; ")+".");
@@ -744,12 +748,13 @@ textarea.fin{text-align:left;min-height:4.5em}
   function fbBox(r){const d=document.createElement("div");d.className="fb"+(r.ok?" ok":"");
     let h='<span class="mark" aria-hidden="true">'+(r.ok?"✓":"✗")+"</span>"+(r.ok?(r.note?inline(r.note):esc(ui("Correct"))):"");
     // short answers: the whole correction in bold; a corrected text: plain, so the **parts the tutor added** (missing task points) stand out
-    if(!r.ok&&r.corrected)h+=r.corrected.length>90?'<span class="corr long">→ '+inline(r.corrected)+"</span>":'<span class="corr">→ <b>'+inline(r.corrected)+"</b></span>";
+    // a passed long text (percent < 100) still had slips: show its corrected version too
+    if(r.corrected&&(!r.ok||(typeof r.percent==="number"&&r.percent<100)))h+=r.corrected.length>90?'<span class="corr long">→ '+inline(r.corrected)+"</span>":'<span class="corr">→ <b>'+inline(r.corrected)+"</b></span>";
     const n=(r.notes||[]).filter(Boolean);if(n.length)h+="<ul>"+n.map(x=>"<li>"+noteHTML(x)+"</li>").join("")+"</ul>";
     d.innerHTML=h;return d}
   function renderSummary(sec,s,fb){
     const d=document.createElement("div");d.className="summary";
-    if(Array.isArray(fb.items)&&fb.items.length){const n=(s.test&&s.test.items)?s.test.items.filter(it=>it.type!=="upload").length:fb.items.length;fb=Object.assign({},fb,{score:fb.items.filter(x=>x.ok).length,total:Math.max(n,fb.items.length)})}
+    if(Array.isArray(fb.items)&&fb.items.length){const n=(s.test&&s.test.items)?s.test.items.filter(it=>it.type!=="upload").length:fb.items.length;fb=Object.assign({},fb,{score:Math.round(100*fb.items.reduce((a,x)=>a+(typeof x.percent==="number"?x.percent/100:x.ok?1:0),0))/100,total:Math.max(n,fb.items.length)})}
     const pct=fb.total?Math.round(100*fb.score/fb.total):null;
     d.innerHTML=(fb.total?'<div><span class="score'+(pct>=80?" pass":"")+'">'+esc(fb.score)+"/"+esc(fb.total)+" · "+pct+"%</span></div>":"")+(fb.summary?"<div>"+md(fb.summary)+"</div>":"");
     sec.append(d);
@@ -766,7 +771,7 @@ textarea.fin{text-align:left;min-height:4.5em}
     const vf=voiceFirst(s);
     const items=(t.items||[]).filter(it=>it.type!=="upload").map((it,k)=>vf?{id:it.id,n:k+1,task_point:it.prompt,hint:it.hint||""}:({id:it.id,n:k+1,type:it.type||"text",prompt:it.prompt,hint:it.hint||"",options:it.options,learner_answer:ans[it.id]||""}));
     const rec=(d.mistakes||[]).slice(0,6).map(m=>"- "+m.rule+(m.example?" (e.g. "+m.example+")":"")).join("\n");
-    return["You are checking a language learner's test in their workbook. Be accurate before being thorough: only mark real errors (ungrammatical, wrong word, wrong gender/article, wrong form, wrong or missing accent). Accept any correct variant. Stylistic alternatives go in notes starting with \"more natural:\" and do not make an answer wrong. A missing or wrong accent alone: ok=false, say it is the accent. Empty answer: ok=false with the correct answer. Questions about a text or recording: judge the content against the material, the transcript and the rubric; small language slips there are noted but don't fail the item unless they change the meaning. If a question is ambiguous or its premise does not match the text/transcript (it asks about something that isn't there, or points to the wrong moment), accept every answer consistent with the text, mark it ok and say in a note that the question was unclear - never blame the learner's attention for a flawed question. Each note in this exact form: «the learner's words around the error, with the wrong part in **double asterisks**» -> the corrected words: the rule in one or two short sentences (e.g. «je suis entraîneur **dans l'école**» -> dans une école: школа упоминается впервые -> une); when the error is in a pattern with look-alikes, add one line contrasting them with an example of each (e.g. «un pain au chocolat, une tarte aux pommes» = flavour / main ingredient: à + le/la/les; «un café avec du lait» = something added: avec + du/de la).",
+    return["You are checking a language learner's test in their workbook. Be accurate before being thorough: only mark real errors (ungrammatical, wrong word, wrong gender/article, wrong form, wrong or missing accent). Accept any correct variant. Stylistic alternatives go in notes starting with \"more natural:\" and do not make an answer wrong. In a language item (words, grammar, translation, a dictation line) a missing or wrong accent alone: ok=false, say it is the accent. Empty answer: ok=false with the correct answer. Questions about a text or recording: judge the content against the material, the transcript and the rubric; small language slips there (spelling, an accent, a wrong letter: «cuisiner» for cuisinier, «Senegal») are noted but don't fail the item unless they change the meaning - this beats the accent rule; only a dictation line is judged word for word. If a question is ambiguous or its premise does not match the text/transcript (it asks about something that isn't there, or points to the wrong moment), accept every answer consistent with the text, mark it ok and say in a note that the question was unclear - never blame the learner's attention for a flawed question. Each note in this exact form: «the learner's words around the error, with the wrong part in **double asterisks**» -> the corrected words: the rule in one or two short sentences (e.g. «je suis entraîneur **dans l'école**» -> dans une école: школа упоминается впервые -> une); when the error is in a pattern with look-alikes, add one line contrasting them with an example of each (e.g. «un pain au chocolat, une tarte aux pommes» = flavour / main ingredient: à + le/la/les; «un café avec du lait» = something added: avec + du/de la).",
       "Target language: "+langName(lesson.target_lang||lang)+". Level: "+(lesson.level||d.level||"?")+".",
       checkRules(),
       langRule(),
@@ -779,8 +784,9 @@ textarea.fin{text-align:left;min-height:4.5em}
       vf?"The learner answered ALL task points in ONE voice message (nothing typed). Automatic speech-to-text transcript of it (it may mishear words or miss punctuation - don't count an obviously misheard word as the learner's error):\n«"+String(ans.transcript||"").slice(0,6000)+"»\nFor EVERY task point give \"said\": the words of the transcript that answer it, verbatim (\"\" if the point is not covered - then ok=false and corrected = a model sentence). Check the language of \"said\" as usual.\nTask points (JSON):\n"+JSON.stringify(items):"Items with the learner's answers (JSON):\n"+JSON.stringify(items),
       sawTranscript(s.key)?"Note: the learner opened the transcript of the recording (after listening twice) before answering.":"",
       (t.items||[]).some(it=>it.type==="upload")?"Voice recording attached: "+((subs[s.key]&&subs[s.key].audio)?"yes (pronunciation is reviewed later by the tutor, don't comment on it)":"no"):"",
+      (t.items||[]).some(it=>it.type==="long")?"A \"long\" item (writing, retelling) also gets \"percent\": the quality of the text, unless the rubric says how to score it = the share of its sentences without a real error, each missing task point counted as one more wrong sentence. «"+ui("Not studied yet:")+"» slips, punctuation and \"more natural:\" notes don't lower it. A good text with one or two slips scores high, never zero. When the rubric gives a pass rule («all points and no more than 2 real errors»), count the real errors and set \"ok\" by that rule.":"",
       "Then write a short MISTAKE DRILL: 3-5 multiple-choice questions that make the learner practise the exact errors from THIS test first (e.g. spelling: \"musèe\" vs \"musée\"; article: \"le pharmacie\" vs \"la pharmacie\"; form: \"je dois\" vs \"je doit\"), then the recurring mistakes above. Each has 2-4 short options, exactly one correct; vary the position of the correct option. If the test was perfect, make 2-3 questions on the recurring mistakes. Each question = a short instruction in the explanation language + ONE target-language sentence with ONE blank ___; every option must fit that same blank, and the correct option put into the blank must give a correct, natural sentence (not «___ étudiante» with verb options). No second blank, no half-translated hints. The question must never contain or describe the correct option - no «un ___ (gâteau, с крышечкой над a)», no naming which accent or letter is right; give the meaning in the explanation language instead («un ___ (торт)»).",
-      'Output exactly one JSON object and nothing else (no prose, no code fence): {"items": [{"id": string, "ok": boolean, "corrected": string, "notes": [string], "note": string'+(vf?', "said": string':'')+'}] (one entry for EVERY item; the page counts the score from "ok"), "summary": "2-3 sentences: what went well, the main thing to work on - no score or count in it", "mistakes": ["short rule name per real error"], "drill": [{"q": string, "options": [string], "answer": index of the correct option, "why": "one-line rule"}]}'
+      'Output exactly one JSON object and nothing else (no prose, no code fence): {"items": [{"id": string, "ok": boolean, "corrected": string, "notes": [string], "note": string'+(vf?', "said": string':'')+', "percent": 0-100 (only for type "long")}] (one entry for EVERY item; the page counts the score from "ok", and a "long" item from "percent"), "summary": "2-3 sentences: what went well, the main thing to work on - no score or count in it", "mistakes": ["short rule name per real error"], "drill": [{"q": string, "options": [string], "answer": index of the correct option, "why": "one-line rule"}]}'
     ].filter(Boolean).join("\n\n")}
   // A drill question must not give its answer away ("un ___ (gâteau, с крышечкой над a)"): drop the hint in
   // brackets that contains the correct option, or the whole question if the answer is still in it.
@@ -790,10 +796,11 @@ textarea.fin{text-align:left;min-height:4.5em}
     const q=x.q.replace(/\s*[(«"][^)»"]*[)»"]/g,m=>has(m)?"":m).trim();return has(q)?null:Object.assign({},x,{q})}
   function cleanFeedback(res,n){
     const drill=(Array.isArray(res.drill)?res.drill:[]).map(x=>({q:String(x.q||""),options:(Array.isArray(x.options)?x.options:[]).map(String).slice(0,4),answer:Number(x.answer),why:String(x.why||"")})).filter(x=>x.q&&x.options.length>=2&&x.answer>=0&&x.answer<x.options.length).filter(x=>(x.q.match(/_{2,}/g)||[]).length<=1).map(unleak).filter(Boolean).slice(0,6);
-    const its=(Array.isArray(res.items)?res.items:[]);
-    // Tests: the score is counted here from the per-item verdicts (Claude's own "score" was sometimes one off).
-    const okN=its.filter(x=>x&&x.ok===true).length;
-    return{score:its.length?okN:(Number(res.score)||0),total:its.length?Math.max(n,its.length):(Number(res.total)||n),items:(Array.isArray(res.items)?res.items:[]).map(x=>({id:String(x.id),ok:!!x.ok,corrected:String(x.corrected||""),notes:Array.isArray(x.notes)?x.notes.map(String):[],note:x.note?String(x.note):"",said:x.said?String(x.said):""})),summary:String(res.summary||""),mistakes:Array.isArray(res.mistakes)?res.mistakes.map(String):[],drill}}
+    const its=(Array.isArray(res.items)?res.items:[]).map(x=>({id:String(x.id),ok:!!x.ok,corrected:String(x.corrected||""),notes:Array.isArray(x.notes)?x.notes.map(String):[],note:x.note?String(x.note):"",said:x.said?String(x.said):"",percent:Number.isFinite(x.percent)?Math.min(100,Math.max(0,Math.round(x.percent))):null}));
+    // Tests: the score is counted here from the per-item verdicts (Claude's own "score" was sometimes one off);
+    // a long text earns its quality percent instead of all or nothing.
+    const got=its.reduce((a,x)=>a+(x.percent===null?(x.ok?1:0):x.percent/100),0);
+    return{score:its.length?Math.round(100*got)/100:(Number(res.score)||0),total:its.length?Math.max(n,its.length):(Number(res.total)||n),items:its,summary:String(res.summary||""),mistakes:Array.isArray(res.mistakes)?res.mistakes.map(String):[],drill}}
   async function checkSection(s,btn,status){
     if(busy)return;busy=true;btn.disabled=true;const ans=collect(s),vf=voiceFirst(s);
     if(vf&&!pendingAudio[s.key]&&!(subs[s.key]&&subs[s.key].audio)&&!ans.transcript){busy=false;btn.disabled=false;status.textContent=ui("Record your answer first.");return}
@@ -973,8 +980,9 @@ textarea.fin{text-align:left;min-height:4.5em}
     return String(tr||"").split(/[,;/]|\s(?:or|или)\s/).map(normAns).filter(Boolean).some(v=>v===a||(a.length>=4&&(v.startsWith(a+" ")||v.endsWith(" "+a))))}
   function shuffled(arr,seed){const a=arr.slice();let h=0;for(const ch of seed)h=(h*31+ch.charCodeAt(0))>>>0;
     for(let i=a.length-1;i>0;i--){h=(h*1103515245+12345)>>>0;const j=h%(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
-  function wordResults(s,res){const out={};(s.cards||[]).forEach(c=>{const r=res[c.id];if(!r||!r.first)return;
-    const prev=out[c.word];if(!prev||GRADE_RANK[r.first]>GRADE_RANK[prev])out[c.word]=r.first});return out}
+  // per word (key "word") or per mistakes.md rule of a construction card (key "mistake"): the worst first-try grade
+  function wordResults(s,res,key){const out={};(s.cards||[]).forEach(c=>{const r=res[c.id],k=c[key];if(!k||!r||!r.first)return;
+    const prev=out[k];if(!prev||GRADE_RANK[r.first]>GRADE_RANK[prev])out[k]=r.first});return out}
   async function gradeCard(s,card,g){
     const d=getDeck(s),sub=subs[s.key]||{},res=Object.assign({},sub.cards||{});
     const r=Object.assign({attempts:0},res[card.id]||{});r.attempts++;if(!r.first)r.first=g;if(g==="right")r.done=true;res[card.id]=r;
@@ -982,7 +990,7 @@ textarea.fin{text-align:left;min-height:4.5em}
     // this round - never right away or one card later.
     d.queue.shift();d.last=card.id;if(g!=="right"&&!d.again.includes(card.id))d.again.push(card.id);
     d.phase="ask";d.answer="";d.verdict=null;
-    await saved(saveSub(s,{cards:res,word_results:wordResults(s,res),status:d.queue.length||d.again.length?"in-progress":"done"}));
+    await saved(saveSub(s,{cards:res,word_results:wordResults(s,res,"word"),mistake_results:wordResults(s,res,"mistake"),status:d.queue.length||d.again.length?"in-progress":"done"}));
     render();setTimeout(()=>{const x=$("card-in");if(x)x.focus()},40)}
   function renderCards(sec,s){
     const d=getDeck(s),res=(subs[s.key]&&subs[s.key].cards)||{},all=s.cards||[];
@@ -998,7 +1006,7 @@ textarea.fin{text-align:left;min-height:4.5em}
       n.onclick=()=>{let q=shuffled(d.again,s.key+":"+d.round);if(q.length>1&&q[0]===d.last)q.push(q.shift());d.queue=q;d.again=[];d.round++;render();setTimeout(()=>{const x=$("card-in");if(x)x.focus()},40)};
       a.append(n,skipBtn(s));box.append(a);sec.append(box);return}
     if(!d.queue.length){
-      const wr=wordResults(s,res),weak=Object.keys(wr).filter(w=>wr[w]!=="right");
+      const wr=wordResults(s,res,"word"),weak=Object.keys(wr).filter(w=>wr[w]!=="right");
       const first=all.filter(c=>res[c.id]&&res[c.id].first==="right").length;
       const box=document.createElement("div");box.className="summary";
       box.innerHTML='<div><span class="score'+(all.length&&first/all.length>=.8?" pass":"")+'">'+esc(ui("{a}/{b} right first time",{a:first,b:all.length}))+'</span></div>'+
@@ -1013,7 +1021,7 @@ textarea.fin{text-align:left;min-height:4.5em}
     // audio for the word (card.audio) and its example (card.example_audio): /_blob/<id> clips
     const sayB=(p,l)=>/^\/_blob\/[A-Za-z0-9]+$/.test(p||"")?' <button type="button" class="say" data-audio="'+esc(p)+'" aria-label="'+esc(ui("Listen"))+'">▶'+(l?" "+esc(l):"")+"</button>":"";
     const tl=langLabel(lesson.target_lang||lang);
-    const ask=(s.prompts&&s.prompts[mode])||{translate:ui("Translate into {lang}",{lang:langLabel(explainLang())}),sentence:ui("Write a short sentence with this word ({lang})",{lang:tl}),choice:ui("Pick the correct word ({lang})",{lang:tl})}[mode];
+    const ask=card.prompt||(s.prompts&&s.prompts[mode])||{translate:ui("Translate into {lang}",{lang:langLabel(explainLang())}),sentence:ui("Write a short sentence with this word ({lang})",{lang:tl}),choice:ui("Pick the correct word ({lang})",{lang:tl})}[mode];
     wrap.innerHTML='<div class="fmode">'+esc(ask)+'</div><div class="fword"'+(mode==="translate"?' lang="'+esc(lesson.target_lang||"")+'"':"")+">"+esc(front)+
       (mode==="translate"&&card.gender?' <span class="chip idle">'+esc(card.gender)+"</span>":"")+(mode==="translate"?sayB(card.audio):"")+"</div>";
     const body=document.createElement("div");body.className="fbody";wrap.append(body);
@@ -1050,7 +1058,7 @@ textarea.fin{text-align:left;min-height:4.5em}
             "The learner saw only the meaning («"+card.translation+"»), not the article or gender. Accept the word in ANY correct form: the other gender of a noun that has both («un collègue / une collègue», «ami / amie»), plural, another form of a verb or adjective. Never mark it down for not matching the card's gender or form - only for real errors in their own sentence. A slip in grammar marked as not taught yet («Not studied yet»/«Ещё не проходили») is shown in the note but does not change the verdict.",
             "Check the WHOLE sentence carefully, not only the target word: spelling and accents; elision and contractions (French: je/le/la/de/ne/que + vowel or mute h -> j'/l'/d'/n'/qu': «je essaie» -> «J'essaie»; de + le -> du, à + le -> au); articles and gender/number agreement of nouns and adjectives («le nouveau livre», «la nouvelle maison»); verb forms; word order. Fix EVERY error in \"corrected\" - it must be a fully correct sentence - and name every error in the note.",
             "verdict: \"right\" = fully correct and uses the word correctly; \"nearly\" = uses the word correctly but has one or two small slips (accent, elision, agreement, article); \"wrong\" = word missing or misused, or several / major errors.",
-            "note: 1-3 short lines in "+E+": each error -> its rule. When the mistake is in a pattern that has look-alikes, contrast them in one line with an example of each (e.g. «un pain au chocolat / une tarte aux pommes» = flavour or main ingredient: à + le/la/les; «un café avec du lait» = something added: avec + du/de la). Empty string if the sentence is right.",
+            "note: 1-3 short lines in "+E+", ONE error per line, lines separated by \\n: each error -> its rule. When the mistake is in a pattern that has look-alikes, contrast them in one line with an example of each (e.g. «un pain au chocolat / une tarte aux pommes» = flavour or main ingredient: à + le/la/les; «un café avec du lait» = something added: avec + du/de la). Empty string if the sentence is right.",
             checkRules(),
             langRule(),
             'Output exactly one JSON object and nothing else: {"verdict": "right"|"nearly"|"wrong", "corrected": "the fully corrected sentence (same as theirs if right)", "note": string}'].join("\n"),{cache:false});
@@ -1063,9 +1071,12 @@ textarea.fin{text-align:left;min-height:4.5em}
         let h="";
         if(mode==="translate")h=(d.verdict==="right"?"✓ ":"")+"<b>"+esc(card.translation)+"</b>"+(card.example?'<div class="why" lang="'+esc(lesson.target_lang||"")+'">'+esc(card.example)+sayB(card.example_audio)+(card.example_translation?" - "+esc(card.example_translation):"")+"</div>":"");
         else{const wa='<div class="why">'+esc(card.word)+sayB(card.audio)+(card.example?" · "+esc(card.example)+sayB(card.example_audio):"")+"</div>";
-          if(d.corr&&d.verdict){h=(d.verdict==="right"?"✓ ":d.verdict==="nearly"?"≈ ":"✗ ")+(d.verdict!=="right"&&d.corr.corrected?"→ <b>"+esc(d.corr.corrected)+"</b>":"")+(d.corr.note?'<div class="why">'+inline(d.corr.note)+"</div>":"")+wa}
+          // one error per line: run together in one centred block the points were hard to read (learner, 2026-11-02)
+          if(d.corr&&d.verdict){const notes=d.corr.note.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+            h="<div>"+(d.verdict==="right"?"✓ ":d.verdict==="nearly"?"≈ ":"✗ ")+(d.verdict!=="right"&&d.corr.corrected?"→ <b>"+esc(d.corr.corrected)+"</b>":"")+"</div>"+
+              (notes.length?'<ul class="fnotes">'+notes.map(x=>"<li>"+noteHTML(x)+"</li>").join("")+"</ul>":"")+wa}
           else h=esc(ui("Example:"))+" <b>"+esc(card.example||card.word)+"</b>"+sayB(card.example?card.example_audio:card.audio)+(card.example_translation?' <span class="why">'+esc(card.example_translation)+"</span>":"")+(card.example?'<div class="why">'+esc(card.word)+sayB(card.audio)+"</div>":"")}
-        fb.innerHTML=h;fb.className="fres "+(d.verdict||"self");
+        fb.innerHTML=h;fb.className="fres "+(d.verdict||"self")+(fb.textContent.length>60?" long":"");
         if(d.verdict&&!(mode==="translate"&&d.verdict!=="right")){const nb=document.createElement("button");nb.className="btn";nb.type="button";nb.textContent=ui("Next card →");nb.onclick=()=>gradeCard(s,card,d.verdict);actions.append(nb);
           const ov=document.createElement("button");ov.className="btn skip";ov.type="button";ov.textContent=ui("Grade it myself");ov.onclick=()=>{d.verdict=null;render()};actions.append(ov)}
         else actions.append(gradeRow(null))}

@@ -17,6 +17,21 @@ Each word appears as **2 cards in different modes** (so 6-12 words → 12-24 car
 
 Prefer `choice` for words connected to recurring mistakes, `sentence` for verbs and phrases, `translate` for nouns. A word the learner got wrong last time gets `choice` + `sentence`.
 
+## Construction cards - mistakes, at the end of the review deck
+
+After the words, the review deck ends with **2-4 construction cards**: `choice` cards on a grammar construction the learner got wrong - every mistake from the previous lesson first (also one seen once), then `active` entries with the lowest `streak`, then one `fixed?` entry that is due (storage.md, mistakes.md). Only constructions from grammar already taught (`status: later` entries never).
+
+- The front (`translation`) is the meaning of a whole sentence in the explanation language; `prompt` replaces the section's prompt («Выбери правильное предложение»).
+- **Options differ only in the construction.** Every option is spelled correctly, with the right accents and elision; only the article, preposition, word order, verb form or agreement changes - «Je suis ingénieur. / Je suis un ingénieur. / Je suis l'ingénieur.», never «Je suis ingenieur.» (an accent is a spelling trap - the word cards drill that). Exactly one option is correct; no other option is also correct French with that meaning.
+- A new sentence with this lesson's or known words, not the learner's original one.
+- `mistake` = the entry's heading in mistakes.md, exactly; no `word`, so the card stays out of the vocabulary. `audio` = the correct sentence.
+
+```json
+{"id": "m1", "mode": "choice", "mistake": "Артикль перед профессией после être", "prompt": "Выбери правильное предложение",
+ "translation": "Мой брат - инженер.", "options": ["Mon frère est ingénieur.", "Mon frère est un ingénieur.", "Mon frère est l'ingénieur."],
+ "answer": "Mon frère est ingénieur.", "why": "профессия после être - без артикля; с c'est - с артиклем: C'est un ingénieur.", "audio": "/_blob/<clip>"}
+```
+
 ## Section shape (workbook)
 
 ```json
@@ -34,7 +49,7 @@ The page shows a "learned / coming up" counter like a card stack: Right → lear
 
 ## Results and sync
 
-The sub doc stores `cards` (per card: first grade, attempts, done) and `word_results` (per word: the worst first-try grade among its cards). On sync, feed `word_results` to `vocab.py grade` - it accepts `"right"`, `"nearly"` (same box, due tomorrow) and `"wrong"` (back to box 1). Grade each word once per deck; review and new-word decks on the same day count once per word (vocab.py never promotes a word twice in one day).
+The sub doc stores `cards` (per card: first grade, attempts, done) and `word_results` (per word: the worst first-try grade among its cards). Construction cards go into `mistake_results` instead (per mistakes.md heading: the first-try grade): on sync, `right` → `streak` +1, `nearly` / `wrong` → `streak: 0` and `status: active` (storage.md, mistakes.md). On sync, feed `word_results` to `vocab.py grade` - it accepts `"right"`, `"nearly"` (same box, due tomorrow) and `"wrong"` (back to box 1). Grade each word once per deck; review and new-word decks on the same day count once per word (vocab.py never promotes a word twice in one day).
 
 ## Inline (no workbook)
 

@@ -32,6 +32,7 @@ For the theme:
 - **Video**: the unit's YouTube explanation(s) from its `## Videos` section, found once per unit (course.md, "Videos for units").
 - **Rule** in one or two plain sentences in the explanation language, compared with the learner's language where useful.
 - **Look-alikes**: when the rule has a construction that looks similar but means something else, show both side by side with an example each (*un pain au chocolat* - flavour; *un café avec du lait* - something added; *à la pomme / aux pommes*). The learner asked for this.
+- **Wrong examples (✗)**: each one is followed by **its own corrected version** - the same sentence with only the error fixed - and a few words on what was wrong (✗ *Est-ce que la piscine est ouvre ?* → ✓ *Est-ce que la piscine ouvre ?* - *est* и *ouvre* - два глагола). Never a different correct sentence next to it: the learner then can't see what changed (2026-11-02).
 - **Pattern** / small table, 4-8 examples - built from the words just learned in step 1 wherever they fit (*du pain, de la confiture* right after learning *le pain, la confiture*) - and the common trap. One audio clip per example (media.md), never a list of examples in one clip.
 - A 6-10 item test with the material hidden, then the mistake drill.
 

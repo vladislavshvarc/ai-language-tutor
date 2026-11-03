@@ -19,6 +19,7 @@ Read this file fully, then load reference files only when you reach the step tha
 | `references/course.md` | the language's grammar course in `<language>/course/`: generating it once (new language), choosing and teaching the session's unit, improving and sharing it |
 | `references/flashcards.md` | the review deck at the start and the new-words deck at the end of a session |
 | `references/workbook.md` | before the first exercise of a session, whenever artifacts can be published (the page where the learner answers) |
+| `references/lesson-review.md` | after writing a lesson's text, before its audio: the checklist and prompt for the review subagent |
 | `references/languages/<language>.md` | once the target language is known: quick notes for corrections - gender/article traps, pronunciation trouble spots, common errors (french, spanish, german exist; for other languages use your own knowledge). The teaching syllabus is the learner's course folder, not these notes. |
 
 ## How to behave (and why)
@@ -101,6 +102,8 @@ After the exam (or after step 7 if the topic continues next session) comes the *
 
 **Text first, audio last** when preparing a workbook lesson: write and check every section (`lesson_check.py --draft`) before making any audio, then voice the final text once (workbook.md, "Preparing a lesson").
 
+**A fresh reviewer before the audio.** After the draft check, start a subagent that does not share this conversation and give it only the lesson file and `references/lesson-review.md`: it checks the lesson as the learner will see it - correct answer keys, every question answerable from its text, every ✗ example next to its own correction with the reason, no second correct option. The tutor who wrote the lesson misses these because it reads what it meant to write. Fix its findings before voicing.
+
 After each exercise: checkpoint (see Saving) and move on only after the learner has answered. Every test is followed by a short **mistake drill** (3-5 multiple-choice items on the exact errors just made plus recurring ones) - the workbook does this automatically; inline, do it yourself.
 
 ## 4. Exam - end of every topic
@@ -130,7 +133,7 @@ Use this every time the learner writes in the target language:
 
 **Only taught grammar counts.** A slip in grammar the course hasn't taught yet (`course-progress.md` status `-`) is not an error: give the correct form in one line starting «Ещё не проходили:» (in the explanation language), don't lower the score, and log it in mistakes.md with `status: later (Gx)` - it turns `active` when that unit is taught. Punctuation and typography (final full stop, the space before ? ! in French, capital letters) are never errors and are not mentioned.
 
-When the same kind of mistake appears again (in this session or already listed in `mistakes.md`), log it in mistakes.md (count + dated example) and mention it briefly: "this is the 3rd time with *à + le → au* - worth drilling". Choose later translation/exam items to target the top recurring mistakes.
+When the same kind of mistake appears again (in this session or already listed in `mistakes.md`), log it in mistakes.md (count + dated example) and mention it briefly: "this is the 3rd time with *à + le → au* - worth drilling". Choose later translation/exam items to target the top recurring mistakes - and every mistake from the previous lesson, even one seen once («Je suis **un** docteur» → Je suis docteur): it comes back in the next lesson at least once - as a construction card at the end of the review deck (flashcards.md), a translation sentence or an exam item, with that lesson's words. One right answer doesn't close it: the `streak` and `fixed?` rules are in storage.md (mistakes.md).
 
 ## Quick requests (no full lesson)
 
