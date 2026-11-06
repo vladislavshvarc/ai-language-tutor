@@ -3,7 +3,7 @@ id: G5
 title: Adjectives - agreement and position
 level: A1
 prerequisites: [G1]
-version: 1
+version: 2
 status: draft
 ---
 ## Goal
@@ -58,3 +58,14 @@ cuisine francais, elle est fatigué, un beau hôtel, une rouge voiture, Françai
 1. une femme (sportif) → sportive
 2. un (nouveau) ami → un nouvel ami
 3. «Это хорошая идея.» → C'est une bonne idée.
+
+## Lesson parts
+One grammar theme per lesson - this unit is taught in two lessons:
+1. **Agreement and the basic position** - feminine (+e; -e unchanged; -eux → -euse; -if → -ive; -er → -ère; gentil → gentille), plural (+s; -s / -x unchanged); after the noun by default, before it: petit, grand, jeune, bon, joli; final consonant silent in the masculine, heard in the feminine (petit / petite).
+2. **Irregular adjectives** - beau / belle, nouveau / nouvelle, vieux / vieille and bel, nouvel, vieil before a vowel; blanc / blanche, long / longue, gros / grosse; plural -eau → -eaux, -al → -aux.
+
+## Videos
+| Video | Channel | Start | Covers | Added |
+|---|---|---|---|---|
+| [Уроки французского #30: Род и число прилагательного](https://www.youtube.com/watch?v=OujL4r1Ush4) | Gayane Khachaturian | - | part 1: feminine and plural (in Russian) | 2026-11-03 · 64K views, 2.0K likes, 79 comments, 11:24, channel 139K subs |
+| [French adjectives: BEFORE or AFTER the noun?](https://www.youtube.com/watch?v=I1RUF472SFY) | Learn French With Alexa | - | part 1: position (BAGS) | 2026-11-03 · 366K views, 8.0K likes, 398 comments, 7:06, channel 2.46M subs |

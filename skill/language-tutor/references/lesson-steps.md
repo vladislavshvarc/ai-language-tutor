@@ -12,12 +12,12 @@ Each step: short intro line ("Step 2/7 - Grammar"), the content, a clear request
 
 | | Word | Translation | Example |
 |---|---|---|---|
-| 🚗 | **la voiture** (f) | car | *La voiture de mon père est rouge.* - My father's car is red. |
-| 🚪 | **la porte de la voiture** (f) | car door | *Ferme la porte de la voiture, s'il te plaît.* |
+| 🚗 | **la voiture** (f) *[la vwa-TÜR]* | car | *La voiture de mon père est rouge.* - My father's car is red. |
+| 🚪 | **la porte de la voiture** (f) *[la port də la vwa-TÜR]* | car door | *Ferme la porte de la voiture, s'il te plaît.* |
 
    - Gender/article always for gendered languages; plural if irregular; verb type if useful (e.g. *-er* verb, separable verb in German).
    - Visual cue: an emoji or small image for concrete things (see media.md); skip it for abstract words rather than forcing a bad one.
-   - Pronunciation hint for tricky words at A0-A1 (simple approximations, not IPA unless the learner wants it).
+   - Pronunciation for **every** word, in the word's own cell right after it, in italics and square brackets: `*[жантú] / [жантúй]*`. Write it as a simple approximation in the alphabet of the learner's explanation language (Cyrillic for a Russian speaker, not IPA unless the learner wants it), mark the stressed syllable (an acute accent: ú, or capitals in Latin script), and give both forms when they sound different (gentil / gentille). The workbook shows it on its own line under the word. It never goes into the translation cell; a spelling-to-sound note (*d* is heard only in *grande*) may stay there.
    - Audio: one clip for every word and one for every example sentence (`tts.py --each --vary --verify`, media.md); in the workbook the word and the example are each a ▶ button.
 4. When preparing the lesson, save them with `vocab.py add <dir> --topic <slug> --queue` (JSON list with word, translation, gender, pos, example, example_translation): queued until studied. When the learner has done the vocabulary section (sync, or in chat), run `vocab.py teach <dir> --topic <slug> --words "…; …"` - only then do they enter the Leitner boxes and later review decks.
 5. Ask the learner to read through and say when ready (optionally: "try to use 3 of them in a sentence" - correct those sentences).

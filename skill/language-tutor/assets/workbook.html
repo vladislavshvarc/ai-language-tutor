@@ -44,8 +44,7 @@ header.top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;justify-
   background-image:linear-gradient(to right,transparent 39px,var(--margin) 39px,var(--margin) 41px,transparent 41px),
     repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rule-strong) 31px,var(--rule-strong) 32px),
     repeating-linear-gradient(to bottom,transparent 0,transparent 7px,var(--rule) 7px,var(--rule) 8px);
-  background-blend-mode:normal}
-@media (max-width:520px){.sheet{padding-inline:30px 14px;background-image:linear-gradient(to right,transparent 17px,var(--margin) 17px,var(--margin) 19px,transparent 19px),repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rule-strong) 31px,var(--rule-strong) 32px)}}
+  background-blend-mode:normal;overflow-wrap:anywhere}
 .eyebrow{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
 h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0}
 h1{font-size:1.7rem;line-height:1.2;margin-top:4px}
@@ -62,11 +61,13 @@ h3{font-size:1.05rem}
 .body p{margin:0}
 .body ul{margin:0;padding-left:1.2em}
 .body blockquote{margin:0;padding:8px 14px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 6px 6px 0}
-.tbl{overflow-x:auto;background:var(--sheet);border:1px solid var(--line);border-radius:6px}
+.tbl{overflow-x:auto;overflow-wrap:normal;background:var(--sheet);border:1px solid var(--line);border-radius:6px}
 table{border-collapse:collapse;width:100%;font-size:.95rem}
 th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft)}
 tr:last-child td{border-bottom:0}
+/* vocabulary table (.pic: emoji column first): the *[pronunciation]* after the word goes on its own line under it */
+.tbl table.pic td:nth-child(2) em{display:block;margin-top:3px;font-size:.92em;color:var(--ink-soft)}
 code{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:var(--accent-soft);padding:1px 5px;border-radius:4px}
 audio{width:100%;margin-top:4px}
 .player{display:grid;gap:6px}
@@ -225,6 +226,27 @@ textarea.fin{text-align:left;min-height:4.5em}
 .copyrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .copyrow code{flex:1 1 220px;padding:8px 10px;border:1px solid var(--rule-strong);border-radius:8px;background:var(--sheet);font-size:.95rem;overflow-wrap:anywhere}
 .done-table td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+/* narrow screens: plain edge-to-edge sheet and cards without the notebook ruling; lesson tables become one cell per line */
+@media (max-width:520px){
+  body{margin-inline:0}
+  .wrap{padding-inline:0}
+  header.top,.stepper,.foot,#pr-empty{padding-inline:12px}
+  .sheet,.card{border-inline:0;border-radius:0}
+  .sheet{padding-inline:14px;background-image:none}
+  .tbl table:not(.done-table),.tbl table:not(.done-table) :is(tbody,tr,td){display:block}
+  .tbl table:not(.done-table) thead{display:none}
+  .tbl table:not(.done-table) tr{padding:12px 14px;border-bottom:1px solid var(--line)}
+  .tbl table:not(.done-table) tr:last-child{border-bottom:0}
+  .tbl table:not(.done-table) td{padding:4px 0;border:0}
+  .tbl table.pic tr{padding-block:16px}
+  .tbl table.pic td{padding-block:6px}
+  .tbl table:not(.done-table) td:empty{display:none}
+  /* .pic = empty first header, i.e. an emoji column: the icon stays on the word's line */
+  .tbl table.pic :is(td:first-child,td:nth-child(2)){display:inline}
+  .tbl table.pic td:first-child{margin-right:6px}
+  .tbl .say{white-space:normal;text-align:left}
+  .composer{grid-template-columns:1fr}
+}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -281,7 +303,7 @@ textarea.fin{text-align:left;min-height:4.5em}
       if(!l.trim()){i++;continue}
       if(/^\s*\|/.test(l)){const rows=[];while(i<lines.length&&/^\s*\|/.test(lines[i])){rows.push(lines[i]);i++}
         const cells=r=>r.trim().replace(/^\||\|$/g,"").split("|").map(c=>c.trim());const h=cells(rows[0]),body=rows.slice(1).filter(r=>!/^\s*\|?\s*:?-{2,}/.test(r)).map(cells);
-        out.push('<div class="tbl"><table><thead><tr>'+h.map(c=>"<th>"+inline(c)+"</th>").join("")+"</tr></thead><tbody>"+body.map(r=>"<tr>"+r.map(c=>"<td>"+inline(c)+"</td>").join("")+"</tr>").join("")+"</tbody></table></div>");continue}
+        out.push('<div class="tbl"><table'+(h[0]?"":' class="pic"')+'><thead><tr>'+h.map(c=>"<th>"+inline(c)+"</th>").join("")+"</tr></thead><tbody>"+body.map(r=>"<tr>"+r.map(c=>"<td>"+inline(c)+"</td>").join("")+"</tr>").join("")+"</tbody></table></div>");continue}
       if(/^\s*[-*] /.test(l)){const it=[];while(i<lines.length&&/^\s*[-*] /.test(lines[i])){it.push(lines[i].replace(/^\s*[-*] /,""));i++}out.push("<ul>"+it.map(x=>"<li>"+inline(x)+"</li>").join("")+"</ul>");continue}
       if(/^\s*\d+[.)] /.test(l)){const it=[];while(i<lines.length&&/^\s*\d+[.)] /.test(lines[i])){it.push(lines[i].replace(/^\s*\d+[.)] /,""));i++}out.push("<ol>"+it.map(x=>"<li>"+inline(x)+"</li>").join("")+"</ol>");continue}
       if(/^#{1,4} /.test(l)){out.push("<h3>"+inline(l.replace(/^#+ /,""))+"</h3>");i++;continue}
